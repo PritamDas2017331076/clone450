@@ -23,7 +23,7 @@ export default function StudentlistL({route, navigation}){
         .then(res => {
             console.log(' data ', res.data.student)
             let arr=res.data.student
-            console.log(arr)
+            console.log('arr',arr)
             arr=arr.filter(item=>(item.section==section))
             console.log(arr)
             setList(arr.map((item,index)=>{

@@ -135,7 +135,7 @@ export default function UAdminRegister({navigation}){
         }
 
       const formData = new FormData();
-      console.log(name,reg,email)
+      console.log(name,email)
       console.log('file',file)
     
       // Update the formData object

@@ -42,7 +42,7 @@ export default function Studentregister({navigation}){
     useEffect(() => {
           axios.get(`http://${ip}:5000/university_admin`)
           .then(res => {
-              console.log('data ', res.data) 
+              console.log('data university', res.data) 
 
               setList(res.data.map( (s) => {
                 return {value:s.university, label:s.university}

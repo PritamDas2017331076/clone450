@@ -131,7 +131,7 @@ export default function Teacherregister({navigation}){
           }
   
         const formData = new FormData();
-        console.log(name,reg,email)
+        console.log(name,email)
         console.log('file',file)
       
         // Update the formData object
@@ -186,7 +186,7 @@ export default function Teacherregister({navigation}){
         console.log(formData)
 
 
-         axios.post(`http://${ip}:5000/teacher/add`,formData,formData,{
+         axios.post(`http://${ip}:5000/teacher/add`,formData,{
             headers: {
               Accept: 'application/json',
               'Content-Type': 'multipart/form-data',
