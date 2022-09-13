@@ -16,7 +16,7 @@ export default function PrintRg({route, navigation}){
 
 
     useEffect(() => {
-        axios.get(`http://${ip}:5000/course/${course_id}`)
+        axios.get(`${ip}/course/${course_id}`)
           .then(res=>{
             console.log('course info ',course_id,res.data)
             let arr=res.data.record

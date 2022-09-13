@@ -39,7 +39,7 @@ export default function UAdminRegister({navigation}){
 
 
     useEffect(() => {
-          axios.get(`http://${ip}:5000/university_admin`)
+          axios.get(`${ip}/university_admin`)
           .then(res => {
               console.log('data ', res.data) 
 
@@ -49,7 +49,7 @@ export default function UAdminRegister({navigation}){
             console.log(list)
          }) ;
 
-         axios.get(`http://${ip}:5000/departments`)
+         axios.get(`${ip}/departments`)
           .then(res => {
               console.log('data ', res.data) 
 
@@ -190,7 +190,7 @@ export default function UAdminRegister({navigation}){
         
         console.log(formData,ip)
 
-         axios.post(`http://${ip}:5000/department_head/add`,formData,{
+         axios.post(`${ip}/department_head/add`,formData,{
           headers: {
             Accept: 'application/json',
             'Content-Type': 'multipart/form-data',

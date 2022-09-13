@@ -36,7 +36,7 @@ export default function UAdminRegister({navigation}){
     const [title,setTitle] = useState('no file choosen')
 
     useEffect(() => {
-          axios.get(`http://${ip}:5000/universities`)
+          axios.get(`${ip}/universities`)
           .then(res => {
               console.log('data ', res.data) 
 
@@ -157,7 +157,7 @@ export default function UAdminRegister({navigation}){
         
         console.log(formData,ip)
 
-         axios.post(`http://${ip}:5000/university_admin/add`,formData,{
+         axios.post(`${ip}/university_admin/add`,formData,{
           headers: {
             Accept: 'application/json',
             'Content-Type': 'multipart/form-data',

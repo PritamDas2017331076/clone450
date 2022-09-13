@@ -15,7 +15,7 @@ export default function University({navigation}){
 
     useEffect(() => {
       let fl=1
-      axios.get(`http://${ip}:5000/university_admin`)
+      axios.get(`${ip}/university_admin`)
         .then(res => {
             console.log(' data ', res.data) 
             setList(res.data)

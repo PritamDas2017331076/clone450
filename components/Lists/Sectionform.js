@@ -46,7 +46,7 @@ export default function Sectionform({route, navigation}){
     useEffect(() => {
       console.log(avatar)
       let f1=1,f2=1,f3=1
-      axios.get(`http://${ip}:5000/course/${course_id}`)
+      axios.get(`${ip}/course/${course_id}`)
         .then(res => {
             console.log(' data ', res.data)
             setList(res.data.section.map( (s) => {
@@ -61,7 +61,7 @@ export default function Sectionform({route, navigation}){
                f1=0 ;
           });
 
-       axios.get(`http://${ip}:5000/${post}/me`,{
+       axios.get(`${ip}/${post}/me`,{
           headers:{ 'Authorization': token }
         })
         .then(res=>{
@@ -88,7 +88,7 @@ export default function Sectionform({route, navigation}){
             return
         }
 
-       /* axios.get(`http://${ip}:5000/${post}/me`,{
+       /* axios.get(`${ip}/${post}/me`,{
           headers:{ 'Authorization': token }
         })
         .then(res=>{
@@ -99,7 +99,7 @@ export default function Sectionform({route, navigation}){
         })
         .catch((err)=>{console.log(err,'error in authentication') })
 
-        axios.get(`http://${ip}:5000/course/${course_id}`)
+        axios.get(`${ip}/course/${course_id}`)
         .then(res=>{
             console.log('course teacher ',res.data)
             setTeacher(res.data.teacher_id)
@@ -110,12 +110,12 @@ export default function Sectionform({route, navigation}){
             alert('error in finding course')
           })*/
 
-          const st=`http://${ip}:5000/section/cids?course_id=${course_id}&section=${dist}`
+          const st=`${ip}/section/cids?course_id=${course_id}&section=${dist}`
           console.log(st)
 
          /* const sendGetRequest = () => {
             try {
-                const resp =  axios.get(`http://${ip}:5000/section/cids?course_id=${course_id}&section=${dist}`);
+                const resp =  axios.get(`${ip}/section/cids?course_id=${course_id}&section=${dist}`);
                 console.log('teast it',resp.data);
                 setIdd(resp.data._id)
             } catch (err) {
@@ -140,7 +140,7 @@ export default function Sectionform({route, navigation}){
 
         }
         console.log('details ',details)
-        axios.post(`http://${ip}:5000/access/add`,details)
+        axios.post(`${ip}/access/add`,details)
         .then(res=>{
           console.log(res.data)
 
@@ -150,7 +150,7 @@ export default function Sectionform({route, navigation}){
           alert('error in sending request to teacher')
         })
 
-        /*axios.get(`http://${ip}:5000/section/cids?course_id=${course_id}&section=${dist}`)
+        /*axios.get(`${ip}/section/cids?course_id=${course_id}&section=${dist}`)
           .then( (res) => {
                 //  console.log('res ',res)
                   console.log(JSON.stringify(res.data))
@@ -168,7 +168,7 @@ export default function Sectionform({route, navigation}){
 
                   }
                   console.log('details ',details)
-                  axios.post(`http://${ip}:5000/access/add`,details)
+                  axios.post(`${ip}/access/add`,details)
                   .then(res=>{
                     console.log(res.data)
 

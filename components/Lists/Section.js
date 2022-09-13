@@ -19,7 +19,7 @@ export default function Section({route, navigation}){
       let fl=1
       const unsubscribe = navigation.addListener('focus', () => {
             console.log('in section it is not')
-            axios.get(`http://${ip}:5000/course/${course_id}`)
+            axios.get(`${ip}/course/${course_id}`)
             .then(res => {
                 console.log(' data ', res.data) 
                 setList(res.data.section)

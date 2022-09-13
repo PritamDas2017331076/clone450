@@ -54,7 +54,7 @@ export default function Drawer({navigation}){
     const logoutClick = ()=>{
       console.log(post,token)
       console.log('token ',token)
-      axios.get(`http://${ip}:5000/${post}/logout`, {
+      axios.get(`${ip}/${post}/logout`, {
           headers: {
             'Authorization': token
           }

@@ -42,7 +42,7 @@ export default function Take({route, navigation}){
       date: dat,
       section: section
     }
-    axios.patch(`http://${ip}:5000/course/record/${course_id}`,dap)
+    axios.patch(`${ip}/course/record/${course_id}`,dap)
      .then(res=>{
       console.log('record updated in course',res.data)
      })
@@ -57,7 +57,7 @@ export default function Take({route, navigation}){
     }
     console.log('data = ',data)
 
-    axios.post(`http://${ip}:5000/bydate/add`,data)
+    axios.post(`${ip}/bydate/add`,data)
      .then(res=>{
        console.log('recorded data',res.data)
      })
@@ -67,7 +67,7 @@ export default function Take({route, navigation}){
       
       }
       console.log('registration',ele.registration_number,chg)
-      axios.patch(`http://${ip}:5000/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+      axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
         .then(res=>{
           console.log('for each ',res.data)
         })

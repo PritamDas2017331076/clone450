@@ -33,7 +33,7 @@ export default function AccessTlist({navigation}){
         console.log(id)
         let fl=1
         const unsubscribe = navigation.addListener('focus', () => {
-            axios.get(`http://${ip}:5000/approveCo/teacher?teacher=${id}`)
+            axios.get(`${ip}/approveCo/teacher?teacher=${id}`)
             .then(res => {
                 console.log('for ',university,' data ', res.data) 
                 setList(res.data)

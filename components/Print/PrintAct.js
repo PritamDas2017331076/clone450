@@ -14,13 +14,13 @@ export default function PrintAct({route, navigation}){
 
     useEffect(() => {
         let fl=1
-      if(fl==1){axios.get(`http://${ip}:5000/teacher/${id}`)
+      if(fl==1){axios.get(`${ip}/teacher/${id}`)
             .then(res => {
                 console.log('data for this id ',res.data)
                 setUse(res.data)
             })
 
-            axios.get(`http://${ip}:5000/approveCo/${un}`)
+            axios.get(`${ip}/approveCo/${un}`)
             .then(res => {
                 console.log('data for this acc ',res.data)
                 setAcc(res.data)
@@ -36,12 +36,12 @@ export default function PrintAct({route, navigation}){
         }
         console.log(chg)
 
-        axios.patch(`http://${ip}:5000/course/collaborator/${acc.course_id}`,chg)
+        axios.patch(`${ip}/course/collaborator/${acc.course_id}`,chg)
             .then(res => {
                 console.log('data added in studentlist ',res.data)
             })
 
-        axios.delete(`http://${ip}:5000/approveCo/${un}`)
+        axios.delete(`${ip}/approveCo/${un}`)
            .then(res => {
                 console.log('data deleted in teacher approval colab ',res.data)
             })
@@ -51,7 +51,7 @@ export default function PrintAct({route, navigation}){
     const Reject = ()=>{
 
 
-        axios.delete(`http://${ip}:5000/approveCo/${un}`)
+        axios.delete(`${ip}/approveCo/${un}`)
             .then(res => {
                 console.log('data deleted teacher approval colab ',res.data)
             })

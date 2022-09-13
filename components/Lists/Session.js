@@ -17,7 +17,7 @@ export default function Session({route, navigation}){
 
     useEffect(() => {
       let fl=1
-      axios.get(`http://${ip}:5000/session/ud?university=${university}&department=${department}`)
+      axios.get(`${ip}/session/ud?university=${university}&department=${department}`)
         .then(res => {
             console.log(' data ', res.data)
             if(fl) setList(res.data)

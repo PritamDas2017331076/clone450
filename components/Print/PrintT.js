@@ -12,7 +12,7 @@ export default function PrintT({route, navigation}){
 
     useEffect(() => {
         let fl=1
-      if(fl==1){axios.get(`http://${ip}:5000/teacher/${id}`)
+      if(fl==1){axios.get(`${ip}/teacher/${id}`)
             .then(res => {
                 console.log('data for this id ',res.data)
                 setUse(res.data)
@@ -27,13 +27,13 @@ export default function PrintT({route, navigation}){
             activated: true
         }
 
-        axios.patch(`http://${ip}:5000/teacher/${id}`,chg)
+        axios.patch(`${ip}/teacher/${id}`,chg)
             .then(res => {
                 console.log('data updated in dhead ',res.data)
                 setUse(res.data)
             })
 
-        axios.delete(`http://${ip}:5000/approveT/${un}`)
+        axios.delete(`${ip}/approveT/${un}`)
            .then(res => {
                 console.log('data deleted in approveDh ',res.data)
             })
@@ -42,12 +42,12 @@ export default function PrintT({route, navigation}){
 
     const Reject = ()=>{
 
-        axios.delete(`http://${ip}:5000/approveT/${un}`)
+        axios.delete(`${ip}/approveT/${un}`)
            .then(res => {
                 console.log('data deleted in approve ',res.data)
             })
 
-        axios.delete(`http://${ip}:5000/teacher/${id}`)
+        axios.delete(`${ip}/teacher/${id}`)
             .then(res => {
                 console.log('data deleted in teacher ',res.data)
             })

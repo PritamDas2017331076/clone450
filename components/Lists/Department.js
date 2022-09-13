@@ -31,7 +31,7 @@ export default function Department({route, navigation}){
 
     useEffect(() => {
       let fl=1
-      axios.get(`http://${ip}:5000/department_head?university=${university}`)
+      axios.get(`${ip}/department_head?university=${university}`)
         .then(res => {
             console.log('for ',university,' data ', res.data)
             if(fl==1) setList(res.data)

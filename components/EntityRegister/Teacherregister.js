@@ -37,7 +37,7 @@ export default function Teacherregister({navigation}){
 
 
     useEffect(() => {
-          axios.get(`http://${ip}:5000/universities`)
+          axios.get(`${ip}/universities`)
           .then(res => {
               console.log('data ', res.data) 
 
@@ -47,7 +47,7 @@ export default function Teacherregister({navigation}){
             console.log(list)
          }) ;
 
-         axios.get(`http://${ip}:5000/departments`)
+         axios.get(`${ip}/departments`)
           .then(res => {
               console.log('data ', res.data) 
 
@@ -186,7 +186,7 @@ export default function Teacherregister({navigation}){
         console.log(formData)
 
 
-         axios.post(`http://${ip}:5000/teacher/add`,formData,{
+         axios.post(`${ip}/teacher/add`,formData,{
             headers: {
               Accept: 'application/json',
               'Content-Type': 'multipart/form-data',

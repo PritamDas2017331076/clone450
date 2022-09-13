@@ -12,7 +12,7 @@ export default function PrintDt({route, navigation}){
     const [list, setList]=useState([])
 
     useEffect(() => {
-      axios.get(`http://${ip}:5000/course/${course_id}`)
+      axios.get(`${ip}/course/${course_id}`)
       .then(res=>{
         let arr=res.data.student
         arr=arr.filter(ele=>(ele.section==section))

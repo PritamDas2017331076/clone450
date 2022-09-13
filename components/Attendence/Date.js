@@ -16,7 +16,7 @@ export default function Date({route, navigation}){
 
     useEffect(() => {
       const unsubscribe = navigation.addListener('focus', () => {
-        axios.get(`http://${ip}:5000/bydate/sec?course_id=${course_id}&section=${section}`)
+        axios.get(`${ip}/bydate/sec?course_id=${course_id}&section=${section}`)
           .then(res=>{
             console.log(course_id,res.data)
             setDist(res.data.map((item,index)=>{

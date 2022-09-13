@@ -19,7 +19,7 @@ export default function StudentlistL({route, navigation}){
 
     useEffect(() => {
         console.log('section',section)
-      axios.get(`http://${ip}:5000/course/${course_id}`)
+      axios.get(`${ip}/course/${course_id}`)
         .then(res => {
             console.log(' data ', res.data.student)
             let arr=res.data.student

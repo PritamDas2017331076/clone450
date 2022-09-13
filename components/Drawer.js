@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const logoutClick = async ()=>{
   const pp=await AsyncStorage.getItem('status')
-  axios.get(`http://localhost:5000/${pp}/logout`, {
+  axios.get(`${ip}/${pp}/logout`, {
       headers: {
         'Authorization': AsyncStorage.getItem('token')
       }

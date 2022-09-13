@@ -12,7 +12,7 @@ export default function PrintAdmin({route, navigation}){
 
     useEffect(() => {
         let fl=1
-      if(fl==1){axios.get(`http://${ip}:5000/department_head/${id}`)
+      if(fl==1){axios.get(`${ip}/department_head/${id}`)
             .then(res => {
                 console.log('data for this id ',res.data)
                 setUse(res.data)
@@ -27,13 +27,13 @@ export default function PrintAdmin({route, navigation}){
             activated: true
         }
 
-        axios.patch(`http://${ip}:5000/department_head/${id}`,chg)
+        axios.patch(`${ip}/department_head/${id}`,chg)
             .then(res => {
                 console.log('data updated in dhead ',res.data)
                 setUse(res.data)
             })
 
-        axios.delete(`http://${ip}:5000/approveDh/${un}`)
+        axios.delete(`${ip}/approveDh/${un}`)
            .then(res => {
                 console.log('data deleted in approveDh ',res.data)
             })
@@ -42,12 +42,12 @@ export default function PrintAdmin({route, navigation}){
 
     const Reject = ()=>{
 
-        axios.delete(`http://${ip}:5000/approveDh/${un}`)
+        axios.delete(`${ip}/approveDh/${un}`)
            .then(res => {
                 console.log('data deleted in approve ',res.data)
             })
 
-        axios.delete(`http://${ip}:5000/department_head/${id}`)
+        axios.delete(`${ip}/department_head/${id}`)
             .then(res => {
                 console.log('data deleted in uadmin ',res.data)
             })

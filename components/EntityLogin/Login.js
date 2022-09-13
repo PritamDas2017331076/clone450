@@ -62,11 +62,11 @@ export default function Studentlogin({navigation}){
             password: password
           }
 
-        console.log(Details,ip)
+        console.log("ip = ",Details,ip)
         
         const pp=ip
 
-        axios.post(`http://${pp}:5000/${post}/login`,Details)
+        axios.post(`${ip}/${post}/login`,Details)
           .then(
               res => {
                //   dispatch({type:"USER",payload:user})

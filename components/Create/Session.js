@@ -48,7 +48,7 @@ export default function Sessions({navigation}){
         
         console.log(Details,ip)
 
-         axios.post(`http://${ip}:5000/session/add`,Details)
+         axios.post(`${ip}/session/add`,Details)
           .then(res => {
             console.log('dhead data ',res.data)
                navigation.navigate('Home')

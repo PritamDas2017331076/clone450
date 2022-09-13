@@ -17,7 +17,7 @@ export default function Teacherlist({navigation}){
     useEffect(() => {
       let fl=1
       const unsubscribe = navigation.addListener('focus', () => {
-            axios.get(`http://${ip}:5000/approveT?university=${university}&department=${department}`)
+            axios.get(`${ip}/approveT?university=${university}&department=${department}`)
             .then(res => {
                 console.log('for ',university, department,' data ', res.data) 
                 setList(res.data)

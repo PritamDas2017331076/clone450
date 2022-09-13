@@ -41,7 +41,7 @@ export default function Courses({route, navigation}){
             alert('Please enter section')
             return
         }
-      /*axios.get(`http://${ip}:5000/${post}/me`,{
+      /*axios.get(`${ip}/${post}/me`,{
         headers: {
             'Authorization': token
           }
@@ -60,7 +60,7 @@ export default function Courses({route, navigation}){
         }
         console.log(Details,ip)
 
-         axios.patch(`http://${ip}:5000/course/section/${course_id}`,Details)
+         axios.patch(`${ip}/course/section/${course_id}`,Details)
           .then(res => {
             console.log('section data ',res.data)
                navigation.goBack()

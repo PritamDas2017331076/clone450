@@ -17,7 +17,7 @@ export default function Dheadlist({navigation}){
     useEffect(() => {
       let fl=1
       const unsubscribe = navigation.addListener('focus', () => {
-            axios.get(`http://${ip}:5000/approveDh?university=${university}`)
+            axios.get(`${ip}/approveDh?university=${university}`)
             .then(res => {
                 console.log('for ',university,' data ', res.data) 
                 setList(res.data)

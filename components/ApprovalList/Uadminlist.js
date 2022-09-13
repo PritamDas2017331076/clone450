@@ -14,7 +14,7 @@ export default function Uadminlist({navigation}){
     useEffect(() => {
       let fl=1
       const unsubscribe = navigation.addListener('focus', () => {
-            axios.get(`http://${ip}:5000/approve`)
+            axios.get(`${ip}/approve`)
             .then(res => {
                 console.log(res.data) 
                 setList(res.data)

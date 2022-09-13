@@ -59,7 +59,7 @@ import {
         
         console.log(adminDetails,ip)
 
-         axios.post(`http://${ip}:5000/admin/add`,adminDetails)
+         axios.post(`${ip}/admin/add`,adminDetails)
           .then(res => {
             console.log(res.data)
             console.log(res.data.token)

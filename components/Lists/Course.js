@@ -33,7 +33,7 @@ export default function Course({route, navigation}){
         let fl=1
         const unsubscribe = navigation.addListener('focus', () => {
             console.log('in course it is working')
-            axios.get(`http://${ip}:5000/course/session?session_id=${session_id}`)
+            axios.get(`${ip}/course/session?session_id=${session_id}`)
             .then(res => {
                 console.log(' data ', res.data, session_id) 
                 setList(res.data)
@@ -52,7 +52,7 @@ export default function Course({route, navigation}){
 
     const accept = (item)=>{
 
-        axios.get(`http://${ip}:5000/access`)
+        axios.get(`${ip}/access`)
          .then(res=>{
             let data=res.data
             data=data.filter(ele => (ele.course_id==item._id && ele.teacher==item.teacher_id && ele.id==id))
@@ -84,7 +84,7 @@ export default function Course({route, navigation}){
     }
 
     const colab = (item)=>{
-        axios.get(`http://${ip}:5000/approveCo/`)
+        axios.get(`${ip}/approveCo/`)
          .then(res =>{
             let data=res.data
             data=data.filter(ele=>(ele.course_id==item._id && ele.teacher==item.teacher_id && ele.id==id))
@@ -100,7 +100,7 @@ export default function Course({route, navigation}){
                     teacher: item.teacher_id
                 }
         
-                axios.post(`http://${ip}:5000/approveCo/add`,dat)
+                axios.post(`${ip}/approveCo/add`,dat)
                   .then(res=>{
                     console.log('approval for colaboration',res.data)
                   })
@@ -126,7 +126,7 @@ export default function Course({route, navigation}){
         student.forEach(item => {
             let section = item.section
             let registration_number = item.registration_number
-            axios.get(`http://${ip}:5000/byreg/srro?course_id=${course_id}&section=${section}&registration_number=${registration_number}`)
+            axios.get(`${ip}/byreg/srro?course_id=${course_id}&section=${section}&registration_number=${registration_number}`)
              .then(res=>{
                 const data=res.data
                 console.log(data)

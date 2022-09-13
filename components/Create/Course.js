@@ -47,7 +47,7 @@ export default function Courses({route, navigation}){
           alert('Please enter course name')
           return
       }
-      /*axios.get(`http://${ip}:5000/${post}/me`,{
+      /*axios.get(`${ip}/${post}/me`,{
         headers: {
             'Authorization': token
           }
@@ -68,7 +68,7 @@ export default function Courses({route, navigation}){
         }
         console.log(Details,ip)
 
-         axios.post(`http://${ip}:5000/course/add`,Details)
+         axios.post(`${ip}/course/add`,Details)
           .then(res => {
             console.log('dhead data ',res.data)
                navigation.goBack()
