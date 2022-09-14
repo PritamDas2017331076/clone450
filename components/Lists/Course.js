@@ -143,23 +143,23 @@ export default function Course({route, navigation}){
         <View style={styles.item}>
             {
                 post=='teacher' ? (id==item.teacher_id || fun(item.collaborator)) 
-                ?<Button onPress={()=>section(item._id)} title="section"  />:<Text></Text>:<Text></Text>
+                ?<Button onPress={()=>section(item._id)} title="section"  />:null:null
             }
             {
                 post ==='teacher' ? !(id==item.teacher_id || fun(item.collaborator))
-                ?<Button onPress={()=>colab(item)} title="collaboration access"  />:<Text>op</Text>:<Text>op</Text>
+                ?<Button onPress={()=>colab(item)} title="collaboration access"  />:null:null
             }
             {
                 post=='student' ? fun(item.student)
-                ?<Button onPress={()=>colas(item)} title="student record"  />:<Text></Text>:<Text>ljl</Text>
+                ?<Button onPress={()=>colas(item)} title="student record"  />:null:null
             }
             {
                 post=='student' ? !fun(item.student)
-                ?<Button onPress={()=>accept(item)} title="access request"/>:<Text></Text>:<Text></Text>
+                ?<Button onPress={()=>accept(item)} title="access request"/>:null:null
             }
             {
                 post!='student' ? post !='teacher'
-                ?<Button onPress={()=>section(item._id)} title="section"/>:<Text></Text> :<Text></Text>
+                ?<Button onPress={()=>section(item._id)} title="section"/>:null :null
             }
            
         
