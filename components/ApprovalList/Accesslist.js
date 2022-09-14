@@ -32,7 +32,7 @@ export default function Accesslist({navigation}){
     useEffect(() => {
         let fl=1
         const unsubscribe = navigation.addListener('focus', () => {
-            axios.get(`${iip}/access/teacher?teacher=${id}`)
+            axios.get(`${ip}/access/teacher?teacher=${id}`)
             .then(res => {
                 console.log('for ',university,' data ', res.data) 
                 setList(res.data)
