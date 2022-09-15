@@ -6,7 +6,14 @@ const uSchema = new Schema({
     department: {
         type: String,
         required: true,
-        unique: true
+    },
+    abbreviation: {
+        type: String,
+        required: true,
+    },
+    university: {
+        type: String,
+        required: true,
     }
 }, {
     timestamp: true

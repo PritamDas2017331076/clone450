@@ -17,7 +17,7 @@ export default function Utake({route, navigation}){
     let f=0
 
     useEffect(() => {
-      axios.get(`${ip}/course/${course_id}`)
+      axios.get(`http://${ip}:5000/course/${course_id}`)
        .then(res=>{
           console.log('data',res.data.student)
           let arr=res.data.student
@@ -50,7 +50,7 @@ export default function Utake({route, navigation}){
     const data={
       record: dd,
     }
-    axios.patch(`${ip}/bydate/${pid}`,data)
+    axios.patch(`http://${ip}:5000/bydate/${pid}`,data)
      .then(res=>{
        console.log('recorded data',res.data)
      })
@@ -60,13 +60,13 @@ export default function Utake({route, navigation}){
       }
       console.log('registration',ele.registration_number,chg)
       if(ele.status==true){
-        axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+        axios.patch(`http://${ip}:5000/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
         .then(res=>{
           console.log('date udated sr ',res.data)
         })
       }
       else{
-        axios.patch(`${ip}/byreg/srd?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+        axios.patch(`http://${ip}:5000/byreg/srd?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
         .then(res=>{
           console.log('date updated srd ',res.data)
         })
