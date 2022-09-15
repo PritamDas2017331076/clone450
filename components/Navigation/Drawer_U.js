@@ -12,6 +12,7 @@ import Uadminlist from '../ApprovalList/Uadminlist'
 import Dheadlist from '../ApprovalList/Dheadlist'
 import PrintDh from '../Print/PrintDh'
 import PrintAdmin from '../Print/PrintAdmin'
+import DepartmentAdd from '../Add/DepartmentAdd'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
@@ -118,6 +119,7 @@ export default function Drawer_U({navigation}){
           <Drawer.Screen component={Home} name="Home" />
           <Drawer.Screen component={About} name="About" />
           <Drawer.Screen component={ApprovalList} name="ApprovalList" />
+          <Drawer.Screen component={DepartmentAdd} name="DepartmentAdd" />
         </Drawer.Navigator>
       )
     }
