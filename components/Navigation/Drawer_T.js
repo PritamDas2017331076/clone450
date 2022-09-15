@@ -18,7 +18,9 @@ import Session from '../Lists/Session'
 import Course from '../Lists/Course'
 import Courses from '../Create/Course'
 import Take from '../Attendence/Take'
+import TakeH from '../Attendence/TakeH'
 import Utake from '../Attendence/Utake'
+import UtakeH from '../Attendence/UtakeH'
 import Date from '../Attendence/Date'
 import PrintDt from '../Attendence/PrintDt'
 import Reg from '../Attendence/Reg'
@@ -80,7 +82,9 @@ function ApprovalList(){
           <Stack.Screen name="Student List" component={StudentlistL} />
           <Stack.Screen name="Create Section" component={Sections} />
           <Stack.Screen name="Take" component={Take} />
+          <Stack.Screen name="TakeH" component={TakeH} />
           <Stack.Screen name="Utake" component={Utake} />
+          <Stack.Screen name="UtakeH" component={UtakeH} />
           <Stack.Screen name="Date" component={Date} />
           <Stack.Screen name="Reg" component={Reg} />
           <Stack.Screen name="PrintDt" component={PrintDt} />
@@ -104,7 +108,7 @@ export default function Drawer_T({navigation}){
     const logoutClick = ()=>{
       console.log(post,token)
       console.log('token ',token)
-      axios.get(`${ip}/${post}/logout`, {
+      axios.get(`http://${ip}:5000/${post}/logout`, {
           headers: {
             'Authorization': token
           }

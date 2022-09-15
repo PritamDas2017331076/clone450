@@ -1,21 +1,21 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, TouchableOpacity, Pressable, TextInput, SafeAreaView, StatusBar, FlatList, Image } from 'react-native';
+import { Button, View, Text, StyleSheet, Dimensions, TouchableOpacity, Pressable, TextInput, SafeAreaView, StatusBar, FlatList, Image } from 'react-native';
 import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import Carousel from 'react-native-snap-carousel';
 
-
-
-export default function Take({route, navigation}){
+export default function TakeH({route, navigation}){
     const { course_id,list,section } = route.params
     const [date, setDate]=useState('')
     const dat=new Date().toString()
     const [dist, setDist] = useState(list)
     const [record,setRecord]=useState([])
     const [lost,setLost]=useState([])
+    const {width, height} = Dimensions.get('screen')
     let tt=new Date()
     console.log('dist',dist,dat)
     let f=0
@@ -89,21 +89,21 @@ export default function Take({route, navigation}){
 
    const Item = ({ item }) => (
     <View style={styles.checkboxContainer}>
+      <View>
+        <Image
+            style={styles.tinyLogo}
+            source={{
+                uri: item.avatar,
+            }}
+        />
+      </View>
       <View style={{flexDirection: 'row'}}>
+          <Text>{item.registration_number}</Text>
           <Pressable
              style={[styles.checkboxBase, item.status && styles.checkboxChecked]}
              onPress={()=>setVal(item.id)}>
              {item.status && <Ionicons name="checkmark" size={24} color="white" /> } 
           </Pressable>
-          <View>
-              <Image
-                  style={styles.tinyLogo}
-                  source={{
-                      uri: item.avatar,
-                  }}
-              />
-          </View>
-          <Text>{item.registration_number}</Text>
       </View>
           {/* <Pressable
              style={[styles.checkboxBase, checked && styles.checkboxChecked]}
@@ -135,16 +135,7 @@ export default function Take({route, navigation}){
                     ))
                 }
             </ul>*/}
-            <View style={{flexDirection: 'row'}}>
-              <Text>{dat}</Text>
-              <Button onPress={()=>{
-                navigation.navigate('TakeH',{
-                  course_id: course_id,
-                  section: section,
-                  list: list
-                })
-              }} title="Submit" />
-            </View>
+            <Text>{dat}</Text>
             <View>
             {/*<ul>
                 {
@@ -163,11 +154,20 @@ export default function Take({route, navigation}){
                        ))
                 }
             </ul>*/}
-              <FlatList
+              {/* <FlatList
                 data={dist}
+                horizontal
+                showsHorizontalScrollIndicator={false}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
-              />
+                style={{flexDirection: 'row'}}
+              /> */}
+              <Carousel
+              data={dist}
+              renderItem={renderItem}
+              sliderWidth={width}
+              itemWidth={width}
+            />
             </View>
             <Button onPress={Submit} title="Submit" />
             <Text>haha</Text>
@@ -181,9 +181,9 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   checkboxContainer: {
-    flexDirection: "row",
     marginBottom: 20,
     alignItems: 'center',
+    
   },
   checkbox: {
     alignSelf: "center",

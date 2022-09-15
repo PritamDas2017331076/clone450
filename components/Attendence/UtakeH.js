@@ -1,30 +1,39 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, TouchableOpacity, Pressable, TextInput, SafeAreaView, StatusBar, FlatList, Image } from 'react-native';
+import { Button, View, Text, StyleSheet, Dimensions, TouchableOpacity, Pressable, TextInput, SafeAreaView, StatusBar, FlatList, Image } from 'react-native';
 import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import Carousel from 'react-native-snap-carousel';
 
-
-
-export default function Take({route, navigation}){
-    const { course_id,list,section } = route.params
-    const [date, setDate]=useState('')
-    const dat=new Date().toString()
-    const [dist, setDist] = useState(list)
-    const [record,setRecord]=useState([])
+export default function Utake({route, navigation}){
+    const { course_id, section, record, date, pid } = route.params
+    const [dist, setDist] = useState([])
     const [lost,setLost]=useState([])
-    let tt=new Date()
-    console.log('dist',dist,dat)
+    const {width, height} = Dimensions.get('screen')
+    console.log('dist',dist)
     let f=0
 
     useEffect(() => {
-      let date = new Date().getDate();
-      let month = new Date().getMonth() + 1;
-      let year = new Date().getFullYear();
-      setDate(`${date}-${month}-${year}`)
+      axios.get(`http://${ip}:5000/course/${course_id}`)
+       .then(res=>{
+          console.log('data',res.data.student)
+          let arr=res.data.student
+          setDist(arr.map((item,index)=>{
+            let br=record.filter(ele=>(item.registration_number==ele.registration_number))
+            if(br.length==0){
+                return {registration_number: item.registration_number, avatar: item.avatar, id: item.id, status: false}
+            }else{
+                return {registration_number: item.registration_number, avatar: item.avatar, id: item.id, status: true}
+            }
+          }))
+       })
+       .catch(err=>{
+        console.log('could not find data',err)
+       })
+
 
   }, []);
 
@@ -38,39 +47,30 @@ export default function Take({route, navigation}){
       }
     })
     console.log(dd)
-    const dap={
-      date: dat,
-      section: section
-    }
-    axios.patch(`http://${ip}:5000/course/record/${course_id}`,dap)
-     .then(res=>{
-      console.log('record updated in course',res.data)
-     })
-     .catch(err=>{
-      console.log('error while updating record',err)
-     })
     const data={
-      date: dat,
       record: dd,
-      course_id: course_id,
-      section: section
     }
-    console.log('data = ',data)
-
-    axios.post(`http://${ip}:5000/bydate/add`,data)
+    axios.patch(`http://${ip}:5000/bydate/${pid}`,data)
      .then(res=>{
        console.log('recorded data',res.data)
      })
-     dd.map((ele)=>{
+     dist.map((ele)=>{
       const chg={
-        date: dat,
-      
+        date: date,
       }
       console.log('registration',ele.registration_number,chg)
-      axios.patch(`http://${ip}:5000/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+      if(ele.status==true){
+        axios.patch(`http://${ip}:5000/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
         .then(res=>{
-          console.log('for each ',res.data)
+          console.log('date udated sr ',res.data)
         })
+      }
+      else{
+        axios.patch(`http://${ip}:5000/byreg/srd?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+        .then(res=>{
+          console.log('date updated srd ',res.data)
+        })
+      }
     })
      navigation.goBack()
 
@@ -89,21 +89,21 @@ export default function Take({route, navigation}){
 
    const Item = ({ item }) => (
     <View style={styles.checkboxContainer}>
+      <View>
+        <Image
+            style={styles.tinyLogo}
+            source={{
+                uri: item.avatar,
+            }}
+        />
+      </View>
       <View style={{flexDirection: 'row'}}>
+          <Text>{item.registration_number}</Text>
           <Pressable
              style={[styles.checkboxBase, item.status && styles.checkboxChecked]}
              onPress={()=>setVal(item.id)}>
              {item.status && <Ionicons name="checkmark" size={24} color="white" /> } 
           </Pressable>
-          <View>
-              <Image
-                  style={styles.tinyLogo}
-                  source={{
-                      uri: item.avatar,
-                  }}
-              />
-          </View>
-          <Text>{item.registration_number}</Text>
       </View>
           {/* <Pressable
              style={[styles.checkboxBase, checked && styles.checkboxChecked]}
@@ -135,16 +135,7 @@ export default function Take({route, navigation}){
                     ))
                 }
             </ul>*/}
-            <View style={{flexDirection: 'row'}}>
-              <Text>{dat}</Text>
-              <Button onPress={()=>{
-                navigation.navigate('TakeH',{
-                  course_id: course_id,
-                  section: section,
-                  list: list
-                })
-              }} title="Submit" />
-            </View>
+            <Text>{date}</Text>
             <View>
             {/*<ul>
                 {
@@ -163,11 +154,17 @@ export default function Take({route, navigation}){
                        ))
                 }
             </ul>*/}
-              <FlatList
+              {/* <FlatList
                 data={dist}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
-              />
+              /> */}
+              <Carousel
+              data={dist}
+              renderItem={renderItem}
+              sliderWidth={width}
+              itemWidth={width}
+            />
             </View>
             <Button onPress={Submit} title="Submit" />
             <Text>haha</Text>
@@ -181,7 +178,6 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   checkboxContainer: {
-    flexDirection: "row",
     marginBottom: 20,
     alignItems: 'center',
   },
