@@ -41,7 +41,7 @@ export default function UAdminRegister({navigation}){
               console.log('data ', res.data) 
 
               setList(res.data.map( (s) => {
-                return {value:s.key, label:s.key}
+                return {value:s.abbreviation, label:s.university}
             }))
             console.log(list)
          }) ;
@@ -80,6 +80,10 @@ export default function UAdminRegister({navigation}){
             alert('Please enter email')
             return
         }
+        if(!university){
+          alert('Please enter university')
+          return
+      }
 
         if(!phone){
             alert('Please enter phone number')
@@ -144,6 +148,8 @@ export default function UAdminRegister({navigation}){
           "password",
            password
         );
+
+        console.log(university)
   
 
 
@@ -225,7 +231,7 @@ export default function UAdminRegister({navigation}){
                     label="Pick a University"
                     style={styles.box}
                     selectedValue={university}
-                    onSelection={(item) => setUniversity(item.label)}
+                    onSelection={(item) => setUniversity(item.value)}
                    />
                 <FormItem
                     label="Password"

@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import { Button, View, Text, StyleSheet, TouchableOpacity, CheckBox } from 'react-native';
 import {ip} from '../ip'
-import { selectUniversity } from '../Loginslice';
+import { selectUniversity, selectId } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 
 
@@ -11,10 +11,11 @@ export default function StudentlistL({route, navigation}){
     const [list, setList] = useState([])
     const [cur, setCur] = useState([])
     const { course_id, section } = route.params
-    const [one, setOne]=useState(false)
-    const [two, setTwo]=useState(false)
-    const [three, setThree]=useState(false)
+    const [col, setCol]=useState([])
+    const [stu, setStu]=useState([])
+    const [tid, setTid] = useState('')
     const [date, setDate]=useState(new Date())
+    const id=useSelector(selectId)
     let f=0
 
     useEffect(() => {
@@ -26,6 +27,9 @@ export default function StudentlistL({route, navigation}){
             console.log('arr',arr)
             arr=arr.filter(item=>(item.section==section))
             console.log(arr)
+            setCol(res.data.collaborator)
+            setStu(res.data.student)
+            setTid(res.data.teacher_id)
             setList(arr.map((item,index)=>{
                 return {registration_number:item.registration_number,status:false,avatar:item.avatar,id:index}
             }))
@@ -33,26 +37,6 @@ export default function StudentlistL({route, navigation}){
     }, []);
 
    console.log('check it out ',f,list)
-   const funone = ()=>{
-    setOne(true)
-    setTwo(false)
-    setThree(false)
-   }
-
-   const funtwo = ()=>{
-    setOne(false)
-    setTwo(true)
-    setThree(false)
-   }
-
-   const funthree = ()=>{
-    setOne(false)
-    setTwo(false)
-    setThree(true)
-   }
-
-
-
 
     return(
         <View>
@@ -70,6 +54,20 @@ export default function StudentlistL({route, navigation}){
                     course_id: course_id,
                     section: section
                 })} title="show registration numbers" />
+                {
+                    (id==tid)?
+                    <View>
+                        <Button onPress={()=>navigation.navigate('Collaborator List',{
+                           course_id: course_id,
+                           section: section
+                        })} title="collaborator list" />
+                        <Button onPress={()=>navigation.navigate('Students List',{
+                           course_id: course_id,
+                           section: section
+                         })} title="student list" />
+                    </View>:null
+
+                }
             </View>
             {/*<ul>
                 {

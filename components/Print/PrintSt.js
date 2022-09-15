@@ -5,59 +5,52 @@ import { Button, View, Text, StyleSheet, Image, TouchableOpacity, TextInput } fr
 import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 
-export default function PrintAct({route, navigation}){
-    const {un, id} = route.params
+export default function PrintSt({route, navigation}){
+    const {id, course_id,reg} = route.params
 
     const [use, setUse] = useState('')
     const [text, onChangeText] = useState('')
     const [acc, setAcc] = useState('')
 
     useEffect(() => {
-        let fl=1
-      if(fl==1){axios.get(`${ip}/teacher/${id}`)
+        axios.get(`${ip}/student/${id}`)
             .then(res => {
                 console.log('data for this id ',res.data)
                 setUse(res.data)
             })
 
-            axios.get(`${ip}/approveCo/${un}`)
-            .then(res => {
-                console.log('data for this acc ',res.data)
-                setAcc(res.data)
-            })}
-            return () => {
-                fl=0
-                };
+            
     },[])
 
-    const Accept = ()=>{
+    const Accept = async()=>{
         const chg = {
-            id: acc.id,
-            name: acc.name,
-            email: acc.email
+            registration_number: reg
         }
         console.log(chg)
+        try{
+            const res = await axios.patch(`${ip}/course/studentd/${course_id}`,chg)
+            console.log(res.data)
 
-        axios.patch(`${ip}/course/collaborator/${acc.course_id}`,chg)
-            .then(res => {
-                console.log('data added in studentlist ',res.data)
-            })
+        }catch(err){
+            console.log(err.message)
+        }
 
-        axios.delete(`${ip}/approveCo/${un}`)
-           .then(res => {
-                console.log('data deleted in teacher approval colab ',res.data)
-            })
-        navigation.goBack();
-    }
+        try{
+            const res = await axios.delete(`${ip}/byreg/del?registration_number=${reg}&course_id=${course_id}`)
+            console.log(res.data)
 
-    const Reject = ()=>{
+        }catch(err){
+            console.log(err.message)
+        }
+        navigation.goBack()
 
 
-        axios.delete(`${ip}/approveCo/${un}`)
-            .then(res => {
-                console.log('data deleted teacher approval colab ',res.data)
-            })
-        navigation.goBack();
+        // axios.patch(`${ip}/course/studentd/${course_id}`,chg)
+        //     .then(res => {
+        //         console.log('data deleted in colaborator ',res.data)
+        //         navigation.goBack();
+        //     })
+        
     }
 
     return(
@@ -67,8 +60,6 @@ export default function PrintAct({route, navigation}){
                     <Text>Name: {use.name}</Text>
                     <Text>Email: {use.email}</Text>
                     <Text>Phone: {use.phone}</Text>
-                    <Text>Course Name: {acc.course_name}</Text>
-                    <Text>Post: {use.post}</Text>
                 </View>
                 <View>
                     <Image
@@ -80,12 +71,8 @@ export default function PrintAct({route, navigation}){
                 </View>
             </View>
             <Button
-              title="Accept"
+              title="Delete"
               onPress={Accept}
-            />
-            <Button
-              title="Reject"
-              onPress={Reject}
             />
         </View>
     )

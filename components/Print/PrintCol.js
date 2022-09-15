@@ -5,59 +5,35 @@ import { Button, View, Text, StyleSheet, Image, TouchableOpacity, TextInput } fr
 import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 
-export default function PrintAct({route, navigation}){
-    const {un, id} = route.params
+export default function PrintCol({route, navigation}){
+    const {id, course_id} = route.params
 
     const [use, setUse] = useState('')
     const [text, onChangeText] = useState('')
     const [acc, setAcc] = useState('')
 
     useEffect(() => {
-        let fl=1
-      if(fl==1){axios.get(`${ip}/teacher/${id}`)
+        axios.get(`${ip}/teacher/${id}`)
             .then(res => {
                 console.log('data for this id ',res.data)
                 setUse(res.data)
             })
 
-            axios.get(`${ip}/approveCo/${un}`)
-            .then(res => {
-                console.log('data for this acc ',res.data)
-                setAcc(res.data)
-            })}
-            return () => {
-                fl=0
-                };
+            
     },[])
 
     const Accept = ()=>{
         const chg = {
-            id: acc.id,
-            name: acc.name,
-            email: acc.email
+            id: id,
         }
         console.log(chg)
 
-        axios.patch(`${ip}/course/collaborator/${acc.course_id}`,chg)
+        axios.patch(`${ip}/course/collaboratord/${course_id}`,chg)
             .then(res => {
-                console.log('data added in studentlist ',res.data)
+                console.log('data deleted in colaborator ',res.data)
+                navigation.goBack();
             })
-
-        axios.delete(`${ip}/approveCo/${un}`)
-           .then(res => {
-                console.log('data deleted in teacher approval colab ',res.data)
-            })
-        navigation.goBack();
-    }
-
-    const Reject = ()=>{
-
-
-        axios.delete(`${ip}/approveCo/${un}`)
-            .then(res => {
-                console.log('data deleted teacher approval colab ',res.data)
-            })
-        navigation.goBack();
+        
     }
 
     return(
@@ -67,7 +43,6 @@ export default function PrintAct({route, navigation}){
                     <Text>Name: {use.name}</Text>
                     <Text>Email: {use.email}</Text>
                     <Text>Phone: {use.phone}</Text>
-                    <Text>Course Name: {acc.course_name}</Text>
                     <Text>Post: {use.post}</Text>
                 </View>
                 <View>
@@ -80,12 +55,8 @@ export default function PrintAct({route, navigation}){
                 </View>
             </View>
             <Button
-              title="Accept"
+              title="Delete"
               onPress={Accept}
-            />
-            <Button
-              title="Reject"
-              onPress={Reject}
             />
         </View>
     )

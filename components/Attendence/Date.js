@@ -39,7 +39,9 @@ export default function Date({route, navigation}){
               onPress={()=>navigation.navigate('PrintDt',{
               record: item.record,
               course_id: course_id,
-              section: section
+              section: section,
+              id:item.id,
+              date: item.date
          })}>
           <View>
               <Text>{item.date}</Text>

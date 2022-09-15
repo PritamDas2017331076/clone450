@@ -8,7 +8,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 
 export default function PrintDt({route, navigation}){
-    const { record, course_id, section } = route.params
+    const { record, course_id, section,id,date } = route.params
+    console.log(course_id,id,date)
     const [list, setList]=useState([])
 
     useEffect(() => {
@@ -27,6 +28,37 @@ export default function PrintDt({route, navigation}){
         }))
       })
     },[])
+
+    const func = ()=>{
+      const chg={date: date }
+      const chh={date: date, section: section }
+      axios.delete(`${ip}/bydate/${id}`)
+        .then(res=>{
+          console.log('successfully deleted bydate')
+          axios.patch(`${ip}/byreg/regd?course_id=${course_id}&section=${section}`,chg)
+            .then(res=>{
+              console.log('successfully updated in byreg')
+              axios.patch(`${ip}/course/recordd/${course_id}`,chh)
+                .then(res=>{
+                  console.log('successfully updated in course record')
+                })
+                .catch(err=>{console.log('error occurred course record',err)})
+                .finally(()=>{navigation.goBack()})
+            })
+            .catch(err=>{console.log('error occurred in byreg',err)})
+        })
+        .catch(err=>{console.log('error occurred bydate',err)})
+      // axios.patch(`http://${ip}:5000/byreg/regd?course_id=${course_id}&section=${section}`,chg)
+      //   .then(res=>{
+      //     console.log('successfully updated in byreg')
+      //   })
+      //   .catch(err=>{console.log('error occurred in byreg',err)})
+      // axios.patch(`http://${ip}:5000/course/recordd/${course_id}`,chh)
+      //   .then(res=>{
+      //     console.log('successfully updated in course record')
+      //   })
+      //   .catch(err=>{console.log('error occurred course record',err)})
+    }
 
     const Item = ({ item }) => (
       <View style={styles.item}>
@@ -80,6 +112,10 @@ export default function PrintDt({route, navigation}){
                   keyExtractor={item => item.id}
                 />
             </View>
+            <Button
+              title="Delete"
+              onPress={func}
+            />
        
         </View>
     )

@@ -11,14 +11,17 @@ import About from '../About'
 import Uadminlist from '../ApprovalList/Uadminlist'
 import Teacherlist from '../ApprovalList/Teacherlist'
 import PrintT from '../Print/PrintT'
+import TeacherAll from '../Lists/TeacherAll'
+import StudentAll from '../Lists/StudentAll'
 import Studentlist from '../ApprovalList/Studentlist'
 import PrintS from '../Print/PrintS'
+import PrintTT from '../Print/PrintTT'
+import PrintSS from '../Print/PrintSS'
 import Sessions from '../Create/Session'
 import PrintAdmin from '../Print/PrintAdmin'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-
 import Department from '../Lists/Department'
 import Session from '../Lists/Session'
 import Course from '../Lists/Course'
@@ -49,6 +52,24 @@ function ApprovalList(){
       <Stack.Navigator>
           <Stack.Screen name="Teacher List" component={Teacherlist} />
           <Stack.Screen name="PrintT" component={PrintT} />
+      </Stack.Navigator>
+  )
+}
+
+function TeacherList(){
+  return(
+      <Stack.Navigator>
+          <Stack.Screen name="Teacher All" component={TeacherAll} />
+          <Stack.Screen name="Print Teacher" component={PrintTT} />
+      </Stack.Navigator>
+  )
+}
+
+function StudentList(){
+  return(
+      <Stack.Navigator>
+          <Stack.Screen name="Student All" component={StudentAll} />
+          <Stack.Screen name="Print Student" component={PrintSS} />
       </Stack.Navigator>
   )
 }
@@ -153,6 +174,8 @@ export default function Drawer_H({navigation}){
           <Drawer.Screen component={About} name="About" />
           <Drawer.Screen component={ApprovalList} name="Approve Teachers" />
           <Drawer.Screen component={ApprovalListS} name="Approve Students" />
+          <Drawer.Screen component={TeacherList} name="Teachers" />
+          <Drawer.Screen component={StudentList} name="Students" />
           <Drawer.Screen component={Sessions} name="Create Session" />
         </Drawer.Navigator>
       )

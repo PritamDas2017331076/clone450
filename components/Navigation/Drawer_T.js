@@ -24,6 +24,8 @@ import PrintDt from '../Attendence/PrintDt'
 import Reg from '../Attendence/Reg'
 import PrintRg from '../Attendence/PrintRg'
 import Section from '../Lists/Section'
+import CollaboratorC from '../Lists/CollaboratorC'
+import StudentC from '../Lists/StudentC'
 import StudentlistL from '../Lists/Studentlist'
 import Sectionform from '../Lists/Sectionform'
 import Sections from '../Create/Section'
@@ -31,6 +33,8 @@ import Accesslist from '../ApprovalList/Accesslist'
 import AccessTlist from '../ApprovalList/AccessTlist'
 import PrintAc from '../Print/PrintAc'
 import PrintAct from '../Print/PrintAct'
+import PrintCol from '../Print/PrintCol'
+import PrintSt from '../Print/PrintSt'
 
 import {
   updateEmail,
@@ -80,13 +84,15 @@ function ApprovalList(){
           <Stack.Screen name="Student List" component={StudentlistL} />
           <Stack.Screen name="Create Section" component={Sections} />
           <Stack.Screen name="Take" component={Take} />
-          <Stack.Screen name="TakeH" component={TakeH} />
           <Stack.Screen name="Utake" component={Utake} />
-          <Stack.Screen name="UtakeH" component={UtakeH} />
           <Stack.Screen name="Date" component={Date} />
           <Stack.Screen name="Reg" component={Reg} />
           <Stack.Screen name="PrintDt" component={PrintDt} />
           <Stack.Screen name="PrintRg" component={PrintRg} />
+          <Stack.Screen name="Collaborator List" component={CollaboratorC} />
+          <Stack.Screen name="Print Collaborator" component={PrintCol} />
+          <Stack.Screen name="Students List" component={StudentC} />
+          <Stack.Screen name="Print Student" component={PrintSt} />
           <Stack.Screen component={Courses} name="Create Course" />
       </Stack.Navigator>
   )
