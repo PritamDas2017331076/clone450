@@ -8,7 +8,7 @@ const uSchema = new Schema({
         required: true,
         unique: true
     },
-    key: {
+    abbreviation: {
         type: String,
         required: true
     }

@@ -55,6 +55,35 @@ router.route('/sr').patch((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 })
 
+router.route('/regd').patch((req, res) => {
+    const course_id = req.query.course_id;
+    const section = req.query.section;
+    Byreg.find({ course_id: course_id, section: section })
+        .then(byreg => {
+            console.log('by registration', byreg)
+            byreg.map(async br => {
+                arr = br.record
+                console.log('arr', arr, req.body)
+                arr = arr.filter(ele => req.body.date != ele.date)
+                console.log(arr)
+                const chg = { record: arr }
+                console.log('chg', chg, br._id)
+                try {
+                    const bg = await Byreg.findByIdAndUpdate(br._id, chg, { new: true, runValidators: true })
+                    if (!bg)
+                        return res.status(404).send()
+                    res.status(200).send(bg)
+                } catch (e) {
+                    res.status(500).send(e.message)
+                }
+            })
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+})
+
+
+
+
 router.route('/srd').patch((req, res) => {
     const course_id = req.query.course_id;
     const section = req.query.section;
@@ -150,7 +179,20 @@ router.patch('/dt/:id', async(req, res) => {
     }
 })
 
+router.delete('/del', async(req, res) => {
+    const course_id = req.query.course_id
+    const registration_number = req.query.registration_number
+    try {
+        const byreg = await Byreg.findOne({ course_id: course_id, registration_number: registration_number })
+        const byr = await Byreg.findByIdAndDelete(byreg._id)
+        if (!byr)
+            return res.status(404).send()
+        res.status(200).send(byr)
 
+    } catch (e) {
+        res.status(400).send()
+    }
+})
 
 router.delete('/:id', async(req, res) => {
     try {

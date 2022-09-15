@@ -70,8 +70,10 @@ router.patch('/student/:id', async(req, res) => {
 
 router.patch('/studentd/:id', async(req, res) => {
     const course = await Course.findById({ _id: req.params.id })
+    console.log(course, req.body.registration_number)
     let col = course.student
     col = col.filter((ele) => (ele.registration_number != req.body.registration_number))
+    console.log('student', col)
     const pss = { student: col }
     const crs = await Course.findByIdAndUpdate(req.params.id, pss, { new: true, runValidators: true })
     if (!crs) res.status(400).send('not found')
@@ -126,7 +128,7 @@ router.patch('/recordd/:id', async(req, res) => {
     const course = await Course.findById({ _id: req.params.id })
     let col = course.record
     col = col.filter((ele) => (ele.date != req.body.date || ele.section != req.body.section))
-    const pss = { section: col }
+    const pss = { record: col }
     const crs = await Course.findByIdAndUpdate(req.params.id, pss, { new: true, runValidators: true })
     if (!crs) res.status(400).send('not found')
     else res.status(200).send(crs)

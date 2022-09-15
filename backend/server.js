@@ -20,7 +20,7 @@ connection.once('open', () => {
     console.log("Connection established")
 })
 
-const studentRouter = require('./api/Student');
+const studentRouter = require('./api/Student.js');
 app.use('/student', studentRouter);
 
 const teacherRouter = require('./api/Teacher.js');

@@ -11,8 +11,8 @@ router.route('/').get((req, res) => {
 })
 
 router.route('/uni').get((req, res) => {
-    const uni=req.query.university
-    Departments.find({university: uni})
+    const uni = req.query.university
+    Departments.find({ university: uni })
         .then(department => res.json(department))
         .catch(err => res.status(400).json('Error: ' + err));
 })
