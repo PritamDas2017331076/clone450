@@ -137,13 +137,6 @@ export default function Take({route, navigation}){
             </ul>*/}
             <View style={{flexDirection: 'row'}}>
               <Text>{dat}</Text>
-              <Button onPress={()=>{
-                navigation.navigate('TakeH',{
-                  course_id: course_id,
-                  section: section,
-                  list: list
-                })
-              }} title="Submit" />
             </View>
             <View>
             {/*<ul>

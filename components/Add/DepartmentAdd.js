@@ -28,29 +28,6 @@ export default function DepartmentAdd({navigation}){
     const [abbreviation, setAbbreviation] = useState('')
     const university = useSelector(selectUniversity)
     const dispatch = useDispatch()
-    useEffect(() => {
-          axios.get(`http://${ip}:5000/university_admin`)
-          .then(res => {
-              console.log('data ', res.data) 
-
-              setList(res.data.map( (s) => {
-                return {value:s.university, label:s.university}
-            }))
-            console.log(list)
-         }) ;
-
-         axios.get(`http://${ip}:5000/departments`)
-          .then(res => {
-              console.log('data ', res.data) 
-
-              setDist(res.data.map( (s) => {
-                return {value:s.department, label:s.department}
-            }))
-            console.log(dist)
-         }) ;
-  
-    }, []);
-
 
     const onSubmit = (e) => {
         
@@ -73,7 +50,7 @@ export default function DepartmentAdd({navigation}){
         
         console.log(Details,ip)
 
-         axios.post(`http://${ip}:5000/departments/add`,Details)
+         axios.post(`${ip}/departments/add`,Details)
           .then(res => {
             console.log(res.data)
             navigation.navigate('Home')

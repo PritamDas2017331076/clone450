@@ -49,17 +49,22 @@ export default function UAdminRegister({navigation}){
             console.log(list)
          }) ;
 
-         axios.get(`${ip}/departments`)
-          .then(res => {
-              console.log('data ', res.data) 
-
-              setDist(res.data.map( (s) => {
-                return {value:s.department, label:s.department}
-            }))
-            console.log(dist)
-         }) ;
+        
   
     }, []);
+
+    useEffect(() => {
+     axios.get(`${ip}/departments/uni?university=${university}`)
+      .then(res => {
+          console.log('data ', res.data)
+
+          setDist(res.data.map( (s) => {
+            return {label:s.department, value:s.abbreviation}
+        }))
+        console.log(dist)
+     }) ;
+
+    }, [university]);
 
     const dispatch = useDispatch()
 
@@ -176,6 +181,7 @@ export default function UAdminRegister({navigation}){
         "password",
          password
       );
+      console.log(department)
 
 
 
