@@ -35,21 +35,21 @@ export default function Date({route, navigation}){
 
   const Item = ({ item }) => (
     <View style={styles.item}>
-       <TouchableOpacity style={{backgroundColor:'#f6f6f6',margin:20,flexDirection:'row'}} 
+       <TouchableOpacity style={{backgroundColor:'white',margin:20,flexDirection:'row'}} 
           onPress={()=>navigation.navigate('PrintRg',{
                                 record: item.record,
                                 course_id: course_id,
                                 section: section
         })}>
-            <Text>{item.registration_number}</Text>
             <View>
                   <Image
                       style={styles.tinyLogo}
                       source={{
-                          uri: item.avatar,
+                        uri: item.avatar,
                       }}
-                  />
+                      />
             </View>
+            <Text style={{marginLeft:'15%'}}>{item.registration_number}</Text>
         </TouchableOpacity>
     </View>
   );
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
+    backgroundColor: 'white',
+    padding: 10,
     marginVertical: 8,
     marginHorizontal: 16,
   },

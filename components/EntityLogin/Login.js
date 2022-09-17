@@ -1,8 +1,9 @@
 import React from 'react'
 import {useState, useEffect, useContext} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import {Text, View, StyleSheet,ScrollView} from 'react-native'
 import { Form, FormItem, Picker } from 'react-native-form-component';
+import { Input,Icon, Layout} from '@ui-kitten/components';
+import {Text, View, StyleSheet,ScrollView, TouchableOpacity, Image,TouchableWithoutFeedback} from 'react-native'
 import {ip} from '../ip'
 import {
   updateEmail,
@@ -33,11 +34,34 @@ export default function Studentlogin({navigation}){
     const [email, setEmail] = useState('')
     const [post, setPost]=useState('')
     const [password, setPassword] = useState('')
+    const [secureTextEntry, setSecureTextEntry] = useState(true)
     console.log(ip)
 
     const dispatch = useDispatch()
 
-    
+    const toggleSecureEntry = () => {
+      setSecureTextEntry(!secureTextEntry);
+    };
+    const EmailIcon = (props) => (
+      <Icon {...props} name='email'/>
+    );
+    const LockIcon = (props) => (
+      <Icon {...props} name='lock'/>
+    );
+    const renderIcon = (props) => (
+      <TouchableWithoutFeedback onPress={toggleSecureEntry}>
+        <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'}/>
+      </TouchableWithoutFeedback>
+    );
+  
+    const renderCaption = () => {
+      return (
+        <View style={styles.captionContainer}>
+          {AlertIcon(styles.captionIcon)}
+          <Text style={styles.captionText}>Should contain at least 8 symbols</Text>
+        </View>
+      )
+    }
     const onSubmit = (e) => {
        // e.preventDefault()
 
@@ -94,29 +118,31 @@ export default function Studentlogin({navigation}){
         setEmail('')
         setPost('')
         setPassword('')
-
-        
-
-        
     }
     return(
         <View style={styles.container}>
             <Form onButtonPress={onSubmit}>
-            <FormItem
+            <Input
                 label="Email"
-                isRequired
+                placeholder='Enter email'
                 value={email}
                 onChangeText={(email) => setEmail(email)}
-                asterik
+                accessoryLeft={EmailIcon}
+                style={styles.input}
               />
-            <FormItem
-                label="Password"
-                isRequired
+              <Input
                 value={password}
-                onChangeText={(password) => setPassword(password)}
-                asterik
+                label='Password'
+                placeholder='Enter password'
+                // caption={()=>renderCaption("Password must be 8 characters long")}
+                accessoryRight={renderIcon}
+                accessoryLeft={LockIcon}
+                secureTextEntry={secureTextEntry}
+                onChangeText={nextValue => setPassword(nextValue)}
+                style={styles.input}
               />
               <Picker
+                    style={styles.input}
                     items={[
                     { label: 'admin', value: 'admin' },
                     { label: 'university_admin', value: 'university_admin' },
@@ -125,7 +151,6 @@ export default function Studentlogin({navigation}){
                     { label: 'student', value: 'student' }
                    ]}
                     label="post"
-                    style={styles.box}
                     selectedValue={post}
                     onSelection={(item) => setPost(item.value)}
                    />
@@ -135,17 +160,42 @@ export default function Studentlogin({navigation}){
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex: 1,
-        height: 80,
-        padding: 50,
-        backgroundColor: '#fff'
-    },
-    text:{
-        color: 'red',
-        fontSize: 20,
-        justifyContent: 'center',
-        fontWeight: 'bold',
-    }
-
-})
+  container:{
+    height:'100%',
+    padding: 30,
+    border: '2px solid black',
+    backgroundColor: '#e3e3e3'
+    
+  },
+  captionContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  captionIcon: {
+    width: 10,
+    height: 10,
+    marginRight: 5
+  },
+  captionText: {
+    fontSize: 12,
+    fontWeight: "400",
+    color: "#8F9BB3",
+  },
+  text:{
+    color: 'red',
+    fontSize: 20,
+    justifyContent: 'center',
+    fontWeight: 'bold',
+  },
+  box:{ 
+      //flex: 1,
+      width: '100%',
+      height: 40,
+      margin: 5
+  },
+  input: {
+    width:'100%',
+    marginBottom:23,
+  },
+});

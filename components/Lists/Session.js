@@ -34,7 +34,7 @@ export default function Session({route, navigation}){
    const Item = ({ item }) => (
     <View style={styles.item}>
       <TouchableOpacity style={{
-            backgroundColor: '#f6f6f6',
+            backgroundColor: 'white',
         }} 
         onPress={()=>navigation.navigate('Course List',{
         session_id: item._id
@@ -68,13 +68,14 @@ export default function Session({route, navigation}){
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      marginTop: StatusBar.currentHeight || 0,
+      marginTop: StatusBar.currentHeight || 20,
     },
     item: {
-      backgroundColor: '#f9c2ff',
+      backgroundColor: 'white',
       padding: 20,
       marginVertical: 8,
       marginHorizontal: 16,
+      width:310
     },
     title: {
       fontSize: 32,

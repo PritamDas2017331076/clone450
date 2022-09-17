@@ -143,7 +143,7 @@ export default function Course({route, navigation}){
         <View style={styles.item}>
             {
                 post=='teacher' ? (id==item.teacher_id || fun(item.collaborator)) 
-                ?<Button onPress={()=>section(item._id)} title="section"  />:null:null
+                ?<Button  onPress={()=>section(item._id)} title="section"  />:null:null
             }
             {
                 post ==='teacher' ? !(id==item.teacher_id || fun(item.collaborator))
@@ -175,9 +175,6 @@ export default function Course({route, navigation}){
     return(
      
      <View>
-        <Text>
-            Hello world
-        </Text>
             {loading?<Text>loading</Text>
                    :<FlatList
                          data={list}
@@ -186,15 +183,15 @@ export default function Course({route, navigation}){
                        />
                     }
 
-            <Text>
+            <View style={{maxWidth:250,marginHorizontal:'18%'}}>
             {
                 post=='teacher'?<Button onPress={()=>{
                     navigation.navigate('Create Course',{
                         session_id: session_id
                     })
-                }} title="create course"/>:''
+                }} title="create  course"/>:''
             }
-            </Text>
+            </View>
             
         </View>
     )
@@ -209,7 +206,7 @@ const styles = StyleSheet.create({
       marginTop: StatusBar.currentHeight || 0,
     },
     item: {
-      backgroundColor: '#f9c2ff',
+      backgroundColor: 'white',
       padding: 20,
       marginVertical: 8,
       marginHorizontal: 16,

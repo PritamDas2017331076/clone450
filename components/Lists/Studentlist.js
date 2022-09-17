@@ -39,7 +39,6 @@ export default function StudentlistL({route, navigation}){
    console.log('check it out ',f,list)
 
     return(
-        <View>
             <View>
                 <Button onPress={()=>navigation.navigate('Take',{
                     course_id: course_id,
@@ -69,16 +68,8 @@ export default function StudentlistL({route, navigation}){
 
                 }
             </View>
-            {/*<ul>
-                {
-                    list.map(item =>(
-                        <li key={item._id}>
-                            {item.registration_number}
-                        </li>
-                    ))
-                }
-            </ul>*/}
-        </View>
+           
+        
     )
 }
 

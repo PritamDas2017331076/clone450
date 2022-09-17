@@ -38,7 +38,7 @@ export default function Section({route, navigation}){
     const Item = ({ item }) => (
         <View style={styles.item}>
           <TouchableOpacity style={{
-            backgroundColor: '#f6f6f6',
+            backgroundColor: 'white',alignItems:'center'
           }} 
             onPress={()=>navigation.navigate('Student List',{
             course_id: course_id, 
@@ -64,15 +64,16 @@ export default function Section({route, navigation}){
                          keyExtractor={item => item._id}
                        />
                     }
-            <Text>
+            <View style={{Width:50,marginHorizontal:'10%'}}>
             {
-                post=='teacher'?<Button onPress={()=>{
+                post=='teacher'?<Button
+                onPress={()=>{
                     navigation.navigate('Create Section',{
                         course_id: course_id
                     })
-                }} title="create section" />:''
+                }} title="Create Section" />:''
             }
-            </Text>
+            </View>
         </View>
     )
 
@@ -83,17 +84,26 @@ export default function Section({route, navigation}){
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
+      // display:'flex',
       marginTop: StatusBar.currentHeight || 0,
+      // flexDirection:'row'
     },
     item: {
-      backgroundColor: '#f9c2ff',
+      backgroundColor: 'white',
       padding: 20,
+      width:350,
       marginVertical: 8,
-      marginHorizontal: 16,
+      flex:1,
+      marginHorizontal:'10%',
+      // flexDirection:'row'
     },
     title: {
       fontSize: 32,
     },
+    flexType:{
+      backgroundColor:'red',
+      display:'flex',
+      flexDirection:'column'
+    }
   });
   

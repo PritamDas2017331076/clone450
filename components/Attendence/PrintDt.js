@@ -63,7 +63,6 @@ export default function PrintDt({route, navigation}){
     const Item = ({ item }) => (
       <View style={styles.item}>
          <View style={{flexDirection:'row'}}>
-               <Text style={{marginRight :20}}>{item.registration_number}</Text>
                <View>
                   <Image
                       style={styles.tinyLogo}
@@ -72,8 +71,9 @@ export default function PrintDt({route, navigation}){
                       }}
                   />
                </View>
+               <Text style={{marginLeft :'10%'}}>{item.registration_number}</Text>
                {
-                item.status==true? <Text>Present</Text>: <Text>Absent</Text>
+                item.status==true? <Text style={{marginLeft:'20%'}}>Present</Text>: <Text style={{marginLeft:'20%'}}>Absent</Text>
                }
           </View>
       </View>
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: 'white',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,

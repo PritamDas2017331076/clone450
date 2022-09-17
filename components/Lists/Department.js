@@ -9,13 +9,13 @@ import { useSelector, useDispatch } from 'react-redux';
 const Item = ({ item, university, navigation }) => (
     <View style={styles.item}>
       <TouchableOpacity style={{
-          backgroundColor: '#f6f6f6',
+          backgroundColor: 'white'
      }} 
         onPress={()=>navigation.navigate('Session List',{
          university: university,
          department: item.department
         })}>
-        <Text>{item.department}</Text>
+        <Text style={{color:'#64dfdf',textAlign:'center'}}>{item.department}</Text>
      </TouchableOpacity>
     </View>
   );
@@ -53,10 +53,12 @@ export default function Department({route, navigation}){
         <View>
             {loading?<Text>loading</Text>
                    :<FlatList
+                        
                          data={list}
                          renderItem={renderItem}
                          keyExtractor={item => item._id}
-                       />
+                         
+                      />
                     }
         </View>
     )
@@ -73,10 +75,12 @@ const styles = StyleSheet.create({
       marginTop: StatusBar.currentHeight || 0,
     },
     item: {
-      backgroundColor: '#f9c2ff',
+      backgroundColor: 'white',
+      fontWeight:10,
       padding: 20,
       marginVertical: 8,
-      marginHorizontal: 16,
+      marginHorizontal:40,
+      width:300,
     },
     title: {
       fontSize: 32,

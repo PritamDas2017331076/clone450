@@ -7,14 +7,24 @@ import { Provider } from 'react-redux';
 import {store} from './components/store';
 import Drawerout from './components/Navigation/Drawerout'
 import Drawer from './components/Navigation/Drawer'
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, IconRegistry, Layout, Text } from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { LoginButton } from './Temp.js';
+const HomeScreen = () => (
+  <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <Text category='h1'>HOME</Text>
+  </Layout>
+);
 
-export default function App() {
-  return (
-        <Provider store={store}>
-            <MainNavigator/>
-        </Provider>
-  )
-}
+export default () => (
+    <Provider store={store}>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider {...eva} theme={eva.light}>
+          <MainNavigator/>
+      </ApplicationProvider>
+    </Provider>
+);
 
 const styles = StyleSheet.create({
   container:{

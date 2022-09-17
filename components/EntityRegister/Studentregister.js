@@ -1,9 +1,10 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import {Text, View, StyleSheet,ScrollView, TouchableOpacity, Image} from 'react-native'
 import { Form, FormItem, Picker } from 'react-native-form-component';
 import { useSelector, useDispatch } from 'react-redux'
+import { Input,Icon, Layout } from '@ui-kitten/components';
+import {Text, View, StyleSheet,ScrollView, TouchableOpacity, Image,TouchableWithoutFeedback} from 'react-native'
 
 ///
 import * as ImagePicker from 'expo-image-picker';
@@ -20,6 +21,9 @@ import {
     selectEntity,
     selectToken,
   } from '../Loginslice'
+const AlertIcon = (props) => (
+  <Icon {...props} name='alert-circle-outline'/>
+);
 export default function Studentregister({navigation}){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -33,17 +37,18 @@ export default function Studentregister({navigation}){
     const [list, setList] = useState([])
     const [dist, setDist] = useState([])
     const [sist, setSist] = useState([])
+    const [temp,setTemp] = useState()
     ///
     const [file, setFile] = useState('');
     const [progress, setProgress] = useState(0);
     const [title,setTitle] = useState('no file choosen')
-
-
+    const [value, setValue] = React.useState('');
+    const [secureTextEntry, setSecureTextEntry] = useState(true)
+      
     useEffect(() => {
           axios.get(`${ip}/university_admin`)
           .then(res => {
               console.log('data university', res.data) 
-
               setList(res.data.map( (s) => {
                 return {value:s.university, label:s.university}
             }))
@@ -62,6 +67,24 @@ export default function Studentregister({navigation}){
   
     }, []);
 
+    const toggleSecureEntry = () => {
+      setSecureTextEntry(!secureTextEntry);
+    };
+  
+    const renderIcon = (props) => (
+      <TouchableWithoutFeedback onPress={toggleSecureEntry}>
+        <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'}/>
+      </TouchableWithoutFeedback>
+    );
+  
+    const renderCaption = (s) => {
+      return (
+        <View style={styles.captionContainer}>
+          {AlertIcon(styles.captionIcon)}
+          <Text style={styles.captionText}>{s}</Text>
+        </View>
+      )
+    }
     ///
     const openImageLibrary = async () => {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -97,9 +120,7 @@ export default function Studentregister({navigation}){
 
     const dispatch = useDispatch()
     const onSubmit = (e) => {
-        //e.preventDefault()
-
-        
+        // e.preventDefault()
         if(!name){
           alert('Please enter name')
           return
@@ -156,7 +177,9 @@ export default function Studentregister({navigation}){
         return
       }
       const formData = new FormData();
-      console.log(name,reg,email)
+      console.log('name,reg,email,pass',name,reg,email,password)
+
+
       console.log('file',file)
     
       // Update the formData object
@@ -257,34 +280,32 @@ export default function Studentregister({navigation}){
         <View style={styles.container}>
             <ScrollView>
             <Form onButtonPress={onSubmit}>
-                
-                <FormItem
+                <Input
                     label="Email"
-                    style={styles.box}
                     isRequired
                     value={email}
                     onChangeText={(email) => setEmail(email)}
-                    asterik
+                    style={styles.input}
                   />
-                <FormItem
+                <Input
                     label="Registration Number"
-                    style={styles.box}
                     isRequired
                     value={reg}
+                    style={styles.input}
                     onChangeText={(email) => setReg(email)}
                     asterik
                   />
-                <FormItem
+                <Input
                     label="Name"
-                    style={styles.box}
+                    style={styles.input}
                     isRequired
                     value={name}
                     onChangeText={(user) => setName(user)}
                     asterik
                   />
-                <FormItem
+                <Input
                     label="Phone"
-                    style={styles.box}
+                    style={styles.input}
                     isRequired
                     value={phone}
                     onChangeText={(user) => setPhone(user)}
@@ -293,7 +314,7 @@ export default function Studentregister({navigation}){
                 <Picker
                     items={list}
                     label="Pick a University"
-                    style={styles.box}
+                    
                     selectedValue={university}
                     onSelection={(item) => setUniversity(item.value)}
                    />
@@ -306,39 +327,44 @@ export default function Studentregister({navigation}){
                     { label: '2021-22', value: '2021-22' },
                    ]}
                     label="Pick a session"
-                    style={styles.box}
+                    // style={styles.box}
                     selectedValue={session}
                     onSelection={(item) => setSession(item.value)}
                    />
                 <Picker
                     items={dist}
                     label="Pick a Department"
-                    style={styles.box}
+                    // style={styles.box}
                     selectedValue={department}
                     onSelection={(item) => setDepartment(item.value)}
                    />
-                <FormItem
-                    label="Password"
-                    style={styles.box}
-                    isRequired
+                  <Input
                     value={password}
-                    onChangeText={(password) => setPassword(password)}
-                    asterik
+                    label='Password'
+                    placeholder='Enter a strong password'
+                    caption={()=>renderCaption("Password must be 8 characters long")}
+                    accessoryRight={renderIcon}
+                    secureTextEntry={secureTextEntry}
+                    onChangeText={nextValue => setPassword(nextValue)}
+                    style={styles.input}
                   />
-                  <FormItem
-                    label="Repeat Password"
-                    style={styles.box}
-                    isRequired
+                 <Input
                     value={rpassword}
-                    onChangeText={(password) => setRPassword(password)}
-                    asterik
+                    label='Password'
+                    placeholder='Enter the same password'
+                    // caption={()=>renderCaption("Password must be 8 characters long")}
+                    accessoryRight={renderIcon}
+                    secureTextEntry={secureTextEntry}
+                    onChangeText={nextValue => setRPassword(nextValue)}
+                    style={styles.input}
                   />
+
 
                   {/* /// */}
                   <TouchableOpacity onPress={openImageLibrary}>
                  {file?
                   <Image source={{uri: file}} style={{height:50,width:50}}/> :
-                  <Text style={{backgroundColor:'#a9a9a9',width:100, textAlign:'center'}}>{title}</Text>}
+                  <Text style={{backgroundColor:'#a9a9a9',width:100, textAlign:'center',marginLeft:100}}>{title}</Text>}
                  </TouchableOpacity>
                    
             </Form>
@@ -348,25 +374,48 @@ export default function Studentregister({navigation}){
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex: 1,
-        height: 50,
-        padding: 20,
-        border: '1px solid black',
-        backgroundColor: '#fff',
-    },
-    text:{
-        color: 'red',
-        fontSize: 20,
-        justifyContent: 'center',
-        fontWeight: 'bold',
-    },
-    box:{ 
-
-        //flex: 1,
-        width: '100%',
-        height: 40,
-        margin: 5
-    }
-
-})
+  container:{
+    flex: 1,
+    height: 50,
+    padding: 30,
+    border: '2px solid black',
+    backgroundColor: '#fff',
+    
+  },
+  captionContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  captionIcon: {
+    width: 10,
+    height: 10,
+    marginRight: 5
+  },
+  captionText: {
+    fontSize: 12,
+    fontWeight: "400",
+    color: "#8F9BB3",
+  },
+  text:{
+    color: 'red',
+    fontSize: 20,
+    justifyContent: 'center',
+    fontWeight: 'bold',
+  },
+  box:{ 
+      //flex: 1,
+      width: '100%',
+      height: 40,
+      margin: 5
+  },
+  input: {
+    width:330,
+    flex: 1,
+    margin: 4
+  },
+  sel:{
+    margin:5,
+    justifyContent:'center'
+  },
+});

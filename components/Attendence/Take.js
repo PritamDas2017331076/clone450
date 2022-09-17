@@ -1,7 +1,9 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, TouchableOpacity, Pressable, TextInput, SafeAreaView, StatusBar, FlatList, Image } from 'react-native';
+import { Button, View,StyleSheet, TouchableOpacity, Pressable, TextInput, SafeAreaView, StatusBar, FlatList, Image } from 'react-native';
+import { Card, Text } from '@ui-kitten/components';
+
 import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -88,22 +90,30 @@ export default function Take({route, navigation}){
    }
 
    const Item = ({ item }) => (
-    <View style={styles.checkboxContainer}>
+    <View >
       <View style={{flexDirection: 'row'}}>
-          <Pressable
+          {/* <Pressable
              style={[styles.checkboxBase, item.status && styles.checkboxChecked]}
              onPress={()=>setVal(item.id)}>
              {item.status && <Ionicons name="checkmark" size={24} color="white" /> } 
-          </Pressable>
-          <View>
+          </Pressable> */}
+          <Card footer={
+            <View >
+              <Text>{item.registration_number}</Text>
+                <Pressable
+                  style={[styles.checkboxBase, item.status && styles.checkboxChecked]}
+                  onPress={()=>setVal(item.id)}>
+                  {item.status && <Ionicons name="checkmark" size={24} color="white" /> }
+                </Pressable>
+            </View>
+          } style={{marginBottom:20}}>
               <Image
                   style={styles.tinyLogo}
                   source={{
                       uri: item.avatar,
                   }}
               />
-          </View>
-          <Text>{item.registration_number}</Text>
+          </Card>
       </View>
           {/* <Pressable
              style={[styles.checkboxBase, checked && styles.checkboxChecked]}
@@ -125,7 +135,7 @@ export default function Take({route, navigation}){
 
 
     return(
-        <View>
+        <View >
             {/*<ul>
                 {
                     list.map(item =>(
@@ -135,35 +145,17 @@ export default function Take({route, navigation}){
                     ))
                 }
             </ul>*/}
-            <View style={{flexDirection: 'row'}}>
+            <View>
               <Text>{dat}</Text>
             </View>
             <View>
-            {/*<ul>
-                {
-                    dist.map((item,index) =>(
-                        <li key={index}>
-                           
-                               <View style={styles.checkboxContainer}>
-                               <CheckBox
-                                  value={item.status}
-                                  onValueChange={()=>setVal(item.id)}
-                                  style={styles.checkbox}
-                                />
-                                  <Text>{item.registration_number}</Text>
-                                </View>
-                        </li>
-                       ))
-                }
-            </ul>*/}
-              <FlatList
+              <FlatList style={{backgroundColor:'white',padding:'5%'}}
                 data={dist}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
               />
             </View>
-            <Button onPress={Submit} title="Submit" />
-            <Text>haha</Text>
+            <Button  onPress={Submit} title="Submit" />
         </View>
     )
 }
@@ -172,6 +164,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
+    justifyContent:'space-between',
+    flexDirection:'row'
   },
   checkboxContainer: {
     flexDirection: "row",
@@ -197,9 +191,9 @@ const styles = StyleSheet.create({
   checkboxBase: {
     width: 24,
     height: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 4,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    borderRadius: 10,
     borderWidth: 2,
     borderColor: 'coral',
     backgroundColor: 'transparent',
@@ -221,11 +215,11 @@ const styles = StyleSheet.create({
   },
   checkboxLabel: {
     marginLeft: 8,
-    fontWeight: 500,
+    fontWeight: 5,
     fontSize: 18,
   },
   tinyLogo: {
-    width: 50,
-    height: 50,
+    width: 250,
+    height: 250,
   },
 });

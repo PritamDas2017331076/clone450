@@ -35,7 +35,7 @@ export default function Date({route, navigation}){
   console.log(dist)
     const Item = ({ item }) => (
       <View style={styles.item}>
-         <TouchableOpacity style={{backgroundColor:'#f6f6f6',margin:20}} 
+         <TouchableOpacity style={{backgroundColor:'white',margin:20}} 
               onPress={()=>navigation.navigate('PrintDt',{
               record: item.record,
               course_id: course_id,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
       margin: 8,
     },
     item: {
-      backgroundColor: '#f9c2ff',
+      backgroundColor: 'white',
       padding: 20,
       marginVertical: 8,
       marginHorizontal: 16,

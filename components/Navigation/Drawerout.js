@@ -50,7 +50,7 @@ export default function Drawerout({navigation}){
       setInput(await AsyncStorage.getItem('token'))
       setCur(await AsyncStorage.getItem('status'))
       console.log('details near are',input,cur)
-      axios.get(`http://192.168.0.106:5000/${cur}/me`,{
+      axios.get(`${ip}/${cur}/me`,{
       headers: {
           'Authorization': input
         }
@@ -78,7 +78,7 @@ export default function Drawerout({navigation}){
 
     const logoutClick = ()=>{
       console.log('logout',cur,input)
-      axios.get(`http://localhost:5000/${cur}/logout`, {
+      axios.get(`${ip}/${cur}/logout`, {
           headers: {
             'Authorization': input
           }

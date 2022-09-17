@@ -42,7 +42,7 @@ export default function PrintRg({route, navigation}){
   const Item = ({ item }) => (
     <View style={styles.item}>
        <View style={{flexDirection:'row'}}>
-             <Text style={{marginRight :20}}>{item.date}</Text>
+             <Text style={{marginRight :10}}>{item.date}</Text>
                 <Text>
                 {
                   item.status?'Present':'Absent'
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: 'white',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
