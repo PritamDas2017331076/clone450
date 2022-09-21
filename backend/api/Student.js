@@ -8,7 +8,8 @@ const Student = require('../db/Student');
 const cloudinary = require('../helper/imageUpload')
 const authStudent = require('../middleware/authStudent');
 const auth = require('../middleware/authStudent')
-
+const Universities = require('../db/Universities')
+const Departments = require('../db/Departments')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const SALT_FACTOR = 10;
@@ -102,6 +103,20 @@ router.post('/add', upload.single('avatar'), async(req, res) => {
     const phone = req.body.phone;
     const university = req.body.university;
     const department = req.body.department;
+    // let university = ''
+    // let department = ''
+    // try {
+    //     let rp = Universities.findOne({ university: req.body.university })
+    //     university = rp.abbreviation
+    // } catch (e) {
+    //     res.status(404).send('did not found this university')
+    // }
+    // try {
+    //     let rp = Departments.findOne({ university: university, department: req.body.department })
+    //     department = rp.abbreviation
+    // } catch (e) {
+    //     res.status(404).send('did not found this department')
+    // }
     const password = req.body.password;
     const post = 'student'
     const activated = false

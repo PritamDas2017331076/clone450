@@ -42,22 +42,25 @@ export default function Teacherregister({navigation}){
               console.log('data ', res.data) 
 
               setList(res.data.map( (s) => {
-                return {value:s.key, label:s.key}
+                return {value:s.abbreviation, label:s.university}
             }))
             console.log(list)
          }) ;
 
-         axios.get(`${ip}/departments`)
-          .then(res => {
-              console.log('data ', res.data) 
-
-              setDist(res.data.map( (s) => {
-                return {value:s.department, label:s.department}
-            }))
-            console.log(dist)
-         }) ;
   
     }, []);
+    useEffect(() => {
+     axios.get(`${ip}/departments/uni?university=${university}`)
+      .then(res => {
+          console.log('data ', res.data) 
+
+          setDist(res.data.map( (s) => {
+            return {value:s.abbreviation, label:s.department}
+        }))
+        console.log(dist)
+     }) ;
+
+}, [university]);
 
     const dispatch = useDispatch()
     const openImageLibrary = async () => {
@@ -183,7 +186,7 @@ export default function Teacherregister({navigation}){
         //     password: password,
         // }
         
-        console.log(formData)
+        console.log(university,department)
 
 
          axios.post(`${ip}/teacher/add`,formData,{

@@ -37,8 +37,8 @@ export default function Studentregister({navigation}){
     const [list, setList] = useState([])
     const [dist, setDist] = useState([])
     const [sist, setSist] = useState([])
+    const [fist, setFist] = useState([])
     const [temp,setTemp] = useState()
-    ///
     const [file, setFile] = useState('');
     const [progress, setProgress] = useState(0);
     const [title,setTitle] = useState('no file choosen')
@@ -46,26 +46,43 @@ export default function Studentregister({navigation}){
     const [secureTextEntry, setSecureTextEntry] = useState(true)
       
     useEffect(() => {
-          axios.get(`${ip}/university_admin`)
+          axios.get(`${ip}/universities`)
           .then(res => {
               console.log('data university', res.data) 
               setList(res.data.map( (s) => {
-                return {value:s.university, label:s.university}
+                return {value:s.abbreviation, label:s.university}
             }))
             console.log(list)
          }) ;
-
-         axios.get(`${ip}/departments`)
-          .then(res => {
-              console.log('data department ', res.data) 
-
-              setDist(res.data.map( (s) => {
-                return {value:s.department, label:s.department}
-            }))
-            console.log(dist)
-         }) ;
   
     }, []);
+    useEffect(() => {
+
+     axios.get(`${ip}/departments?university=${university}`)
+      .then(res => {
+          console.log('data department ', res.data) 
+
+          setDist(res.data.map( (s) => {
+            return {value:s.abbreviation, label:s.department}
+        }))
+        console.log(dist)
+     }) ;
+
+    }, [university]);
+
+    useEffect(() => {
+
+      axios.get(`${ip}/session/ud?university=${university}&department=${department}`)
+       .then(res => {
+           console.log('data department ', res.data) 
+ 
+           setFist(res.data.map( (s) => {
+             return {value:s.session, label:s.session}
+         }))
+         console.log(dist)
+      }) ;
+ 
+     }, [department]);
 
     const toggleSecureEntry = () => {
       setSecureTextEntry(!secureTextEntry);
@@ -238,7 +255,7 @@ export default function Studentregister({navigation}){
         //   password: password,
         // }
         
-        console.log(formData,ip)
+        console.log(ip,university,department)
 
          axios.post(`${ip}/student/add`,formData,{
           headers: {
@@ -314,18 +331,11 @@ export default function Studentregister({navigation}){
                 <Picker
                     items={list}
                     label="Pick a University"
-                    
                     selectedValue={university}
                     onSelection={(item) => setUniversity(item.value)}
                    />
                 <Picker
-                    items={[
-                    { label: '2017-18', value: '2017-18' },
-                    { label: '2018-19', value: '2018-19' },
-                    { label: '2019-20', value: '2019-20' },
-                    { label: '2020-21', value: '2020-21' },
-                    { label: '2021-22', value: '2021-22' },
-                   ]}
+                    items={fist}
                     label="Pick a session"
                     // style={styles.box}
                     selectedValue={session}
