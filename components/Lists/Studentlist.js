@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import { Button, View, Text, StyleSheet, TouchableOpacity, CheckBox } from 'react-native';
 import {ip} from '../ip'
-import { selectUniversity, selectId } from '../Loginslice';
+import { selectUniversity, selectId, selectPost } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 
 
@@ -16,6 +16,7 @@ export default function StudentlistL({route, navigation}){
     const [tid, setTid] = useState('')
     const [date, setDate]=useState(new Date())
     const id=useSelector(selectId)
+    const post = useSelector(selectPost)
     let f=0
 
     useEffect(() => {
@@ -40,11 +41,12 @@ export default function StudentlistL({route, navigation}){
 
     return(
             <View>
+                {post=='teacher' ?
                 <Button onPress={()=>navigation.navigate('Take',{
                     course_id: course_id,
                     list: list, // student list
                     section: section
-                })} title="take attendence" />
+                })} title="take attendence" />:null}
                 <Button onPress={()=>navigation.navigate('Date',{
                     course_id: course_id,
                     section: section

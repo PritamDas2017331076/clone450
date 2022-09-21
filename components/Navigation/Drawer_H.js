@@ -29,6 +29,10 @@ import Courses from '../Create/Course'
 import Section from '../Lists/Section'
 import StudentlistL from '../Lists/Studentlist'
 import Sectionform from '../Lists/Sectionform'
+import Date from '../Attendence/Date'
+import PrintDt from '../Attendence/PrintDt'
+import Reg from '../Attendence/Reg'
+import PrintRg from '../Attendence/PrintRg'
 import {
   updateEmail,
   updateName,
@@ -83,6 +87,10 @@ function NavList(){
           <Stack.Screen name="Course List" component={Course} />
           <Stack.Screen name="Section List" component={Section} />
           <Stack.Screen name="Student List" component={StudentlistL} />
+          <Stack.Screen name="Date" component={Date} />
+          <Stack.Screen name="Reg" component={Reg} />
+          <Stack.Screen name="PrintDt" component={PrintDt} />
+          <Stack.Screen name="PrintRg" component={PrintRg} />
       </Stack.Navigator>
   )
 }

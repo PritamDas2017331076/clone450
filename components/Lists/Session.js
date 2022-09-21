@@ -16,6 +16,7 @@ export default function Session({route, navigation}){
     let f=0
 
     useEffect(() => {
+      console.log('we are here in session list')
       let fl=1
       axios.get(`${ip}/session/ud?university=${university}&department=${department}`)
         .then(res => {

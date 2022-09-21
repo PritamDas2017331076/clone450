@@ -14,6 +14,16 @@ import UniversityAdd from '../Add/UniversityAdd'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import Date from '../Attendence/Date'
+import PrintDt from '../Attendence/PrintDt'
+import Reg from '../Attendence/Reg'
+import PrintRg from '../Attendence/PrintRg'
+import Department from '../Lists/Department'
+import Session from '../Lists/Session'
+import Course from '../Lists/Course'
+import Section from '../Lists/Section'
+import StudentlistL from '../Lists/Studentlist'
+import University from '../Lists/University'
 import {
   updateEmail,
   updateName,
@@ -31,6 +41,24 @@ import {
 } from '../Loginslice'
 
 const Stack = createStackNavigator();
+
+
+function NavList(){
+  return(
+      <Stack.Navigator>
+          <Stack.Screen name="University List" component={University}  />
+          <Stack.Screen name="Department List" component={Department}  />
+          <Stack.Screen name="Session List" component={Session} />
+          <Stack.Screen name="Course List" component={Course} />
+          <Stack.Screen name="Section List" component={Section} />
+          <Stack.Screen name="Student List" component={StudentlistL} />
+          <Stack.Screen name="Date" component={Date} />
+          <Stack.Screen name="Reg" component={Reg} />
+          <Stack.Screen name="PrintDt" component={PrintDt} />
+          <Stack.Screen name="PrintRg" component={PrintRg} />
+      </Stack.Navigator>
+  )
+}
 
 function ApprovalList(){
   return(
@@ -128,6 +156,7 @@ export default function Drawer({navigation}){
              );
           },
 })}>
+          <Drawer.Screen component={NavList} name="Departments" />
           <Drawer.Screen component={Home} name="Home" />
           <Drawer.Screen component={About} name="About" />
           <Drawer.Screen component={ApprovalList} name="Approvals" />

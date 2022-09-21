@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Button, View, Text, StyleSheet, ScrollView, FlatList, StatusBar, TouchableOpacity } from 'react-native';
 import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 import Department from './Department'
@@ -34,7 +34,7 @@ export default function University({navigation}){
       <TouchableOpacity style={{
         backgroundColor: '#f6f6f6',
         }} 
-        onPress={()=>navigation.navigate('Department',{
+        onPress={()=>navigation.navigate('Department List',{
             university: item.university
       })}>
        <Text>{item.university}</Text>

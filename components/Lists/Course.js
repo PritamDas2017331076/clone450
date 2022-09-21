@@ -24,7 +24,7 @@ export default function Course({route, navigation}){
     const department = useSelector(selectDepartment)
     const id = useSelector(selectId)
     const { session_id } = route.params
-    console.log('session id ',session_id)
+    console.log('session id in course ',session_id)
     let f=0
     const [loading, setLoading] = useState(true)
 
@@ -189,7 +189,7 @@ export default function Course({route, navigation}){
                     navigation.navigate('Create Course',{
                         session_id: session_id
                     })
-                }} title="create  course"/>:''
+                }} title="create  course"/>:null
             }
             </View>
             

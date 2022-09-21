@@ -71,7 +71,7 @@ export default function Section({route, navigation}){
                     navigation.navigate('Create Section',{
                         course_id: course_id
                     })
-                }} title="Create Section" />:''
+                }} title="Create Section" />:null
             }
             </View>
         </View>

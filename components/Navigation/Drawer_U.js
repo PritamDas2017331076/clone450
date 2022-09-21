@@ -14,6 +14,15 @@ import PrintDh from '../Print/PrintDh'
 import PrintAdmin from '../Print/PrintAdmin'
 import DepartmentAdd from '../Add/DepartmentAdd'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Date from '../Attendence/Date'
+import PrintDt from '../Attendence/PrintDt'
+import Reg from '../Attendence/Reg'
+import PrintRg from '../Attendence/PrintRg'
+import Department from '../Lists/Department'
+import Session from '../Lists/Session'
+import Course from '../Lists/Course'
+import Section from '../Lists/Section'
+import StudentlistL from '../Lists/Studentlist'
 import { TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -39,6 +48,23 @@ function ApprovalList(){
       <Stack.Navigator>
           <Stack.Screen name="Department Head List" component={Dheadlist} />
           <Stack.Screen name="PrintDh" component={PrintDh} />
+      </Stack.Navigator>
+  )
+}
+
+function NavList(){
+  const uni = useSelector(selectUniversity)
+  return(
+      <Stack.Navigator>
+          <Stack.Screen name="Department List" component={Department} initialParams={{university: uni}} />
+          <Stack.Screen name="Session List" component={Session} />
+          <Stack.Screen name="Course List" component={Course} />
+          <Stack.Screen name="Section List" component={Section} />
+          <Stack.Screen name="Student List" component={StudentlistL} />
+          <Stack.Screen name="Date" component={Date} />
+          <Stack.Screen name="Reg" component={Reg} />
+          <Stack.Screen name="PrintDt" component={PrintDt} />
+          <Stack.Screen name="PrintRg" component={PrintRg} />
       </Stack.Navigator>
   )
 }
@@ -116,6 +142,7 @@ export default function Drawer_U({navigation}){
     const DrawerNavigator = ()=>{
       return (
         <Drawer.Navigator drawerContent = {(props)=><CustomDrawer {...props} />} >
+          <Drawer.Screen component={NavList} name="Departments" />
           <Drawer.Screen component={Home} name="Home" />
           <Drawer.Screen component={About} name="About" />
           <Drawer.Screen component={ApprovalList} name="ApprovalList" />
