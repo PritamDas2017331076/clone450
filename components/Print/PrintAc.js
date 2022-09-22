@@ -3,14 +3,16 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import { Button, View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
 import {ip} from '../ip'
-import { selectUniversity } from '../Loginslice';
-
+import { selectUniversity, selectDepartment } from '../Loginslice';
+import { useSelector, useDispatch } from 'react-redux';
 export default function PrintAc({route, navigation}){
     const {un, id} = route.params
 
     const [use, setUse] = useState('')
     const [text, onChangeText] = useState('')
     const [acc, setAcc] = useState('')
+    const university = useSelector(selectUniversity)
+    const department = useSelector(selectDepartment)
 
     useEffect(() => {
         let fl=1
@@ -43,7 +45,10 @@ export default function PrintAc({route, navigation}){
             section: acc.section,
             registration_number: use.registration_number,
             course_id: acc.course_id,
+            course_name: acc.course_name,
             avatar: use.avatar,
+            university: university,
+            department: department,
             record: []
         }
 

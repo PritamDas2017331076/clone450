@@ -33,6 +33,10 @@ import Date from '../Attendence/Date'
 import PrintDt from '../Attendence/PrintDt'
 import Reg from '../Attendence/Reg'
 import PrintRg from '../Attendence/PrintRg'
+import CourseAll from '../Lists/CourseAll'
+import CourseDelete from '../Print/CourseDelete'
+import SectionDelete from '../Print/SectionDelete'
+
 import {
   updateEmail,
   updateName,
@@ -91,6 +95,8 @@ function NavList(){
           <Stack.Screen name="Reg" component={Reg} />
           <Stack.Screen name="PrintDt" component={PrintDt} />
           <Stack.Screen name="PrintRg" component={PrintRg} />
+          <Stack.Screen name="Course Info" component={CourseDelete} />
+          <Stack.Screen name="Section Info" component={SectionDelete} />
       </Stack.Navigator>
   )
 }

@@ -3,9 +3,9 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import { Button, View,StyleSheet, TouchableOpacity, Pressable, TextInput, SafeAreaView, StatusBar, FlatList, Image } from 'react-native';
 import { Card, Text } from '@ui-kitten/components';
-
+import { useSelector, useDispatch } from 'react-redux';
 import {ip} from '../ip'
-import { selectUniversity } from '../Loginslice';
+import { selectUniversity, selectDepartment} from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
@@ -18,11 +18,20 @@ export default function Take({route, navigation}){
     const [dist, setDist] = useState(list)
     const [record,setRecord]=useState([])
     const [lost,setLost]=useState([])
+    const university = useSelector(selectUniversity)
+    const department = useSelector(selectDepartment)
+    const [acc, setAcc] = useState('')
     let tt=new Date()
     console.log('dist',dist,dat)
     let f=0
 
-    useEffect(() => {
+    useEffect(async() => {
+      try{
+        const rs=await axios.get(`${ip}/course/${course_id}`)
+        setAcc(rs)
+      }catch(e){
+        console.log('error in take effect',e)
+      }
       let date = new Date().getDate();
       let month = new Date().getMonth() + 1;
       let year = new Date().getFullYear();
@@ -55,7 +64,10 @@ export default function Take({route, navigation}){
       date: dat,
       record: dd,
       course_id: course_id,
-      section: section
+      section: section,
+      course_name: acc.name,
+      department: department,
+      university: university
     }
     console.log('data = ',data)
 

@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router();
 const Course = require('../db/Course')
+const Byreg = require('../db/Byreg')
+const Bydate = require('../db/Bydate')
 
 router.use(express.json())
 
@@ -99,12 +101,23 @@ router.patch('/section/:id', async(req, res) => {
 
 router.patch('/sectiond/:id', async(req, res) => {
     const course = await Course.findById({ _id: req.params.id })
+    const cid = course._id
     let col = course.section
     col = col.filter((ele) => (ele.section != req.body.section))
     const pss = { section: col }
     const crs = await Course.findByIdAndUpdate(req.params.id, pss, { new: true, runValidators: true })
     if (!crs) res.status(400).send('not found')
-    else res.status(200).send(crs)
+    const byreg = await Byreg.find({ course_id: cid, section: req.body.section })
+    byreg.forEach(async(ele) => {
+        const td = await Byreg.findByIdAndDelete(ele._id)
+        if (!td) res.status(404).send('failed to delete a byreg')
+    })
+    const bydate = await Bydate.find({ course_id: cid, section: req.body.section })
+    bydate.forEach(async(ele) => {
+        const td = await Bydate.findByIdAndDelete(ele._id)
+        if (!td) res.status(404).send('failed to delete a bydate')
+    })
+    res.status(200).send(crs)
 })
 
 router.patch('/record/:id', async(req, res) => {
@@ -148,14 +161,28 @@ router.get('/:id', async(req, res) => {
 })
 
 router.delete('/:id', async(req, res) => {
+    let crs
+    let crr
     try {
         const course = await Course.findByIdAndDelete(req.params.id)
         if (!course)
             return res.status(404).send()
-        res.status(200).send(course)
+        crs = course._id
+        crr = course
 
     } catch (e) {
         res.status(400).send()
     }
+    const byreg = await Byreg.find({ course_id: crs })
+    byreg.forEach(async(ele) => {
+        const td = await Byreg.findByIdAndDelete(ele._id)
+        if (!td) res.status(404).send('failed to delete a byreg')
+    })
+    const bydate = await Bydate.find({ course_id: crs })
+    bydate.forEach(async(ele) => {
+        const td = await Bydate.findByIdAndDelete(ele._id)
+        if (!td) res.status(404).send('failed to delete a bydate')
+    })
+    res.status(200).send(crr)
 })
 module.exports = router

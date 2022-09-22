@@ -24,6 +24,8 @@ import Course from '../Lists/Course'
 import Section from '../Lists/Section'
 import StudentlistL from '../Lists/Studentlist'
 import University from '../Lists/University'
+import UadminAll from '../Lists/UadminAll'
+import UadminDelete from '../Print/UadminDelete'
 import {
   updateEmail,
   updateName,
@@ -65,6 +67,15 @@ function ApprovalList(){
       <Stack.Navigator>
           <Stack.Screen name="University Admin List" component={Uadminlist} />
           <Stack.Screen name="PrintAdmin" component={PrintAdmin} />
+      </Stack.Navigator>
+  )
+}
+
+function DeleteUadmin(){
+  return(
+      <Stack.Navigator>
+          <Stack.Screen name="University admin List" component={UadminAll} />
+          <Stack.Screen name="University Info" component={UadminDelete} />
       </Stack.Navigator>
   )
 }
@@ -161,6 +172,7 @@ export default function Drawer({navigation}){
           <Drawer.Screen component={About} name="About" />
           <Drawer.Screen component={ApprovalList} name="Approvals" />
           <Drawer.Screen component={UniversityAdd} name="UniversityAdd" />
+          <Drawer.Screen component={DeleteUadmin} name="University Admin List" />
         </Drawer.Navigator>
       )
     }

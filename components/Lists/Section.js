@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import { Button, View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, StatusBar, FlatList } from 'react-native';
 import {ip} from '../ip'
-import { selectUniversity, selectPost } from '../Loginslice';
+import { selectUniversity, selectPost, selectId } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 
 
@@ -12,6 +12,8 @@ export default function Section({route, navigation}){
     const { course_id } = route.params
     const post= useSelector(selectPost)
     const [loading, setLoading] = useState(true)
+    const id= useSelector(selectId)
+    const [tid, setTid]=useState()
 
     let f=0
 
@@ -23,6 +25,7 @@ export default function Section({route, navigation}){
             .then(res => {
                 console.log(' data ', res.data) 
                 setList(res.data.section)
+                setTid(res.data.teacher_id)
              })
              .catch((error) => console.error(error))
              .finally(() => {
@@ -45,6 +48,12 @@ export default function Section({route, navigation}){
             section: item.section
         })}>
             <Text>{item.section}</Text>
+            {post=='department_head'?<Button onPress={()=>{
+              navigation.navigate('Section Info',{
+                id: course_id,
+                section: item.section
+              })
+            }} title="Section Details"/>:null}
         </TouchableOpacity>
         </View>
       );

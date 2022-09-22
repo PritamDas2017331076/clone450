@@ -62,6 +62,8 @@ export default function Courses({route, navigation}){
 
         const Details = {
           session_id: session_id,
+          university: university,
+          department: department,
           code: code,
           name: name,
           teacher_id: id

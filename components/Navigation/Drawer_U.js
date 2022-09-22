@@ -25,6 +25,8 @@ import Section from '../Lists/Section'
 import StudentlistL from '../Lists/Studentlist'
 import { TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import DheadAll from '../Lists/DheadAll'
+import DeptDelete from '../Print/DeptDelete'
 import {
   updateEmail,
   updateName,
@@ -48,6 +50,15 @@ function ApprovalList(){
       <Stack.Navigator>
           <Stack.Screen name="Department Head List" component={Dheadlist} />
           <Stack.Screen name="PrintDh" component={PrintDh} />
+      </Stack.Navigator>
+  )
+}
+
+function ApprovalList(){
+  return(
+      <Stack.Navigator>
+          <Stack.Screen name="Department List" component={DheadAll} />
+          <Stack.Screen name="Department Info" component={DeptDelete} />
       </Stack.Navigator>
   )
 }

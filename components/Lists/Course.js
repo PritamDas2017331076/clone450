@@ -117,6 +117,12 @@ export default function Course({route, navigation}){
 
     }
 
+    const Delcourse = (id) =>{
+        navigation.navigate('Course Info',{
+            id: id
+        })
+    }
+
     const colas = (ele) => {
         const course_id=ele._id
         let student=ele.student;
@@ -160,6 +166,9 @@ export default function Course({route, navigation}){
             {
                 post!='student' ? post !='teacher'
                 ?<Button onPress={()=>section(item._id)} title="section"/>:null :null
+            }
+            {
+                post==department?<Button onPress={()=>Delcourse(item._id)} title="Course Delete"/>:null
             }
            
         
