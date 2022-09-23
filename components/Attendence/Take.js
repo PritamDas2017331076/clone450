@@ -6,7 +6,6 @@ import { Card, Text } from '@ui-kitten/components';
 import { useSelector, useDispatch } from 'react-redux';
 import {ip} from '../ip'
 import { selectUniversity, selectDepartment} from '../Loginslice';
-import { useSelector, useDispatch } from 'react-redux';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 
@@ -25,17 +24,20 @@ export default function Take({route, navigation}){
     console.log('dist',dist,dat)
     let f=0
 
-    useEffect(async() => {
+    const func = async()=>{
       try{
+        console.log('i am here to do it**********************************')
         const rs=await axios.get(`${ip}/course/${course_id}`)
-        setAcc(rs)
+        console.log('course in this case',rs.data)
+        setAcc(rs.data)
       }catch(e){
         console.log('error in take effect',e)
       }
-      let date = new Date().getDate();
-      let month = new Date().getMonth() + 1;
-      let year = new Date().getFullYear();
-      setDate(`${date}-${month}-${year}`)
+
+    }
+
+    useEffect(() => {
+      func()
 
   }, []);
 
@@ -163,11 +165,14 @@ export default function Take({route, navigation}){
             <View>
               <FlatList style={{backgroundColor:'white',padding:'5%'}}
                 data={dist}
+                contentContainerStyle={{paddingBottom:150}}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
+                ListFooterComponent={<Button onPress={Submit} title="Submit" />}
               />
+              {/* <Button style={{marginBottom:-100}}  onPress={Submit} title="Submit" /> */}
             </View>
-            <Button  onPress={Submit} title="Submit" />
+            
         </View>
     )
 }
@@ -231,7 +236,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   tinyLogo: {
-    width: 250,
-    height: 250,
+    width: 50,
+    height: 50,
   },
 });

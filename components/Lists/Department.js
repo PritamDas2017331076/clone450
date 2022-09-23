@@ -25,6 +25,7 @@ export default function Department({route, navigation}){
     const [list, setList] = useState([])
     console.log(route.params)
     const { university } = route.params
+    console.log('unihre',university)
     console.log(university)
     let f=0
     const [loading, setLoading] = useState(true)
@@ -55,6 +56,7 @@ export default function Department({route, navigation}){
                    :<FlatList
                         
                          data={list}
+                         contentContainerStyle={{paddingBottom:150}}
                          renderItem={renderItem}
                          keyExtractor={item => item._id}
                          

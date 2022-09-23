@@ -75,6 +75,7 @@ export default function Date({route, navigation}){
             {loading?<Text>loading</Text>
                    :<FlatList
                          data={dist}
+                         contentContainerStyle={{paddingBottom:150}}
                          renderItem={renderItem}
                          keyExtractor={item => item.id}
                        />

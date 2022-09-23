@@ -21,7 +21,7 @@ export default function PrintRg({route, navigation}){
             console.log('course info ',course_id,res.data)
             let arr=res.data.record
             arr=arr.filter(ele=>(ele.section==section))
-            setDist(res.data.record.map((item,index)=>{
+            setDist(arr.map((item,index)=>{
                 let rec=record.filter(ele=>(ele.date==item.date))
                 if(rec.length!=0){
                   return {date: item.date,status:true,id:index }
@@ -63,6 +63,7 @@ export default function PrintRg({route, navigation}){
             {loading?<Text>loading</Text>
                    :<FlatList
                          data={dist}
+                         contentContainerStyle={{paddingBottom:150}}
                          renderItem={renderItem}
                          keyExtractor={item => item.id}
                        />

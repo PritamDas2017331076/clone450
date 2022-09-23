@@ -21,6 +21,7 @@ export default function Utake({route, navigation}){
        .then(res=>{
           console.log('data',res.data.student)
           let arr=res.data.student
+          arr=arr.filter(ele=>(ele.section==section))
           setDist(arr.map((item,index)=>{
             let br=record.filter(ele=>(item.registration_number==ele.registration_number))
             if(br.length==0){
@@ -156,12 +157,12 @@ export default function Utake({route, navigation}){
             </ul>*/}
               <FlatList
                 data={dist}
+                contentContainerStyle={{paddingBottom:150}}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
+                ListFooterComponent={<Button onPress={Submit} title="Submit" />}
               />
             </View>
-            <Button onPress={Submit} title="Submit" />
-            <Text>haha</Text>
         </View>
     )
 }

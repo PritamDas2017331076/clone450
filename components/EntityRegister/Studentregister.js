@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Form, FormItem, Picker } from 'react-native-form-component';
 import { useSelector, useDispatch } from 'react-redux'
 import { Input,Icon, Layout } from '@ui-kitten/components';
-import {Text, View, StyleSheet,ScrollView, TouchableOpacity, Image,TouchableWithoutFeedback} from 'react-native'
+import {Text, View, StyleSheet,ScrollView, TouchableOpacity,Button, Image,TouchableWithoutFeedback} from 'react-native'
 
 ///
 import * as ImagePicker from 'expo-image-picker';
@@ -293,6 +293,164 @@ export default function Studentregister({navigation}){
         
     }
 
+    const force = (e) => {
+      // e.preventDefault()
+      if(!name){
+        alert('Please enter name')
+        return
+    }
+
+    if(!phone){
+        alert('Please enter phone')
+        return
+    }
+
+    if(!university){
+        alert('Please enter university')
+        return
+    }
+
+    if(!department){
+        alert('Please enter department')
+        return
+    }
+
+    if(!email){
+        alert('Please enter email')
+        return
+    }
+
+    if(!session){
+      alert('Please enter session')
+      return
+    }
+
+    if(!reg){
+      alert('Please enter registration number')
+      return
+  }
+
+    if(!password){
+        alert('Please enter password')
+        return
+    }
+
+    if(!rpassword){
+        alert('Please enter password again here')
+        return
+    }
+
+
+    if(password!==rpassword){
+        alert('wrong password entered')
+        return
+    }
+
+    if(!file){
+      alert('Please enter file')
+      return
+    }
+    const formData = new FormData();
+    console.log('name,reg,email,pass',name,reg,email,password)
+
+
+    console.log('file',file)
+  
+    // Update the formData object
+    formData.append('avatar', {
+      name: new Date() + '_profile',
+      uri: file,
+      type: 'image/png'
+    });
+
+    // formData.append(
+    //   "files",
+    //   file
+    // )
+    formData.append(
+      "name",
+       name
+    );
+    formData.append(
+      "registration_number",
+       reg
+    );
+    formData.append(
+      "email",
+       email
+    );
+    formData.append(
+      "phone",
+       phone
+    );
+
+    formData.append(
+      "university",
+       university
+    );
+    formData.append(
+      "session",
+       session
+    );
+    formData.append(
+      "department",
+       department
+    );
+    formData.append(
+      "password",
+       password
+    );
+
+      // const studentDetails = {
+      //   name: name,
+      //   registration_number: reg,
+      //   email: email,
+      //   phone: phone,
+      //   university: university,
+      //   session: session,
+      //   department: department,
+      //   password: password,
+      // }
+      
+      console.log(ip,university,department)
+
+       axios.post(`${ip}/student/addd`,formData,{
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
+       })
+        .then(res => {
+                console.log(res.data)
+
+                ///
+                if (res.data.success) {
+                  navigation.dispatch(StackActions.replace('UserProfile'));
+                }
+                navigation.navigate('Home')
+        })
+        .catch((error) => {
+          console.log(error,error.message)
+        })
+
+      /* onAdd({user,email,password,passwordr}) */
+
+      setName('')
+      setPhone('')
+      setUniversity('')
+      setDepartment('')
+      setEmail('')
+      setPassword('')
+      setRPassword('')
+      setSession('')
+      setReg('')
+      setFile('')
+      
+
+      
+  }
+
+
     return(
         <View style={styles.container}>
             <ScrollView>
@@ -378,6 +536,8 @@ export default function Studentregister({navigation}){
                  </TouchableOpacity>
                    
             </Form>
+            <Button onPress={force} title='force' />
+
             </ScrollView>
         </View>
     )

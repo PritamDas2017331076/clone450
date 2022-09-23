@@ -108,6 +108,7 @@ export default function PrintDt({route, navigation}){
             </ul>*/}
               <FlatList
                   data={list}
+                  contentContainerStyle={{paddingBottom:150}}
                   renderItem={renderItem}
                   keyExtractor={item => item.id}
                 />

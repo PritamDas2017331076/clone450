@@ -11,6 +11,7 @@ export default function CourseDelete({route, navigation}){
     const [text, onChangeText] = useState('')
 
     useEffect(() => {
+        console.log('came in delete')
         axios.get(`${ip}/course/${id}`)
             .then(res => {
                 console.log('data for this id ',res.data)
@@ -21,10 +22,11 @@ export default function CourseDelete({route, navigation}){
 
     const Accept = async()=>{
 
-        const dept=use.abbreviation
+        const dept=use.department
         try{
             const r1 = await axios.delete(`${ip}/course/${id}`)
-            console.log('success',r1)
+            console.log('success',r1.data)
+            navigation.goBack()
         }catch(e){
             console.log('faile to delete in courses',e)
         }

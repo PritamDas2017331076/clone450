@@ -77,6 +77,7 @@ export default function AccessTlist({navigation}){
             {loading?<Text>loading</Text>
                    :<FlatList
                          data={list}
+                         contentContainerStyle={{paddingBottom:150}}
                          renderItem={renderItem}
                          keyExtractor={item => item._id}
                        />

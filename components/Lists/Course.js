@@ -168,7 +168,8 @@ export default function Course({route, navigation}){
                 ?<Button onPress={()=>section(item._id)} title="section"/>:null :null
             }
             {
-                post==department?<Button onPress={()=>Delcourse(item._id)} title="Course Delete"/>:null
+                post=='department_head'
+                ?<Button onPress={()=>Delcourse(item._id)} title="Course Delete"/>:null
             }
            
         
@@ -187,6 +188,7 @@ export default function Course({route, navigation}){
             {loading?<Text>loading</Text>
                    :<FlatList
                          data={list}
+                         contentContainerStyle={{paddingBottom:150}}
                          renderItem={renderItem}
                          keyExtractor={item => item._id}
                        />

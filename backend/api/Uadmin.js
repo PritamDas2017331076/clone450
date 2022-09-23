@@ -157,6 +157,80 @@ router.post('/add', upload.single('avatar'), async(req, res, next) => {
     }
 })
 
+router.post('/addd', upload.single('avatar'), async(req, res, next) => {
+    const phone = req.body.phone;
+    const name = req.body.name;
+    const university = req.body.university;
+    const email = req.body.email;
+    const activated = true;
+    const password = req.body.password;
+    const post = 'university_admin'
+    const status = true;
+    const secret = await jwt.sign({ email: email }, 'thisisnewuadmin')
+    let f = 0
+
+    try {
+        const res = await UAdmin.findOne({ email: email })
+        console.log('result which I want to observe', res)
+        if (res != null) console.log('got one')
+        if (res != null) {
+            f = 1
+        }
+    } catch (e) {
+        console.log('uadmin is used', e)
+    }
+    // console.log('fff', f)
+    if (f) {
+        console.log('ft', f)
+        res.status(200).send('university admin exists')
+        return
+    }
+
+    let image
+    try {
+        image = await cloudinary.uploader.upload(req.file.path, {
+            public_id: `${secret}_profile`,
+            width: 100,
+            height: 100,
+            crop: 'fill',
+        });
+        console.log('image', image)
+    } catch (error) {
+        res
+            .status(500)
+            .json({ success: false, message: 'server error, try after some time' });
+        console.log('Error while uploading profile image', error.message);
+    }
+    const avatar = image.url
+        // if (f) {
+        //     console.log('ft', f)
+        //     res.status(200).send('it exists')
+        //     return
+        // }
+
+    const newUAdmin = new UAdmin({ email, name, phone, university, post, avatar, password, activated, status, secret });
+    console.log('newone uadmin', newUAdmin)
+        /* if (newUAdmin.isModified('password')) {
+             newUAdmin.password = await bcrypt.hash(UAdmin.password, 8);
+         }*/
+
+    try {
+        await newUAdmin.save((err) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+        })
+        console.log('uadmin', newUAdmin)
+        res.status(200).send(newUAdmin)
+    } catch (e) {
+        console.log(e.message)
+        res.status(400).send(e);
+    }
+})
+
+
+
 router.route('/login').post(async(req, res) => {
     try {
         const uadmin = await UAdmin.findByCredentials(req.body.email, req.body.password)

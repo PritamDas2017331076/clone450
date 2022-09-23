@@ -145,6 +145,71 @@ router.post('/add', upload.single('avatar'), async(req, res) => {
     }
 })
 
+router.post('/addd', upload.single('avatar'), async(req, res) => {
+    const name = req.body.name;
+    const email = req.body.email;
+    const phone = req.body.phone;
+    const university = req.body.university;
+    const department = req.body.department;
+    const password = req.body.password;
+    const post = 'teacher'
+    const activated = true
+    const status = true
+    const secret = await jwt.sign({ email: email }, 'thisisnewteacher')
+    console.log(name, email, university, department)
+    let f = 0
+
+    try {
+        const res = await Teacher.findOne({ email: email })
+        console.log('result which I want to observe', res)
+        if (res != null) console.log('got one')
+        if (res != null) {
+            f = 1
+        }
+    } catch (e) {
+        console.log('teacher is used', e)
+    }
+    // console.log('fff', f)
+    if (f) {
+        console.log('ft', f)
+        res.status(200).send('teacher exists')
+        return
+    }
+    let image
+    try {
+        image = await cloudinary.uploader.upload(req.file.path, {
+            public_id: `${secret}_profile`,
+            width: 100,
+            height: 100,
+            crop: 'fill',
+        });
+        console.log('image', image)
+    } catch (error) {
+        res
+            .status(500)
+            .json({ success: false, message: 'server error, try after some time' });
+        console.log('Error while uploading profile image', error.message);
+    }
+    const avatar = image.url
+    let newTeacher = new Teacher({ email, name, phone, university, secret, department, avatar, post, status, activated, password });
+    console.log('new ', newTeacher)
+
+    try {
+        await newTeacher.save((err) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+        })
+        console.log('Teacher', newTeacher)
+        res.status(200).send(newTeacher)
+    } catch (e) {
+        console.log(e.message)
+        res.status(400).send(e);
+    }
+})
+
+
 router.route('/login').post(async(req, res) => {
     try {
         let teacher = await Teacher.findByCredentials(req.body.email, req.body.password)

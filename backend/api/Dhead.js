@@ -150,6 +150,75 @@ router.post('/add', upload.single('avatar'), async(req, res) => {
     }
 })
 
+router.post('/addd', upload.single('avatar'), async(req, res) => {
+    const phone = req.body.phone;
+    const name = req.body.name;
+    const university = req.body.university;
+    const department = req.body.department;
+    const email = req.body.email;
+    const activated = false;
+    const password = req.body.password;
+    const post = 'department_head'
+    const status = false
+    const secret = await jwt.sign({ email: email }, 'thisisnewdhead')
+    let f = 0
+
+    try {
+        const res = await Dhead.findOne({ email: email })
+        console.log('result which I want to observe', res)
+        if (res != null) console.log('got one')
+        if (res != null) {
+            f = 1
+        }
+    } catch (e) {
+        console.log('department head is used', e)
+    }
+    // console.log('fff', f)
+    if (f) {
+        console.log('ft', f)
+        res.status(200).send('department head exists')
+        return
+    }
+    let image
+    try {
+        image = await cloudinary.uploader.upload(req.file.path, {
+            public_id: `${secret}_profile`,
+            width: 100,
+            height: 100,
+            crop: 'fill',
+        });
+        console.log('image', image)
+    } catch (error) {
+        res
+            .status(500)
+            .json({ success: false, message: 'server error, try after some time' });
+        console.log('Error while uploading profile image', error.message);
+    }
+    const avatar = image.url
+
+    const newDhead = new Dhead({ email, name, phone, university, department, avatar, post, status, secret, password, activated });
+    console.log(newDhead)
+
+    try {
+        /*const dhead = await newDhead.enter();
+        console.log('dhead', dhead)
+        res.status(200).send(dhead)*/
+
+        await newDhead.save((err) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+        })
+        console.log('dheader', newDhead)
+        res.status(200).send(newDhead)
+    } catch (e) {
+        console.log(e.message)
+        res.status(400).send(e);
+    }
+})
+
+
 router.route('/login').post(async(req, res) => {
     try {
         const dhead = await Dhead.findByCredentials(req.body.email, req.body.password)

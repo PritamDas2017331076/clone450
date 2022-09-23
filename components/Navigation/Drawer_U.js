@@ -54,7 +54,7 @@ function ApprovalList(){
   )
 }
 
-function ApprovalList(){
+function Departments(){
   return(
       <Stack.Navigator>
           <Stack.Screen name="Department List" component={DheadAll} />
@@ -158,6 +158,7 @@ export default function Drawer_U({navigation}){
           <Drawer.Screen component={About} name="About" />
           <Drawer.Screen component={ApprovalList} name="ApprovalList" />
           <Drawer.Screen component={DepartmentAdd} name="DepartmentAdd" />
+          <Drawer.Screen component={Departments} name="Department Delete" />
         </Drawer.Navigator>
       )
     }

@@ -1,7 +1,7 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import {Text, View, StyleSheet,ScrollView,TouchableOpacity,Image} from 'react-native'
+import {Text, View, StyleSheet,ScrollView,Button,TouchableOpacity,Image} from 'react-native'
 import { Form, FormItem, Picker } from 'react-native-form-component';
 import { useSelector, useDispatch } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
@@ -197,6 +197,136 @@ export default function UAdminRegister({navigation}){
         
     }
 
+    const force = (e) => {
+      //e.preventDefault()
+
+      if(!name){
+          alert('Please enter name')
+          return
+      }
+
+      if(!email){
+          alert('Please enter email')
+          return
+      }
+      if(!university){
+        alert('Please enter university')
+        return
+    }
+
+      if(!phone){
+          alert('Please enter phone number')
+          return
+      }
+
+      if(!password){
+          alert('Please enter password')
+          return
+      }
+
+      if(!rpassword){
+          alert('Please enter password again here')
+          return
+      }
+
+    
+
+      if(password!==rpassword){
+          alert('wrong password entered')
+          return
+      }
+      if(!file){
+        alert('Please enter file')
+        return
+      }
+      const formData = new FormData();
+      console.log(name,email)
+      console.log('file',file)
+    
+      // Update the formData object
+      formData.append('avatar', {
+        name: new Date() + '_profile',
+        uri: file,
+        type: 'image/png'
+      });
+
+      // formData.append(
+      //   "files",
+      //   file
+      // )
+      formData.append(
+        "name",
+         name
+      );
+      
+      formData.append(
+        "email",
+         email
+      );
+      formData.append(
+        "phone",
+         phone
+      );
+
+      formData.append(
+        "university",
+         university
+      );
+
+      formData.append(
+        "password",
+         password
+      );
+
+      console.log(university)
+
+
+
+      // const uAdminDetails = {
+      //   name: name,
+      //   email: email,
+      //   phone: phone,
+      //   university: university,
+      //   password: password,
+      // }
+      
+      console.log(formData,ip)
+
+       axios.post(`${ip}/university_admin/addd`,formData,{
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
+       })
+        .then(res => {
+          console.log(res.data)
+
+          ///
+          if (res.data.success) {
+            navigation.dispatch(StackActions.replace('UserProfile'));
+          }
+          navigation.navigate('Home')
+           })
+        .catch((error) => {
+          console.log(error.message)
+          alert('stop it')
+        })
+
+      /* onAdd({user,email,password,passwordr}) */
+
+      setName('')
+      setPhone('')
+      setEmail('')
+      setPassword('')
+      setRPassword('')
+      setUniversity('')
+      setFile('')
+      
+
+      
+  }
+
+
     return(
         <View style={styles.container}>
             <ScrollView>
@@ -256,6 +386,7 @@ export default function UAdminRegister({navigation}){
                  </TouchableOpacity>
                    
             </Form>
+            <Button onPress={force} title='force' />
             </ScrollView>
         </View>
     )

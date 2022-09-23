@@ -103,8 +103,12 @@ router.patch('/sectiond/:id', async(req, res) => {
     const course = await Course.findById({ _id: req.params.id })
     const cid = course._id
     let col = course.section
+    let cll = course.record
+    let css = course.student
     col = col.filter((ele) => (ele.section != req.body.section))
-    const pss = { section: col }
+    cll = cll.filter(ele => ele.section != req.body.section)
+    css = css.filter(ele => ele.section != req.body.section)
+    const pss = { section: col, record: cll, student: css }
     const crs = await Course.findByIdAndUpdate(req.params.id, pss, { new: true, runValidators: true })
     if (!crs) res.status(400).send('not found')
     const byreg = await Byreg.find({ course_id: cid, section: req.body.section })

@@ -16,7 +16,7 @@ export default function Date({route, navigation}){
     useEffect(() => {
         let fl=1
         console.log(course_id,section)
-        axios.get(`${ip}/byreg?course_id=${course_id}&section=${section}`)
+        axios.get(`${ip}/byreg/srr?course_id=${course_id}&section=${section}`)
         .then(res => {
             console.log(' data ', res.data)
             let arr=res.data
@@ -64,6 +64,7 @@ export default function Date({route, navigation}){
             {loading?<Text>loading</Text>
                    :<FlatList
                          data={list}
+                         contentContainerStyle={{paddingBottom:150}}
                          renderItem={renderItem}
                          keyExtractor={item => item.id}
                        />

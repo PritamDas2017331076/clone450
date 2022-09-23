@@ -21,10 +21,14 @@ export default function SectionDelete({route, navigation}){
 
     const Accept = async()=>{
 
-        const dept=use.abbreviation
+        const dept=use.adepartment
+        console.log(dept,id)
         try{
-            const r1 = await axios.delete(`${ip}/course/sectiond/${id}`)
-            console.log('success',r1)
+            const chh={section: section}
+            console.log(chh)
+            const r1 = await axios.patch(`${ip}/course/sectiond/${id}`,chh)
+            console.log('success',r1.data)
+            navigation.goBack()
         }catch(e){
             console.log('faile to delete in section',e)
         }
@@ -44,6 +48,7 @@ export default function SectionDelete({route, navigation}){
                 <View>
                     <Text>Name: {use.name}</Text>
                     <Text>Code: {use.code}</Text>
+                    <Text>Section: {section}</Text>
                 </View>
             </View>
             <Button

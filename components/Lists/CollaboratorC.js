@@ -47,6 +47,7 @@ export default function CollaboratorC({route, navigation}) {
     <View>
       <FlatList
         data={list}
+        contentContainerStyle={{paddingBottom:150}}
         renderItem={renderItem}
         keyExtractor={item => item._id}
       />
