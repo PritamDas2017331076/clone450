@@ -30,23 +30,26 @@ export default function PrintAct({route, navigation}){
                 };
     },[])
 
-    const Accept = ()=>{
+    const Accept = async()=>{
         const chg = {
             id: acc.id,
             name: acc.name,
-            email: acc.email
+            email: acc.email,
+            avatar: use.avatar
         }
-        console.log(chg)
-
-        axios.patch(`${ip}/course/collaborator/${acc.course_id}`,chg)
-            .then(res => {
-                console.log('data added in studentlist ',res.data)
-            })
-
-        axios.delete(`${ip}/approveCo/${un}`)
-           .then(res => {
-                console.log('data deleted in teacher approval colab ',res.data)
-            })
+        console.log(chg,acc.id,use._id)
+        try{
+            const res=await axios.patch(`${ip}/course/collaborator/${acc.course_id}`,chg)
+            console.log(res.data)
+        }catch(e){
+            console.log('error patch',e)
+        }
+        try{
+            const res=await axios.delete(`${ip}/approveCo/${un}`)
+            console.log(res.data)
+        }catch(e){
+            console.log('error delete',e)
+        }
         navigation.goBack();
     }
 

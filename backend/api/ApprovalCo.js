@@ -18,6 +18,7 @@ router.route('/teacher').get((req, res) => {
 })
 
 router.post('/add', async(req, res) => {
+    console.log(req.body)
     const approvalco = new ApprovalCo({...req.body });
     console.log(approvalco)
 

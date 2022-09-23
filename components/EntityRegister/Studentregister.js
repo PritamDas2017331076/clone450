@@ -58,7 +58,7 @@ export default function Studentregister({navigation}){
     }, []);
     useEffect(() => {
 
-     axios.get(`${ip}/departments?university=${university}`)
+     axios.get(`${ip}/departments/uni?university=${university}`)
       .then(res => {
           console.log('data department ', res.data) 
 

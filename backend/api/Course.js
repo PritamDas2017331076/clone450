@@ -39,7 +39,7 @@ router.patch('/collaborator/:id', async(req, res) => {
     const course = await Course.findById({ _id: req.params.id })
     let col = course.collaborator
     col = col.filter((ele) => ele.id != req.body.id)
-    const data = { id: req.body.id }
+    const data = {...req.body }
     col.push(data)
     const pss = { collaborator: col }
     const crs = await Course.findByIdAndUpdate(req.params.id, pss, { new: true, runValidators: true })

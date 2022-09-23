@@ -11,6 +11,7 @@ import {
     selectUniversity,
     selectDepartment,
     selectId,
+    selectAvatar
     } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -22,6 +23,7 @@ export default function Course({route, navigation}){
     const name = useSelector(selectName)
     const university = useSelector(selectUniversity)
     const department = useSelector(selectDepartment)
+    const avatar = useSelector(selectAvatar)
     const id = useSelector(selectId)
     const { session_id } = route.params
     console.log('session id in course ',session_id)
@@ -97,7 +99,8 @@ export default function Course({route, navigation}){
                     department: department,
                     course_id: item._id,
                     course_name: item.name,
-                    teacher: item.teacher_id
+                    teacher: item.teacher_id,
+                    avatar: avatar
                 }
         
                 axios.post(`${ip}/approveCo/add`,dat)

@@ -34,6 +34,10 @@ const approveSchema = new Schema({
     teacher: {
         type: String,
         required: true,
+    },
+    avatar: {
+        type: String,
+        required: true
     }
 }, {
     timestamp: true
