@@ -22,6 +22,21 @@ export default function Utake({route, navigation}){
           console.log('data',res.data.student)
           let arr=res.data.student
           arr=arr.filter(ele=>(ele.section==section))
+          arr.sort(function(a,b){
+            if(a.registration_number<b.registration_number) return -1
+            else return 0
+          })
+          console.log('all',arr)
+          let obj=arr[arr.length-1].registration_number.substring(0,4)
+          let brr=[]
+          let crr=[]
+          arr.forEach((a)=>{
+            if(a.registration_number.substring(0,4)==obj)brr.push(a)
+            else crr.push(a)
+          })
+          brr=brr.concat(crr)
+          console.log(brr,'thennn',crr)
+          arr=brr
           setDist(arr.map((item,index)=>{
             let br=record.filter(ele=>(item.registration_number==ele.registration_number))
             if(br.length==0){
