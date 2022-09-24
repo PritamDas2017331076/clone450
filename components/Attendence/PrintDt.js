@@ -11,6 +11,9 @@ export default function PrintDt({route, navigation}){
     const { record, course_id, section,id,date } = route.params
     console.log(course_id,id,date)
     const [list, setList]=useState([])
+    const [total, setTotal]=useState(0)
+    const present=record.length
+
 
     useEffect(() => {
       axios.get(`${ip}/course/${course_id}`)
@@ -111,12 +114,9 @@ export default function PrintDt({route, navigation}){
                   contentContainerStyle={{paddingBottom:150}}
                   renderItem={renderItem}
                   keyExtractor={item => item.id}
+                  ListFooterComponent={<Button onPress={func} title="Delete" />}
                 />
             </View>
-            <Button
-              title="Delete"
-              onPress={func}
-            />
        
         </View>
     )

@@ -12,6 +12,9 @@ export default function PrintRg({route, navigation}){
     const [dist, setDist] = useState([])
     const [loading, setLoading] = useState(true)
     console.log('course id',course_id,record)
+    const [list, setList]=useState([])
+    const [total, setTotal]=useState(0)
+    const present=record.length
     let fl=1
 
 
@@ -21,6 +24,7 @@ export default function PrintRg({route, navigation}){
             console.log('course info ',course_id,res.data)
             let arr=res.data.record
             arr=arr.filter(ele=>(ele.section==section))
+            setTotal(arr.length)
             setDist(arr.map((item,index)=>{
                 let rec=record.filter(ele=>(ele.date==item.date))
                 if(rec.length!=0){
@@ -70,6 +74,13 @@ export default function PrintRg({route, navigation}){
                          contentContainerStyle={{paddingBottom:150}}
                          renderItem={renderItem}
                          keyExtractor={item => item.id}
+                         ListFooterComponent={
+                          <View>
+                          <Text>Total Classes: {total}</Text>
+                          <Text>Present: {present}</Text>
+                          <Text>Percentage: {(present*1*100)/(total)}</Text>
+                          </View>
+                         }
                        />
                     }
        
