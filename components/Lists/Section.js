@@ -1,12 +1,12 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, StatusBar, FlatList } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, StatusBar, FlatList } from 'react-native';
 import {ip} from '../ip'
 import { selectUniversity, selectPost, selectId } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay/lib';
-
+import { Button } from '@ui-kitten/components';
 export default function Section({route, navigation}){
     const [list, setList] = useState([])
     const { course_id } = route.params
@@ -48,13 +48,13 @@ export default function Section({route, navigation}){
             section: item.section
         })}>
             <Text>{item.section}</Text>
-            {post=='department_head'?<Button onPress={()=>{
+        </TouchableOpacity>
+            {post=='department_head'?<Button style={{width:200,alignSelf:'center'}} onPress={()=>{
               navigation.navigate('Section Info',{
                 id: course_id,
                 section: item.section
               })
-            }} title="Section Details"/>:null}
-        </TouchableOpacity>
+            }}>Section Details</Button>:null}
         </View>
       );
 
@@ -85,7 +85,7 @@ export default function Section({route, navigation}){
                     navigation.navigate('Create Section',{
                         course_id: course_id
                     })
-                }} title="Create Section" />:null
+                }}>Create Section</Button>:null
             }
             </View>
         </View>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     },
     item: {
       backgroundColor: 'white',
-      padding: 20,
+      padding: 5,
       width:350,
       marginVertical: 8,
       flex:1,
@@ -114,10 +114,5 @@ const styles = StyleSheet.create({
     title: {
       fontSize: 32,
     },
-    flexType:{
-      backgroundColor:'red',
-      display:'flex',
-      flexDirection:'column'
-    }
   });
   

@@ -180,7 +180,7 @@ export default function Course({route, navigation}){
             }
             {
                 post=='department_head'
-                ?<Button onPress={()=>Delcourse(item._id)} title="Course Delete"/>:null
+                ?<Button style={{marginTop:20}} onPress={()=>Delcourse(item._id)} title="Course Delete"/>:null
             }
            
             </View>
