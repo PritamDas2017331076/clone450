@@ -5,7 +5,7 @@ import { Button, View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Ch
 import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
-
+import Spinner from 'react-native-loading-spinner-overlay/lib';
 
 export default function Date({route, navigation}){
     const { course_id, section } = route.params
@@ -61,7 +61,11 @@ export default function Date({route, navigation}){
 
     return(
         <View>
-            {loading?<Text>loading</Text>
+            {loading?<Spinner
+                      visible={true}
+                      textContent={'Loading...'}
+                      textStyle={styles.spinnerTextStyle}
+                    />
                    :<FlatList
                          data={list}
                          contentContainerStyle={{paddingBottom:150}}

@@ -386,7 +386,7 @@ export default function UAdminRegister({navigation}){
                  </TouchableOpacity>
                    
             </Form>
-            <Button onPress={force} title='force' />
+            {/* <Button onPress={force} title='force' /> */}
             </ScrollView>
         </View>
     )

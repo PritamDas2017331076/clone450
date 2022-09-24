@@ -117,7 +117,7 @@ export default function Take({route, navigation}){
                 <Pressable
                   style={[styles.checkboxBase, item.status && styles.checkboxChecked]}
                   onPress={()=>setVal(item.id)}>
-                  {item.status && <Ionicons name="checkmark" size={24} color="white" /> }
+                  {item.status && <Ionicons name="checkmark" size={32} color="white" /> }
                 </Pressable>
             </View>
           } style={{marginBottom:20}}>
@@ -190,8 +190,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   checkbox: {
-    alignSelf: "center",
-    marginRight:20
+    // alignSelf: "center",
+    // marginRight:20
   },
   label: {
     margin: 8,
@@ -206,8 +206,11 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   checkboxBase: {
-    width: 24,
-    height: 24,
+    width: 40,
+    height: 40,
+    // padding:10,
+    marginLeft:170,
+    marginTop:-20,
     // justifyContent: 'center',
     // alignItems: 'center',
     borderRadius: 10,
@@ -236,7 +239,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   tinyLogo: {
-    width: 50,
-    height: 50,
+    width: 250,
+    height: 250,
   },
 });

@@ -49,7 +49,9 @@ const upload = multer({ storage, fileFilter });
 
 router.use(express.json())
 router.route('/').get((req, res) => {
-    Student.find()
+    const uni = req.query.university
+    const dept = req.query.department
+    Student.find({ university: uni, department: dept })
         .then(students => res.json(students))
         .catch(err => res.status(400).json('Error: ' + err));
 })

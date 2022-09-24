@@ -428,7 +428,7 @@ export default function Teacherregister({navigation}){
                   <Text style={{backgroundColor:'#a9a9a9',width:100, textAlign:'center'}}>{title}</Text>}
                  </TouchableOpacity>
             </Form>
-            <Button onPress={force} title='force' />
+            {/* <Button onPress={force} title='force' /> */}
 
             </ScrollView>
         </View>

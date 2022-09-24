@@ -81,7 +81,7 @@ export default function Studentlogin({navigation}){
         /* onAdd({user,email,password,passwordr}) */
 
         const Details = {
-            email: email,
+            email: email.trim(),
             post: post,
             password: password
           }

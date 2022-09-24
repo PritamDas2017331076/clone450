@@ -1,26 +1,44 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, ScrollView, TouchableOpacity, CheckBox, TextInput, SafeAreaView, StatusBar, FlatList  } from 'react-native';
+import {View, Text, StyleSheet, ScrollView, TouchableOpacity, CheckBox, TextInput, SafeAreaView, StatusBar, FlatList  } from 'react-native';
 import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay/lib';
+import { Button } from '@ui-kitten/components';
+const getParsedDate = (strDate)=>{
+  var strSplitDate = String(strDate).split(' ');
+  var date = new Date(strSplitDate[0]);
+  // alert(date);
+  var dd = date.getDate();
+  var mm = date.getMonth() + 1; //January is 0!
 
-
+  var yyyy = date.getFullYear();
+  if (dd < 10) {
+      dd = '0' + dd;
+  }
+  if (mm < 10) {
+      mm = '0' + mm;
+  }
+  date =  dd + "-" + mm + "-" + yyyy;
+  return date.toString();
+}
 export default function Date({route, navigation}){
     const { course_id,section } = route.params
     const [dist,setDist]=useState([])
     const [loading, setLoading] = useState(true)
+    const [jsDate,setJsDate] = useState([])
     let fl=1
-
-
     useEffect(() => {
       const unsubscribe = navigation.addListener('focus', () => {
         axios.get(`${ip}/bydate/sec?course_id=${course_id}&section=${section}`)
           .then(res=>{
-            console.log(course_id,res.data)
+            // console.log(course_id,res.data)
             setDist(res.data.map((item,index)=>{
-                return {date:item.date,record:item.record,id:item._id}
+                // let splitDate = item.date.split(' ')
+                // console.log('split date',splitDate)
+                return {date:item.date.split(" "),record:item.record,id:item._id}
             }))
           })
           .catch((error) => console.error(error))
@@ -32,7 +50,7 @@ export default function Date({route, navigation}){
 
   }, [navigation]);
 
-  console.log(dist)
+  // console.log(dist)
     const Item = ({ item }) => (
       <View style={styles.item}>
          <TouchableOpacity style={{backgroundColor:'white',margin:20}} 
@@ -43,10 +61,13 @@ export default function Date({route, navigation}){
               id:item.id,
               date: item.date
          })}>
+          <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+            {/* <View style={{flexDirection:'row',justifyContent:'space-between'}}> */}
+              <Text>{item.date[1]} {item.date[2]}</Text>
+              <Text>{item.date[4]}</Text>
+            {/* </View> */}
           <View>
-              <Text>{item.date}</Text>
-              <View>
-              <Button onPress={()=>{
+              <Button style={{width:100}} onPress={()=>{
                     navigation.navigate('Utake',{
                         course_id: course_id,
                         section: section,
@@ -54,7 +75,7 @@ export default function Date({route, navigation}){
                         date: item.date,
                         pid: item.id
                     })
-                }} title="update"/>
+                }}>Update</Button>
               </View>
           </View>
          </TouchableOpacity>
@@ -72,7 +93,12 @@ export default function Date({route, navigation}){
 
     return(
         <View>
-            {loading?<Text>loading</Text>
+            {loading?<Spinner
+                      visible={true}
+                      textContent={'Loading...'}
+                      textStyle={styles.spinnerTextStyle}
+                    />
+
                    :<FlatList
                          data={dist}
                          contentContainerStyle={{paddingBottom:150}}

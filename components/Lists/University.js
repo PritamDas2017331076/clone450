@@ -6,7 +6,7 @@ import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 import Department from './Department'
 import { useSelector, useDispatch } from 'react-redux';
-
+import Spinner from 'react-native-loading-spinner-overlay/lib';
 
 export default function University({navigation}){
     const [list, setList] = useState([])
@@ -48,7 +48,12 @@ export default function University({navigation}){
 
     return(
         <View>
-            {loading?<Text>loading</Text>
+            {loading?<Spinner
+              visible={true}
+              textContent={'Loading...'}
+              textStyle={styles.spinnerTextStyle}
+            />
+
                    :<FlatList
                          data={list}
                          renderItem={renderItem}

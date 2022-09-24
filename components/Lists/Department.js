@@ -5,7 +5,7 @@ import { Button, View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaV
 import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
-
+import Spinner from 'react-native-loading-spinner-overlay/lib';
 const Item = ({ item, university, navigation }) => (
     <View style={styles.item}>
       <TouchableOpacity style={{
@@ -52,7 +52,10 @@ export default function Department({route, navigation}){
 
     return(
         <View>
-            {loading?<Text>loading</Text>
+            {loading?<Spinner
+                visible={true}
+                textContent={'Loading...'}
+            />
                    :<FlatList
                         
                          data={list}
