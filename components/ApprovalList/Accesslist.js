@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar, FlatList } from 'react-native';
+import { Button, Image,View, Text, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar, FlatList } from 'react-native';
 import {ip} from '../ip'
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -34,7 +34,7 @@ export default function Accesslist({navigation}){
         const unsubscribe = navigation.addListener('focus', () => {
             axios.get(`${ip}/access/teacher?teacher=${id}`)
             .then(res => {
-                console.log('for ',university,' data ', res.data) 
+                // console.log('for ',university,' data ', res.data) 
                 setList(res.data)
              })
              .catch((error) => console.error(error))
@@ -48,19 +48,31 @@ export default function Accesslist({navigation}){
 
       }, [navigation]);
 
-   console.log('check it out ',f,list)
+  //  console.log('check it out ',f,list)
 
    const Item = ({ item }) => (
     <View style={styles.item}>
       <TouchableOpacity style={{
-            backgroundColor: '#f6f6f6',
+            flexDirection:'row',justifyContent:'space-between'
             }} 
             onPress={()=>navigation.navigate('PrintAc',{
                 un: item._id,
                 id: item.id
         })}>
+          <View>
             <Text>{item.registration_number}</Text>
             <Text>{item.name}</Text>
+            <Text>{item.course_name}</Text>
+          </View>
+          <View>
+              <Image
+              style={styles.tinyLogo}
+              source={{
+                  uri:item.avatar,
+              }}
+              />
+          </View>
+            
       </TouchableOpacity>
     </View>
   );
@@ -91,13 +103,16 @@ const styles = StyleSheet.create({
       marginTop: StatusBar.currentHeight || 0,
     },
     item: {
-      backgroundColor: '#f9c2ff',
+      backgroundColor: 'white',
       padding: 20,
-      marginVertical: 8,
-      marginHorizontal: 16,
+      margin:20
     },
     title: {
       fontSize: 32,
     },
+    tinyLogo:{
+      width:80,
+      height:80,
+    }
   });
   

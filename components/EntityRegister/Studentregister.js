@@ -3,8 +3,9 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 import { Form, FormItem, Picker } from 'react-native-form-component';
 import { useSelector, useDispatch } from 'react-redux'
-import { Input,Icon, Layout } from '@ui-kitten/components';
-import {Text, View, StyleSheet,ScrollView, TouchableOpacity,Button, Image,TouchableWithoutFeedback} from 'react-native'
+import { Input,Icon} from '@ui-kitten/components';
+import {View,StyleSheet,ScrollView, TouchableOpacity, Image,TouchableWithoutFeedback} from 'react-native'
+import {Card,Button, Modal, Text } from '@ui-kitten/components';
 
 ///
 import * as ImagePicker from 'expo-image-picker';
@@ -44,7 +45,8 @@ export default function Studentregister({navigation}){
     const [title,setTitle] = useState('no file choosen')
     const [value, setValue] = React.useState('');
     const [secureTextEntry, setSecureTextEntry] = useState(true)
-      
+    const [visible, setVisible] = React.useState(false);
+
     useEffect(() => {
           axios.get(`${ip}/universities`)
           .then(res => {
@@ -269,8 +271,9 @@ export default function Studentregister({navigation}){
                   ///
                   if (res.data.success) {
                     navigation.dispatch(StackActions.replace('UserProfile'));
+                    setVisible(true)
                   }
-                  navigation.navigate('Home')
+                  // navigation.navigate('Home')
           })
           .catch((error) => {
             console.log(error,error.message)
@@ -539,6 +542,15 @@ export default function Studentregister({navigation}){
             {/* <Button onPress={force} title='force' /> */}
 
             </ScrollView>
+            <Modal visible={visible}>
+            <Card disabled={true}>
+              <Text>User Successfully Registered!</Text>
+              <Text>A verification mail will be sent to your email address</Text>
+              <Button size='small'status = 'success' onPress={() => setVisible(false)}>
+                DISMISS
+              </Button>
+            </Card>
+          </Modal>
         </View>
     )
 }

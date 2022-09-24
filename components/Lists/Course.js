@@ -1,7 +1,9 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, StatusBar, FlatList } from 'react-native';
+import {View,Button,Text,StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, StatusBar, FlatList } from 'react-native';
+// import { Card, Layout, Modal} from '@ui-kitten/components';
+
 import {ip} from '../ip'
 import {
     selectEmail,
@@ -150,6 +152,12 @@ export default function Course({route, navigation}){
 
     const Item = ({ item, university, navigation }) => (
         <View style={styles.item}>
+            <View>
+                <Text style={{fontSize:25,textAlign:'center',marginBottom:10}}>{item.code}</Text>
+                <Text style={{textAlign:'center'}}>{item.name}</Text>
+            </View>
+            <View style={{maxWidth:'80%',marginHorizontal:'10%'}}>
+
             {
                 post=='teacher' ? (id==item.teacher_id || fun(item.collaborator)) 
                 ?<Button  onPress={()=>section(item._id)} title="section"  />:null:null
@@ -175,9 +183,8 @@ export default function Course({route, navigation}){
                 ?<Button onPress={()=>Delcourse(item._id)} title="Course Delete"/>:null
             }
            
-        
-            <Text>{item.code}</Text>
-            <Text>{item.name}</Text>
+            </View>
+
         </View>
       );
 
@@ -225,8 +232,10 @@ const styles = StyleSheet.create({
     item: {
       backgroundColor: 'white',
       padding: 20,
-      marginVertical: 8,
-      marginHorizontal: 16,
+      margin:20,
+      marginBottom:0,
+      
+      
     },
     title: {
       fontSize: 32,

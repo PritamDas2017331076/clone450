@@ -1,10 +1,11 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
 import {ip} from '../ip'
 import { selectUniversity, selectDepartment } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
+import { Button } from '@ui-kitten/components';
 export default function PrintAc({route, navigation}){
     const {un, id} = route.params
 
@@ -80,7 +81,7 @@ export default function PrintAc({route, navigation}){
     }
 
     return(
-        <View>
+        <View >
             <View style={styles.flat}>
                 <View>
                     <Text>Name: {use.name}</Text>
@@ -89,7 +90,7 @@ export default function PrintAc({route, navigation}){
                     <Text>Phone: {use.phone}</Text>
                     <Text>Course Name: {acc.course_name}</Text>
                     <Text>Section: {acc.section}</Text>
-                    <Text>Post: {use.post}</Text>
+                    {/* <Text>Post: {use.post}</Text> */}
                 </View>
                 <View>
                     <Image
@@ -104,14 +105,18 @@ export default function PrintAc({route, navigation}){
               onChangeText={onChangeText}
               value={text}
             />
-            <Button
-              title="Accept"
-              onPress={Accept}
-            />
-            <Button
-              title="Reject"
-              onPress={Reject}
-            />
+            <View style={{flexDirection:'row',justifyContent:'space-around'}}>
+                <Button
+                    status='success'
+                    onPress={Accept}
+                    >Accept
+                </Button>
+                <Button
+                    status='danger'
+                    onPress={Reject}
+                    >Reject
+                </Button>
+            </View>
         </View>
     )
 
@@ -124,15 +129,18 @@ const styles = StyleSheet.create({
       paddingTop: 50,
     },
     tinyLogo: {
-      width: 50,
-      height: 50,
+      width: 120,
+      height: 120,
     },
     logo: {
       width: 66,
       height: 58,
     },
     flat: {
-        flexDirection: 'row'
+        padding:15,
+        flexDirection: 'row',
+        justifyContent:'space-between',
+
       },
   });
   

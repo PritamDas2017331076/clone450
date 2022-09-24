@@ -46,8 +46,8 @@ export default function Studentlist({navigation}){
       })}>
           <View>
             <Text>{item.name}</Text>
-            <Text>{item.email}</Text>
             <Text>{item.registration_number}</Text>
+            <Text>{item.email}</Text>
           </View>
         </TouchableOpacity>
     </View>
@@ -81,8 +81,8 @@ const styles = StyleSheet.create({
       marginTop: StatusBar.currentHeight || 0,
     },
     item: {
-      backgroundColor: '#f9c2ff',
-      padding: 20,
+      backgroundColor: 'white',
+      // padding: 20,
       marginVertical: 8,
       marginHorizontal: 16,
     },

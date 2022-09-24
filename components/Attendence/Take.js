@@ -14,6 +14,7 @@ export default function Take({route, navigation}){
     const { course_id,list,section } = route.params
     const [date, setDate]=useState('')
     const dat=new Date().toString()
+    const zdat = dat.split(" ")
     const [dist, setDist] = useState(list)
     const [record,setRecord]=useState([])
     const [lost,setLost]=useState([])
@@ -21,14 +22,14 @@ export default function Take({route, navigation}){
     const department = useSelector(selectDepartment)
     const [acc, setAcc] = useState('')
     let tt=new Date()
-    console.log('dist',dist,dat)
+    // console.log('dist',dist,dat)
     let f=0
 
     const func = async()=>{
       try{
-        console.log('i am here to do it**********************************')
+        // console.log('i am here to do it**********************************')
         const rs=await axios.get(`${ip}/course/${course_id}`)
-        console.log('course in this case',rs.data)
+        // console.log('course in this case',rs.data)
         setAcc(rs.data)
       }catch(e){
         console.log('error in take effect',e)
@@ -42,22 +43,22 @@ export default function Take({route, navigation}){
   }, []);
 
    const Submit = ()=>{
-    console.log('hello')
-    console.log('record',record)
+    // console.log('hello')
+    // console.log('record',record)
     let dd=[]
     dist.forEach(ele=>{
       if(ele.status==true) {
         dd.push({registration_number: ele.registration_number,avatar: ele.avatar})
       }
     })
-    console.log(dd)
     const dap={
       date: dat,
       section: section
     }
+    console.log('date',dat,date,dap)
     axios.patch(`${ip}/course/record/${course_id}`,dap)
      .then(res=>{
-      console.log('record updated in course',res.data)
+      // console.log('record updated in course',res.data)
      })
      .catch(err=>{
       console.log('error while updating record',err)
@@ -71,21 +72,21 @@ export default function Take({route, navigation}){
       department: department,
       university: university
     }
-    console.log('data = ',data)
+    // console.log('data = ',data)
 
     axios.post(`${ip}/bydate/add`,data)
      .then(res=>{
-       console.log('recorded data',res.data)
+      //  console.log('recorded data',res.data)
      })
      dd.map((ele)=>{
       const chg={
         date: dat,
       
       }
-      console.log('registration',ele.registration_number,chg)
+      // console.log('registration',ele.registration_number,chg)
       axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
         .then(res=>{
-          console.log('for each ',res.data)
+          // console.log('for each ',res.data)
         })
     })
      navigation.goBack()
@@ -149,7 +150,7 @@ export default function Take({route, navigation}){
 
 
     return(
-        <View >
+        <View style={{marginHorizontal:10}}>
             {/*<ul>
                 {
                     list.map(item =>(
@@ -159,8 +160,9 @@ export default function Take({route, navigation}){
                     ))
                 }
             </ul>*/}
-            <View>
-              <Text>{dat}</Text>
+            <View style={{flexDirection:'row',justifyContent:'space-around',padding:10}}>
+              <Text>{zdat[1]} {zdat[2]}</Text>
+              <Text> {zdat[4]}</Text>
             </View>
             <View>
               <FlatList style={{backgroundColor:'white',padding:'5%'}}

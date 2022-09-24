@@ -1,7 +1,8 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
+import { Button,Text } from '@ui-kitten/components';
 import {ip} from '../ip'
 
 export default function PrintS({route, navigation}){
@@ -59,14 +60,14 @@ export default function PrintS({route, navigation}){
             <View style={styles.flat}>
                 <View>
                     <Text>Name: {use.name}</Text>
-                    <Text>Registration Number: {use.registration_number}</Text>
+                    <Text>Reg. Number: {use.registration_number}</Text>
                     <Text>Email: {use.email}</Text>
                     <Text>Phone: {use.phone}</Text>
                     <Text>University: {use.university}</Text>
                     <Text>Department: {use.department}</Text>
                     <Text>Post: {use.post}</Text>
                 </View>
-                <View>
+                <View style = {{}}>
                     <Image
                     style={styles.tinyLogo}
                     source={{
@@ -75,16 +76,19 @@ export default function PrintS({route, navigation}){
                     />
                 </View>
             </View>
-            <Button
-              title="Accept"
-              onPress={Accept}
-            />
-            <Button
-              title="Reject"
-              onPress={Reject}
-            />
+            <View style={{flexDirection:'row',justifyContent:'space-around'}}>
+                <Button
+                onPress={Accept}
+                status='success'
+                >Accept</Button>
+                <Button
+                onPress={Reject}
+                status='danger'
+                >Refect</Button>
+            </View>
         </View>
     )
+
 
 
 
@@ -92,18 +96,21 @@ export default function PrintS({route, navigation}){
 
 const styles = StyleSheet.create({
     container: {
-      paddingTop: 50,
+      paddingTop: 5,
     },
     tinyLogo: {
-      width: 50,
-      height: 50,
+      width: 150,
+      height: 150,
     },
-    logo: {
-      width: 66,
-      height: 58,
-    },
+    // logo: {
+    //   width: 66,
+    //   height: 58,
+    // },
     flat: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        padding:20,
       },
+    
   });
   

@@ -6,7 +6,7 @@ import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay/lib';
-
+import { Card } from '@ui-kitten/components';
 export default function PrintRg({route, navigation}){
     const { course_id, record, section } = route.params
     const [dist, setDist] = useState([])
@@ -15,6 +15,7 @@ export default function PrintRg({route, navigation}){
     const [list, setList]=useState([])
     const [total, setTotal]=useState(0)
     const present=record.length
+    const [zdate,setZdate] = useState()
     let fl=1
 
 
@@ -28,10 +29,10 @@ export default function PrintRg({route, navigation}){
             setDist(arr.map((item,index)=>{
                 let rec=record.filter(ele=>(ele.date==item.date))
                 if(rec.length!=0){
-                  return {date: item.date,status:true,id:index }
+                  return {date: item.date.split(" "),status:true,id:index }
                 }
                 else{
-                  return {date: item.date,status:false,id:index}
+                  return {date: item.date.split(" "),status:false,id:index}
                 }
             }))
           })
@@ -45,13 +46,13 @@ export default function PrintRg({route, navigation}){
 
   const Item = ({ item }) => (
     <View style={styles.item}>
-       <View style={{flexDirection:'row'}}>
-             <Text style={{marginRight :10}}>{item.date}</Text>
-                <Text>
-                {
-                  item.status?'Present':'Absent'
-                }
-             </Text>
+       <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+             <Text style={{marginRight :10}}>{item.date[1]} {item.date[2]} {item.date[4]}</Text>
+              <Text>
+              {
+                item.status?'Present':'Absent'
+              }
+            </Text>
         </View>
     </View>
   );
@@ -75,11 +76,11 @@ export default function PrintRg({route, navigation}){
                          renderItem={renderItem}
                          keyExtractor={item => item.id}
                          ListFooterComponent={
-                          <View>
+                          <Card>
                           <Text>Total Classes: {total}</Text>
                           <Text>Present: {present}</Text>
-                          <Text>Percentage: {(present*1*100)/(total)}</Text>
-                          </View>
+                          <Text>Percentage: {(present*1*100)/(total)}%</Text>
+                          </Card>
                          }
                        />
                     }
@@ -107,8 +108,9 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: 'white',
     padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    margin:20,
+    // marginVertical: 8,
+    // marginHorizontal: 16,
   },
   title: {
     fontSize: 32,
