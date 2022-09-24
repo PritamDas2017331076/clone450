@@ -70,15 +70,18 @@ const styles = StyleSheet.create({
       paddingTop: 50,
     },
     tinyLogo: {
-      width: 50,
-      height: 50,
+      width: 100,
+      height: 100,
     },
     logo: {
       width: 66,
       height: 58,
     },
     flat: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        padding:10,
+        margin:10
       },
   });
   

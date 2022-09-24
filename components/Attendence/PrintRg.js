@@ -22,7 +22,7 @@ export default function PrintRg({route, navigation}){
     useEffect(() => {
         axios.get(`${ip}/course/${course_id}`)
           .then(res=>{
-            console.log('course info ',course_id,res.data)
+            // console.log('course info ',course_id,res.data)
             let arr=res.data.record
             arr=arr.filter(ele=>(ele.section==section))
             setTotal(arr.length)
@@ -76,10 +76,10 @@ export default function PrintRg({route, navigation}){
                          renderItem={renderItem}
                          keyExtractor={item => item.id}
                          ListFooterComponent={
-                          <Card>
-                          <Text>Total Classes: {total}</Text>
-                          <Text>Present: {present}</Text>
-                          <Text>Percentage: {(present*1*100)/(total)}%</Text>
+                          <Card style={{margin:10}}>
+                            <Text>Total Classes: {total}</Text>
+                            <Text>Present: {present}</Text>
+                            <Text>Percentage: {((present*1*100)/(total)).toFixed(2)}%</Text>
                           </Card>
                          }
                        />

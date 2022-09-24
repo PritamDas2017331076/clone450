@@ -26,13 +26,13 @@ export default function CollaboratorC({route, navigation}) {
   const Item = ({ item }) => (
     <View style={styles.item}>
       <TouchableOpacity style={{
-        backgroundColor: '#f6f6f6',
+        backgroundColor: 'white',
       }} 
         onPress={()=>navigation.navigate('Print Collaborator',{
         id: item.id,
         course_id: course_id
     })}>
-        <Text>{item.id}</Text>
+        {/* <Text>{item.id}</Text> */}
         <Text>{item.name}</Text>
         <Text>{item.email}</Text>
     </TouchableOpacity>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
       marginTop: StatusBar.currentHeight || 0,
     },
     item: {
-      backgroundColor: '#f9c2ff',
+      backgroundColor: 'white',
       padding: 20,
       marginVertical: 8,
       marginHorizontal: 16,

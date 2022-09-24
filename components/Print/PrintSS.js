@@ -36,9 +36,9 @@ export default function PrintSS({route, navigation}){
                     <Text>Name: {use.name}</Text>
                     <Text>Email: {use.email}</Text>
                     <Text>Phone: {use.phone}</Text>
-                    <Text>University: {use.university}</Text>
+                    {/* <Text>University: {use.university}</Text> */}
                     <Text>Department: {use.department}</Text>
-                    <Text>Post: {use.post}</Text>
+                    {/* <Text>Post: {use.post}</Text> */}
                 </View>
                 <View>
                     <Image
@@ -65,15 +65,18 @@ const styles = StyleSheet.create({
       paddingTop: 50,
     },
     tinyLogo: {
-      width: 50,
-      height: 50,
+      width: 110,
+      height: 110,
     },
     logo: {
       width: 66,
       height: 58,
     },
     flat: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent:'space-between',
+        padding:10,
+        margin:10
       },
   });
   

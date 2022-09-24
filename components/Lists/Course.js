@@ -168,7 +168,7 @@ export default function Course({route, navigation}){
             }
             {
                 post=='student' ? fun(item.student)
-                ?<Button onPress={()=>colas(item)} title="student record"  />:null:null
+                ?<Button onPress={()=>colas(item)} title="View Attendence"  />:null:null
             }
             {
                 post=='student' ? !fun(item.student)

@@ -91,11 +91,7 @@ export default function Utake({route, navigation}){
    const Item = ({ item }) => (
     <View style={styles.checkboxContainer}>
       <View style={{flexDirection: 'row'}}>
-          <Pressable
-             style={[styles.checkboxBase, item.status && styles.checkboxChecked]}
-             onPress={()=>setVal(item.id)}>
-             {item.status && <Ionicons name="checkmark" size={24} color="white" /> } 
-          </Pressable>
+          
           <View>
               <Image
                   style={styles.tinyLogo}
@@ -105,6 +101,11 @@ export default function Utake({route, navigation}){
               />
           </View>
           <Text>{item.registration_number}</Text>
+          <Pressable
+             style={[styles.checkboxBase, item.status && styles.checkboxChecked]}
+             onPress={()=>setVal(item.id)}>
+             {item.status && <Ionicons name="checkmark" size={24} color="white" /> } 
+          </Pressable>
       </View>
           {/* <Pressable
              style={[styles.checkboxBase, checked && styles.checkboxChecked]}
@@ -127,34 +128,9 @@ export default function Utake({route, navigation}){
 
     return(
         <View>
-            {/*<ul>
-                {
-                    list.map(item =>(
-                        <li key={item._id}>
-                            {item.registration_number}
-                        </li>
-                    ))
-                }
-            </ul>*/}
-            <Text>{date}</Text>
+
+            <Text>{date[1]} {""} {date[2]} {""} {date[4]}</Text>
             <View>
-            {/*<ul>
-                {
-                    dist.map((item,index) =>(
-                        <li key={index}>
-                           
-                               <View style={styles.checkboxContainer}>
-                               <CheckBox
-                                  value={item.status}
-                                  onValueChange={()=>setVal(item.id)}
-                                  style={styles.checkbox}
-                                />
-                                  <Text>{item.registration_number}</Text>
-                                </View>
-                        </li>
-                       ))
-                }
-            </ul>*/}
               <FlatList
                 data={dist}
                 contentContainerStyle={{paddingBottom:150}}
@@ -169,13 +145,14 @@ export default function Utake({route, navigation}){
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     marginTop: StatusBar.currentHeight || 0,
+    padding:10
   },
   checkboxContainer: {
-    flexDirection: "row",
-    marginBottom: 20,
-    alignItems: 'center',
+    // flexDirection: "row",
+    margin: 20,
+    // alignItems: 'center',
   },
   checkbox: {
     alignSelf: "center",

@@ -539,7 +539,7 @@ export default function Studentregister({navigation}){
                  </TouchableOpacity>
                    
             </Form>
-            {/* <Button onPress={force} title='force' /> */}
+            <Button onPress={force}>Force</Button>
 
             </ScrollView>
             <Modal visible={visible}>

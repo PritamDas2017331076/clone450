@@ -37,7 +37,7 @@ export default function Teacherlist({navigation}){
    const Item = ({ item }) => (
     <View style={styles.item}>
       <TouchableOpacity style={{
-          backgroundColor: '#f6f6f6',
+          backgroundColor: 'white',
           margin: 20
         }} 
         onPress={()=>navigation.navigate('PrintT',{
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
       marginTop: StatusBar.currentHeight || 0,
     },
     item: {
-      backgroundColor: '#f9c2ff',
+      backgroundColor: 'white',
       padding: 20,
       marginVertical: 8,
       marginHorizontal: 16,
