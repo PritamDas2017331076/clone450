@@ -23,35 +23,38 @@ router.get('/:secret', async(req, res, next) => {
             }
 
             console.log('student here', student)
-
-            student.status = true;
-            await student.save(async(err) => {
-                if (err) {
-                    res.status(500).send({ message: err });
-                    return;
-                }
-                const id = student._id
-                const university = student.university
-                const department = student.department
-                const name = student.name
-                const email = student.email
-                const registration_number = student.registration_number
-                const avatar = student.avatar
-                console.log('link', avatar)
-                const newApprovalS = new ApprovalS({ id, email, name, avatar, registration_number, university, department });
-                try {
-                    if (student.activated == true) {
-                        res.status(200).send('it has been activated')
-                    } else {
-                        console.log('new one', newApprovalS, newApprovalS.avatar)
-                        await newApprovalS.save();
-                        res.status(200).send({ newApprovalS })
+            if (student.status == true) res.status(400).send('status true');
+            else {
+                student.status = true;
+                await student.save(async(err) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
                     }
-                } catch (e) {
-                    res.status(400).send(e);
-                }
+                    const id = student._id
+                    const university = student.university
+                    const department = student.department
+                    const name = student.name
+                    const email = student.email
+                    const phone = student.phone
+                    const registration_number = student.registration_number
+                    const avatar = student.avatar
+                    console.log('link', avatar)
+                    const newApprovalS = new ApprovalS({ id, email, name, avatar, phone, registration_number, university, department });
+                    try {
+                        if (student.activated == true) {
+                            res.status(200).send('it has been activated')
+                        } else {
+                            console.log('new one', newApprovalS, newApprovalS.avatar)
+                            await newApprovalS.save();
+                            res.status(200).send({ newApprovalS })
+                        }
+                    } catch (e) {
+                        res.status(400).send(e);
+                    }
 
-            });
+                });
+            }
         })
         .catch((e) => console.log("error", e));
 })

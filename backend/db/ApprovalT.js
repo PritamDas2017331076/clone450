@@ -9,11 +9,19 @@ const approveSchema = new Schema({
     },
     email: {
         type: String,
-        required: true,
+        required: true
     },
     name: {
         type: String,
-        required: true,
+        required: true
+    },
+    phone: {
+        type: String,
+        required: true
+    },
+    avatar: {
+        type: String,
+        required: true
     },
     university: {
         type: String,

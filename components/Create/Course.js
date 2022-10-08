@@ -31,7 +31,7 @@ export default function Courses({route, navigation}){
     const post=useSelector(selectPost)
     const token=useSelector(selectToken)
     const id=useSelector(selectId)
-    const {session_id} = route.params
+    const {session_id, session} = route.params
     console.log('post ',post,'token ',token)
 
     
@@ -62,6 +62,7 @@ export default function Courses({route, navigation}){
 
         const Details = {
           session_id: session_id,
+          session: session,
           university: university,
           department: department,
           code: code,

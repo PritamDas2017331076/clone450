@@ -33,28 +33,36 @@ router.get('/:secret', async(req, res, next) => {
                 return res.status(404).send({ message: "University Admin Not found." });
             }
 
-            if (uadmin.status == true) throw new Error('request send already')
+            if (uadmin.status == true) res.status(400).send('status true')
+            else {
 
-            uadmin.status = true;
-            await uadmin.save(async(err) => {
-                if (err) {
-                    console.log('err occurred here in secret approve')
-                    res.status(500).send({ message: err });
-                    return;
-                }
-                const id = uadmin._id
-                const university = uadmin.university
-                const newApproval = new Approval({ id, university });
-                try {
-                    if (uadmin.activated == true) throw new Error('this account is already acticated')
-                    console.log(newApproval)
-                    await newApproval.save();
-                    res.status(200).send({ newApproval })
-                } catch (e) {
-                    res.status(400).send(e);
-                }
+                uadmin.status = true;
+                await uadmin.save(async(err) => {
+                    if (err) {
+                        console.log('err occurred here in secret approve')
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+                    const id = uadmin._id
+                    const university = uadmin.university
+                    const email = uadmin.email
+                    const name = uadmin.name
+                    const phone = uadmin.phone
+                    const avatar = uadmin.avatar
+                    const newApproval = new Approval({ id, university, email, name, phone, avatar });
+                    try {
+                        if (uadmin.activated == true) res.status(400).send('already activated')
+                        else {
+                            console.log(newApproval)
+                            await newApproval.save();
+                            res.status(200).send({ newApproval })
+                        }
+                    } catch (e) {
+                        res.status(400).send(e);
+                    }
 
-            });
+                });
+            }
         })
         .catch((e) => console.log("error", e));
 })

@@ -34,30 +34,35 @@ router.get('/:secret', async(req, res, next) => {
                 return res.status(404).send({ message: "Teacher Not found." });
             }
 
-            if (teacher.status == true) throw new Error('request send already')
+            if (teacher.status == true) res.status(400).send('status true');
+            else {
+                teacher.status = true;
+                await teacher.save(async(err) => {
+                    if (err) {
+                        res.status(500).send({ message: err });
+                        return;
+                    }
+                    const id = teacher._id
+                    const university = teacher.university
+                    const department = teacher.department
+                    const name = teacher.name
+                    const email = teacher.email
+                    const phone = teacher.phone
+                    const avatar = teacher.avatar
+                    const newApprovalT = new ApprovalT({ id, email, name, phone, avatar, university, department });
+                    try {
+                        if (teacher.activated == true) res.status(400).send('already activated');
+                        else {
+                            console.log(newApprovalT)
+                            await newApprovalT.save();
+                            res.status(200).send({ newApprovalT })
+                        }
+                    } catch (e) {
+                        res.status(400).send(e);
+                    }
 
-            teacher.status = true;
-            await teacher.save(async(err) => {
-                if (err) {
-                    res.status(500).send({ message: err });
-                    return;
-                }
-                const id = teacher._id
-                const university = teacher.university
-                const department = teacher.department
-                const name = teacher.name
-                const email = teacher.email
-                const newApprovalT = new ApprovalT({ id, email, name, university, department });
-                try {
-                    if (teacher.activated == true) throw new Error('this account is already acticated')
-                    console.log(newApprovalT)
-                    await newApprovalT.save();
-                    res.status(200).send({ newApprovalT })
-                } catch (e) {
-                    res.status(400).send(e);
-                }
-
-            });
+                });
+            }
         })
         .catch((e) => console.log("error", e));
 })

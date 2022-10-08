@@ -7,6 +7,10 @@ const uSchema = new Schema({
         type: String,
         required: true,
     },
+    session: {
+        type: String,
+        required: true
+    },
     university: {
         type: String,
         required: true,

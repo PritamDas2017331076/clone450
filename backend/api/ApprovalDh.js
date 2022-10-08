@@ -33,7 +33,7 @@ router.get('/:secret', async(req, res, next) => {
                 return res.status(404).send({ message: "Department head Not found." });
             }
 
-            if (dhead.status == true) throw new Error('request send already')
+            if (dhead.status == true) res.status(400).send('status true');
 
             dhead.status = true;
             await dhead.save(async(err) => {
@@ -44,12 +44,18 @@ router.get('/:secret', async(req, res, next) => {
                 const id = dhead._id
                 const university = dhead.university
                 const department = dhead.department
-                const newApprovalDh = new ApprovalDh({ id, university, department });
+                const email = dhead.email
+                const name = dhead.name
+                const phone = dhead.phone
+                const avatar = dhead.avatar
+                const newApprovalDh = new ApprovalDh({ id, university, department, email, phone, name, avatar });
                 try {
-                    if (dhead.activated == true) throw new Error('this account is already acticated')
-                    console.log(newApprovalDh)
-                    await newApprovalDh.save();
-                    res.status(200).send({ newApprovalDh })
+                    if (dhead.activated == true) res.status(400).send('already activated');
+                    else {
+                        console.log(newApprovalDh)
+                        await newApprovalDh.save();
+                        res.status(200).send({ newApprovalDh })
+                    }
                 } catch (e) {
                     res.status(400).send(e);
                 }

@@ -38,7 +38,8 @@ export default function Session({route, navigation}){
             backgroundColor: 'white',
         }} 
         onPress={()=>navigation.navigate('Course List',{
-        session_id: item._id
+        session_id: item._id,
+        session: item.session
       })}>
             <Text>{item.session}</Text>
         </TouchableOpacity>
