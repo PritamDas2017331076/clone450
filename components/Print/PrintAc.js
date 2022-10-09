@@ -38,7 +38,9 @@ export default function PrintAc({route, navigation}){
             registration_number: use.registration_number,
             id: use._id, 
             section: acc.section,
-            avatar: use.avatar
+            avatar: use.avatar,
+            session: use.session,
+            name: use.name
         }
         console.log(chg)
 

@@ -78,6 +78,14 @@ const uSchema = new Schema({
             type: String,
             required: true
         },
+        session: {
+            type: String,
+            required: true
+        },
+        name: {
+            type: String,
+            required: true
+        },
         avatar: {
             type: String,
             required: true
