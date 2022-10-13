@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, Image, TouchableOpacity, SafeAreaView, StatusBar, FlatList } from 'react-native';
+import { Button, View, Text, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar, FlatList } from 'react-native';
 import {ip} from '../ip'
 import { selectUniversity, selectDepartment } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -32,32 +32,23 @@ export default function Studentlist({navigation}){
         return unsubscribe;
       }, [navigation]);
 
-   console.log('check it out ',f,list)
+  //  console.log('check it out ',f,list)
 
    const Item = ({ item }) => (
     <View style={styles.item}>
       <TouchableOpacity style={{
             backgroundColor: '#f6f6f6',
-            margin: 20,
-            flexDirection: 'row'
+            margin: 20
            }} 
            onPress={()=>navigation.navigate('PrintS',{
                 un: item._id,
                 id: item.id
       })}>
           <View>
-          <Text>Name: {item.name}</Text>
-          <Text>Email: {item.email}</Text>
-          <Text>Registration Number: {item.registration_number}</Text>
-         </View>
-         <View>
-            <Image
-                style={styles.tinyLogo}
-                source={{
-                    uri: item.avatar,
-                 }}
-            />
-         </View>
+            <Text>{item.name}</Text>
+            <Text>{item.registration_number}</Text>
+            <Text>{item.email}</Text>
+          </View>
         </TouchableOpacity>
     </View>
   );
@@ -97,9 +88,5 @@ const styles = StyleSheet.create({
     },
     title: {
       fontSize: 32,
-    },
-    tinyLogo: {
-      width: 50,
-      height: 50,
     },
   });

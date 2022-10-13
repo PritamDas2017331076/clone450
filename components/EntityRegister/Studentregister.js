@@ -496,19 +496,20 @@ export default function Studentregister({navigation}){
                     onSelection={(item) => setUniversity(item.value)}
                    />
                 <Picker
+                    items={dist}
+                    label="Pick a Department"
+                    // style={styles.box}
+                    selectedValue={department}
+                    onSelection={(item) => setDepartment(item.value)}
+                    />
+                <Picker
                     items={fist}
                     label="Pick a session"
                     // style={styles.box}
                     selectedValue={session}
                     onSelection={(item) => setSession(item.value)}
                    />
-                <Picker
-                    items={dist}
-                    label="Pick a Department"
-                    // style={styles.box}
-                    selectedValue={department}
-                    onSelection={(item) => setDepartment(item.value)}
-                   />
+             
                   <Input
                     value={password}
                     label='Password'

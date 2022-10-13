@@ -27,7 +27,7 @@ export default function Course({route, navigation}){
     const department = useSelector(selectDepartment)
     const avatar = useSelector(selectAvatar)
     const id = useSelector(selectId)
-    const { session_id, session } = route.params
+    const { session_id } = route.params
     console.log('session id in course ',session_id)
     let f=0
     const [loading, setLoading] = useState(true)
@@ -180,7 +180,7 @@ export default function Course({route, navigation}){
             }
             {
                 post=='department_head'
-                ?<Button style={{marginTop:20}} onPress={()=>Delcourse(item._id)} title="Course Delete"/>:null
+                ?<Button  onPress={()=>Delcourse(item._id)} title="Course Delete"/>:null
             }
            
             </View>
@@ -211,8 +211,7 @@ export default function Course({route, navigation}){
             {
                 post=='teacher'?<Button onPress={()=>{
                     navigation.navigate('Create Course',{
-                        session_id: session_id,
-                        session: session
+                        session_id: session_id
                     })
                 }} title="create  course"/>:null
             }
