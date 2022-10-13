@@ -1,6 +1,6 @@
 {
   "expo": {
-    "owner":"purpleghost",
+    "owner": "purpleghost",
     "name": "CSE450",
     "slug": "CSE450",
     "version": "1.0.0",
@@ -25,11 +25,23 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.purpleghost.CSE450"
     },
     "web": {
       "favicon": "./assets/favicon.png",
-      "build": { "babel": { "include": [ "@ui-kitten/components" ] }}
+      "build": {
+        "babel": {
+          "include": [
+            "@ui-kitten/components"
+          ]
+        }
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "56346325-17a5-41d8-81d1-4024795d162b"
+      }
     }
   }
 }
