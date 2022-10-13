@@ -90,11 +90,11 @@ dheadSchema.statics.findByCredentials = async(email, password) => {
     try {
         const dhead = await Dhead.findOne({ email })
         if (!dhead) {
-            return 'user not found'
+            return -1
         }
         const isMatch = await bcrypt.compare(password, dhead.password)
         if (!isMatch) {
-            return 'pass not matched'
+            return -1
         }
         return dhead;
     } catch (e) {

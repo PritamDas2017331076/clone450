@@ -12,6 +12,13 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 })
 
+router.route('/teacher').get((req, res) => {
+    const teacher_id = req.query.teacher_id
+    Course.find({ teacher_id: teacher_id })
+        .then(course => res.json(course))
+        .catch(err => res.status(400).json('Error: ' + err));
+})
+
 router.route('/session').get((req, res) => {
     const session_id = req.query.session_id
     Course.find({ session_id: session_id })

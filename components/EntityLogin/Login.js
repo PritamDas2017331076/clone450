@@ -110,9 +110,12 @@ export default function Studentlogin({navigation}){
                   navigation.navigate('Home')
               }
            ) 
+           // pd17021999@gmail.com
            .catch(err =>{
-              console.log('hah')
-              console.log(err)
+              console.log(err.response.data)
+              alert(err.response.data)
+            //  console.log(err)
+              //   erralert(err.message.msg)
            })
 
         setEmail('')

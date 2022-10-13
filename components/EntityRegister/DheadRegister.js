@@ -355,7 +355,7 @@ export default function UAdminRegister({navigation}){
         })
         .catch((error) => {
           console.log(error.message)
-          alert('stop it')
+          alert('error occurred')
         })
 
       /* onAdd({user,email,password,passwordr}) */

@@ -133,11 +133,11 @@ uadminSchema.statics.findByCredentials = async(email, password) => {
     try {
         const uadmin = await UAdmin.findOne({ email })
         if (!uadmin) {
-            return 'user not found'
+            return -1
         }
         const isMatch = await bcrypt.compare(password, uadmin.password)
         if (!isMatch) {
-            return 'pass not matched'
+            return -1
         }
         return uadmin;
     } catch (e) {

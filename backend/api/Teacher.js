@@ -59,7 +59,9 @@ const sendConfirmationEmail = (name, email, secret) => {
           <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
           <p>http://localhost:5000/approveT/${secret}</p>
           </div>`,
-    }).catch(err => console.log('errr ', err));
+    }).catch(async(err) => {
+        console.log('error occurred', err)
+    });
 };
 
 const storage = multer.diskStorage({});
@@ -214,21 +216,26 @@ router.route('/login').post(async(req, res) => {
     try {
         let teacher = await Teacher.findByCredentials(req.body.email, req.body.password)
         console.log('got a teacher', teacher)
-        if (teacher.activated == false) {
-            res.status(400).send('Id is not activated')
-            throw new Error('Id is not activated')
-            return
+        if (teacher == -1) {
+            console.log(teacher)
+            res.status(403).send('Email or Password not matched')
         }
-        const token = await teacher.generateAuthToken()
-        const post = teacher.post
-        const university = teacher.university
-        const department = teacher.department
-        const name = teacher.name
-        const email = teacher.email
-        const id = teacher._id
-        const avatar = teacher.avatar
-        console.log(teacher)
-        res.status(200).send({ teacher, token, post, department, university, name, avatar, email, id })
+        if (teacher.activated == false) {
+            console.log('not activated')
+            res.status(403).send('Id is not activated')
+            return
+        } else {
+            const token = await teacher.generateAuthToken()
+            const post = teacher.post
+            const university = teacher.university
+            const department = teacher.department
+            const name = teacher.name
+            const email = teacher.email
+            const id = teacher._id
+            const avatar = teacher.avatar
+            console.log(teacher)
+            res.status(200).send({ teacher, token, post, department, university, name, avatar, email, id })
+        }
     } catch (e) {
         console.log(e.message)
         res.status(400).json(e)

@@ -9,7 +9,6 @@ const studentSchema = new Schema({
     name: {
         type: String,
         required: true,
-        minlength: 3
     },
     email: {
         type: String,
@@ -100,14 +99,14 @@ studentSchema.statics.findByCredentials = async(email, password) => {
     try {
         const student = await Student.findOne({ email })
         if (!student) {
-            return 'user not found'
+            return -1
         }
         console.log('student ', student)
         console.log(password, student.password)
         const isMatch = await bcrypt.compare(password, student.password)
         if (!isMatch) {
             console.log('not matched')
-            return 'pass not matched'
+            return -1
         } else { console.log('matched') }
         return student;
     } catch (e) {
