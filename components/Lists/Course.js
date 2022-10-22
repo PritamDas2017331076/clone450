@@ -27,7 +27,7 @@ export default function Course({route, navigation}){
     const department = useSelector(selectDepartment)
     const avatar = useSelector(selectAvatar)
     const id = useSelector(selectId)
-    const { session_id } = route.params
+    const { session_id,session } = route.params
     console.log('session id in course ',session_id)
     let f=0
     const [loading, setLoading] = useState(true)
@@ -39,7 +39,7 @@ export default function Course({route, navigation}){
             console.log('in course it is working')
             axios.get(`${ip}/course/session?session_id=${session_id}`)
             .then(res => {
-                console.log(' data ', res.data, session_id) 
+                console.log(' data ', res.data, session) 
                 setList(res.data)
              })
              .catch((error) => console.error(error))
@@ -211,7 +211,8 @@ export default function Course({route, navigation}){
             {
                 post=='teacher'?<Button onPress={()=>{
                     navigation.navigate('Create Course',{
-                        session_id: session_id
+                        session_id: session_id,
+                        session: session
                     })
                 }} title="create  course"/>:null
             }

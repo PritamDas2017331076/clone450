@@ -245,6 +245,71 @@ router.post('/addd', upload.single('avatar'), async(req, res) => {
     }
 })
 
+router.post('/drive', async(req, res) => {
+    const name = req.body.name;
+    const email = req.body.email;
+    const phone = req.body.phone;
+    const university = req.body.university;
+    const department = req.body.department;
+    const password = req.body.password;
+    const post = 'student'
+    const activated = true
+    const registration_number = req.body.registration_number
+    const session = req.body.session
+    const status = true
+    const secret = await jwt.sign({ email: email }, 'thisisnewstudent')
+    const avatar = req.body.file
+    console.log(name, email, phone, university, department, registration_number, avatar)
+    let f = 0
+
+    try {
+        const res = await Student.findOne({ email: email })
+        console.log('result which I want to observe', res)
+        if (res != null) console.log('got one')
+        if (res != null) {
+            f = 1
+        }
+    } catch (e) {
+        console.log('student is not used', e)
+    }
+    // console.log('fff', f)
+    if (f) {
+        console.log('ft', f)
+        res.status(400).send('student exists')
+        return
+    }
+    //console.log('request', JSON.stringify(req.body), req.body.files, req.file)
+    /*let image
+    try {
+        image = await cloudinary.v2.uploader.upload(file);
+        console.log('image', image)
+    } catch (error) {
+        res
+            .status(500)
+            .json({ success: false, message: 'server error, try after some time' });
+        console.log('Error while uploading profile image', error.message);
+    }*/
+
+    const newStudent = new Student({ email, name, phone, secret, status, university, avatar, department, post, activated, password, registration_number, session });
+    console.log(newStudent)
+
+    try {
+        await newStudent.save((err) => {
+            if (err) {
+                console.log('error occurred')
+                res.status(500).send({ message: err });
+                return;
+            }
+        })
+        console.log('Student', newStudent)
+        res.status(200).send(newStudent)
+    } catch (e) {
+        console.log(e.message)
+        res.status(400).send(e);
+    }
+})
+
+
 
 router.route('/login').post(async(req, res) => {
     try {

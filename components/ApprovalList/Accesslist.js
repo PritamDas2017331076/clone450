@@ -63,6 +63,7 @@ export default function Accesslist({navigation}){
             <Text>{item.registration_number}</Text>
             <Text>{item.name}</Text>
             <Text>{item.course_name}</Text>
+            <Text>{item.section}</Text>
           </View>
           <View>
               <Image
