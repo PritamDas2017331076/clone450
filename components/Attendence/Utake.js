@@ -53,7 +53,7 @@ export default function Utake({route, navigation}){
 
   }, []);
 
-   const Submit = ()=>{
+   const Submit = async()=>{
     console.log('hello')
     console.log('record',record)
     let dd=[]
@@ -66,26 +66,45 @@ export default function Utake({route, navigation}){
     const data={
       record: dd,
     }
-    axios.patch(`${ip}/bydate/${pid}`,data)
-     .then(res=>{
-       console.log('recorded data',res.data)
-     })
-     dist.map((ele)=>{
+    try{
+      const res=await axios.patch(`${ip}/bydate/${pid}`,data)
+      console.log('suucess while updating byate',res.data)
+    }catch(e){
+      console.log('error in bydate',e) 
+    }
+    // axios.patch(`${ip}/bydate/${pid}`,data)
+    //  .then(res=>{
+    //    console.log('recorded data',res.data)
+    //  })
+     dist.map(async(ele)=>{
       const chg={
         date: date,
       }
       console.log('registration',ele.registration_number,chg)
       if(ele.status==true){
-        axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
-        .then(res=>{
-          console.log('date udated sr ',res.data)
-        })
+        try{
+          const res=await axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+          console.log('suucess while updating byregsr',res.data)
+        }catch(e){
+          console.log('error in byregsr',e) 
+        }
+        // axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+        // .then(res=>{
+        //   console.log('date udated sr ',res.data)
+        // })
       }
       else{
-        axios.patch(`${ip}/byreg/srd?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
-        .then(res=>{
-          console.log('date updated srd ',res.data)
-        })
+        try{
+          const res=await axios.patch(`${ip}/byreg/srd?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+          console.log('suucess while updating byregsrd',res.data)
+        }catch(e){
+          console.log('error in byregsrd',e) 
+        }
+        
+        // axios.patch(`${ip}/byreg/srd?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+        // .then(res=>{
+        //   console.log('date updated srd ',res.data)
+        // })
       }
     })
      navigation.goBack()

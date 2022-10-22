@@ -29,7 +29,7 @@ export default function Take({route, navigation}){
       try{
         // console.log('i am here to do it**********************************')
         const rs=await axios.get(`${ip}/course/${course_id}`)
-        // console.log('course in this case',rs.data)
+         console.log('course in this case',rs.data)
         setAcc(rs.data)
       }catch(e){
         console.log('error in take effect',e)
@@ -40,9 +40,10 @@ export default function Take({route, navigation}){
     useEffect(() => {
       func()
 
+
   }, []);
 
-   const Submit = ()=>{
+   const Submit = async()=>{
     // console.log('hello')
     // console.log('record',record)
     let dd=[]
@@ -55,14 +56,21 @@ export default function Take({route, navigation}){
       date: dat,
       section: section
     }
-    console.log('date',dat,date,dap)
-    axios.patch(`${ip}/course/record/${course_id}`,dap)
-     .then(res=>{
-      // console.log('record updated in course',res.data)
-     })
-     .catch(err=>{
-      console.log('error while updating record',err)
-     })
+   // console.log('date',dat,date,dap)
+    // axios.patch(`${ip}/course/record/${course_id}`,dap)
+    //  .then(res=>{
+    //    console.log('record updated in course',res.data)
+    //  })
+    //  .catch(err=>{
+    //   console.log('error while updating record',err.message)
+    //  })
+    try{
+      const res=await axios.patch(`${ip}/course/record/${course_id}`,dap);
+      console.log('record updated in course',res.data)
+    }catch(e){
+      console.log('error while updating record',err.message)
+
+    }
     const data={
       date: dat,
       record: dd,
@@ -74,20 +82,40 @@ export default function Take({route, navigation}){
     }
     // console.log('data = ',data)
 
-    axios.post(`${ip}/bydate/add`,data)
-     .then(res=>{
-      //  console.log('recorded data',res.data)
-     })
-     dd.map((ele)=>{
+    // axios.post(`${ip}/bydate/add`,data)
+    //  .then(res=>{
+    //     console.log('recorded data',res.data)
+    //  })
+    //  .catch(e=>{
+    //   console.log('bydate',e)
+    // })
+    try{
+      const res=await axios.post(`${ip}/bydate/add`,data)
+      console.log('recorded data',res.data)
+    }
+    catch(e){
+      console.log('bydate',e)
+    }
+     dd.map(async(ele)=>{
       const chg={
         date: dat,
       
       }
       // console.log('registration',ele.registration_number,chg)
-      axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
-        .then(res=>{
-          // console.log('for each ',res.data)
-        })
+      // axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+      //   .then(res=>{
+      //      console.log('for each ',res.data)
+      //   })
+      //   .catch(e=>{
+      //     console.log('byreg',e.message)
+      //   })
+      try{
+        const res= await axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+        console.log('byreg succeeded')
+      }
+      catch(e){
+        console.log('error in byreg',e.message)
+      }
     })
      navigation.goBack()
 

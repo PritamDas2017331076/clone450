@@ -7,4 +7,4 @@
 7) fault tolerance
 8) add new feature(query,search etc)
 9) offline use
-10) approve all
+1

@@ -31,6 +31,7 @@ export default function Date({route, navigation}){
     const [jsDate,setJsDate] = useState([])
     let fl=1
     useEffect(() => {
+      console.log('i have enterd in date list')
       const unsubscribe = navigation.addListener('focus', () => {
         axios.get(`${ip}/bydate/sec?course_id=${course_id}&section=${section}`)
           .then(res=>{

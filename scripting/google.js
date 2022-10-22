@@ -6,9 +6,6 @@ const app = express()
 
 app.get('/',async (req,res)=>{
     ///crediantials.json is a service account created from console.cloud.google.com
-    // console.log('current path = ',__dirname)
-    // path1 = path.resolve(__dirname,'scripting','credentials.json')
-    console.log("path1 ",path1)
     const auth = new google.auth.GoogleAuth({
         keyFile:'scripting/credentials.json',
         scopes:"https://www.googleapis.com/auth/spreadsheets",

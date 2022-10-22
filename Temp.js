@@ -8,3 +8,5 @@ const FacebookIcon = (props) => (
 export const LoginButton = () => (
   <Button accessoryLeft={FacebookIcon}>Login with Facebook</Button>
 );
+
+

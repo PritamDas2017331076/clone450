@@ -9,17 +9,36 @@ import { useSelector, useDispatch } from 'react-redux';
 
 export default function PrintDt({route, navigation}){
     const { record, course_id, section,id,date } = route.params
-    console.log(course_id,id,date)
+    console.log('kkd',course_id,id,date)
     const [list, setList]=useState([])
     const [total, setTotal]=useState(0)
     const present=record.length
 
 
     useEffect(() => {
+      console.log('got it na??')
       axios.get(`${ip}/course/${course_id}`)
       .then(res=>{
+        //console.log('student data in printdt',res.data.student)
         let arr=res.data.student
         arr=arr.filter(ele=>(ele.section==section))
+        //console.log('arr',arr)
+        arr.sort(function(a,b){
+          if(a.registration_number<b.registration_number) return -1
+          else return 0
+        })
+       // console.log('all arry',arr)
+        let obj=arr[arr.length-1].registration_number.substring(0,4)
+        let brr=[]
+        let crr=[]
+        arr.forEach((a)=>{
+          if(a.registration_number.substring(0,4)==obj)brr.push(a)
+          else crr.push(a)
+        })
+        brr=brr.concat(crr)
+        arr=brr
+        console.log('sorted array arr',brr)
+        //console.log('sortted in printdt',arr)
         setList(arr.map((item, index)=>{
           let arr=record.filter((ele)=>(ele.registration_number==item.registration_number))
           if(arr.length==0){
