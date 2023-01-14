@@ -35,16 +35,31 @@ export default function UAdminRegister({navigation}){
     const [progress, setProgress] = useState(0);
     const [title,setTitle] = useState('no file choosen')
 
-    useEffect(() => {
-          axios.get(`${ip}/universities`)
-          .then(res => {
-              console.log('data ', res.data) 
+    const effect = async()=>{
+      try{
+        const res=await axios.get(`${ip}/universities`)
+        console.log('data ', res.data) 
 
               setList(res.data.map( (s) => {
                 return {value:s.abbreviation, label:s.university}
             }))
             console.log(list)
-         }) ;
+      }catch(err){
+        console.log('university find for uadmin register',err)
+      }
+    }
+
+    useEffect(() => {
+      effect()
+        //   axios.get(`${ip}/universities`)
+        //   .then(res => {
+        //       console.log('data ', res.data) 
+
+        //       setList(res.data.map( (s) => {
+        //         return {value:s.abbreviation, label:s.university}
+        //     }))
+        //     console.log(list)
+        //  }) ;
   
     }, []);
     const openImageLibrary = async () => {
@@ -68,7 +83,7 @@ export default function UAdminRegister({navigation}){
       }
     };
 
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
         //e.preventDefault()
 
         if(!name){
@@ -163,25 +178,44 @@ export default function UAdminRegister({navigation}){
         
         console.log(formData,ip)
 
-         axios.post(`${ip}/university_admin/add`,formData,{
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'multipart/form-data',
-          },
-         })
-          .then(res => {
-            console.log(res.data)
+        try{
+          const res=await axios.post(`${ip}/university_admin/add`,formData,{
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'multipart/form-data',
+            },
+           })
+           console.log(res.data)
 
             ///
             if (res.data.success) {
               navigation.dispatch(StackActions.replace('UserProfile'));
             }
             navigation.navigate('Home')
-             })
-          .catch((error) => {
-            console.log(error.message)
-            alert('stop it')
-          })
+        }catch(error){
+          console.log(error.message)
+          alert('stop it')
+        }
+
+        //  axios.post(`${ip}/university_admin/add`,formData,{
+        //   headers: {
+        //     Accept: 'application/json',
+        //     'Content-Type': 'multipart/form-data',
+        //   },
+        //  })
+        //   .then(res => {
+        //     console.log(res.data)
+
+        //     ///
+        //     if (res.data.success) {
+        //       navigation.dispatch(StackActions.replace('UserProfile'));
+        //     }
+        //     navigation.navigate('Home')
+        //      })
+        //   .catch((error) => {
+        //     console.log(error.message)
+        //     alert('stop it')
+        //   })
 
         /* onAdd({user,email,password,passwordr}) */
 
@@ -197,7 +231,7 @@ export default function UAdminRegister({navigation}){
         
     }
 
-    const force = (e) => {
+    const force = async(e) => {
       //e.preventDefault()
 
       if(!name){
@@ -292,25 +326,44 @@ export default function UAdminRegister({navigation}){
       
       console.log(formData,ip)
 
-       axios.post(`${ip}/university_admin/addd`,formData,{
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'multipart/form-data',
-        },
-       })
-        .then(res => {
-          console.log(res.data)
+      try{
+        const res=await axios.post(`${ip}/university_admin/addd`,formData,{
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+         })
+         console.log(res.data)
 
           ///
           if (res.data.success) {
             navigation.dispatch(StackActions.replace('UserProfile'));
           }
           navigation.navigate('Home')
-           })
-        .catch((error) => {
-          console.log(error.message)
-          alert('stop it')
-        })
+      }catch(error){
+        console.log(error.message)
+        alert('stop it')
+      }
+
+      //  axios.post(`${ip}/university_admin/addd`,formData,{
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'multipart/form-data',
+      //   },
+      //  })
+      //   .then(res => {
+      //     console.log(res.data)
+
+      //     ///
+      //     if (res.data.success) {
+      //       navigation.dispatch(StackActions.replace('UserProfile'));
+      //     }
+      //     navigation.navigate('Home')
+      //      })
+      //   .catch((error) => {
+      //     console.log(error.message)
+      //     alert('stop it')
+      //   })
 
       /* onAdd({user,email,password,passwordr}) */
 

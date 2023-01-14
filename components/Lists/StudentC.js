@@ -9,17 +9,29 @@ import { useSelector, useDispatch } from 'react-redux';
 export default function StudentC({route, navigation}) {
   const { course_id, section } = route.params
   const [list, setList] = useState([])
+  const effect = async()=>{
+    try{
+      const res=await axios.get(`${ip}/course/${course_id}`)
+      console.log(' data ', res.data) 
+      let dd=res.data.student
+      dd=dd.filter(st=>st.section==section)
+      setList(dd)
+    }catch(error){
+      console.log('error in studentc',error)
+    }
+  }
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-        axios.get(`${ip}/course/${course_id}`)
-        .then(res => {
-            console.log(' data ', res.data) 
-            let dd=res.data.student
-            dd=dd.filter(st=>st.section==section)
-            setList(dd)
-         })
-         .catch((error) => console.error(error))
+      effect()
+        // axios.get(`${ip}/course/${course_id}`)
+        // .then(res => {
+        //     console.log(' data ', res.data) 
+        //     let dd=res.data.student
+        //     dd=dd.filter(st=>st.section==section)
+        //     setList(dd)
+        //  })
+        //  .catch((error) => console.error(error))
     });
 
     return unsubscribe;

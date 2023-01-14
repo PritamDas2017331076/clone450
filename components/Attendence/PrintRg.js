@@ -17,30 +17,51 @@ export default function PrintRg({route, navigation}){
     const present=record.length
     const [zdate,setZdate] = useState()
     let fl=1
-
+    const effect = async()=>{
+      try{
+        const res=await axios.get(`${ip}/course/${course_id}`)
+        // console.log('course info ',course_id,res.data)
+        let arr=res.data.record
+        arr=arr.filter(ele=>(ele.section==section))
+        setTotal(arr.length)
+        setDist(arr.map((item,index)=>{
+            let rec=record.filter(ele=>(ele.date==item.date))
+            if(rec.length!=0){
+              return {date: item.date.split(" "),status:true,id:index }
+            }
+            else{
+              return {date: item.date.split(" "),status:false,id:index}
+            }
+        }))
+        setLoading(false)
+      }catch(error){
+        console.error('error',error.message)
+      }
+    }
 
     useEffect(() => {
-        axios.get(`${ip}/course/${course_id}`)
-          .then(res=>{
-            // console.log('course info ',course_id,res.data)
-            let arr=res.data.record
-            arr=arr.filter(ele=>(ele.section==section))
-            setTotal(arr.length)
-            setDist(arr.map((item,index)=>{
-                let rec=record.filter(ele=>(ele.date==item.date))
-                if(rec.length!=0){
-                  return {date: item.date.split(" "),status:true,id:index }
-                }
-                else{
-                  return {date: item.date.split(" "),status:false,id:index}
-                }
-            }))
-          })
-          .catch((error) => console.error('error',error.message))
-          .finally(() => {
-            setLoading(false)
-            fl=0 ;
-          });
+        effect()
+        // axios.get(`${ip}/course/${course_id}`)
+        //   .then(res=>{
+        //     // console.log('course info ',course_id,res.data)
+        //     let arr=res.data.record
+        //     arr=arr.filter(ele=>(ele.section==section))
+        //     setTotal(arr.length)
+        //     setDist(arr.map((item,index)=>{
+        //         let rec=record.filter(ele=>(ele.date==item.date))
+        //         if(rec.length!=0){
+        //           return {date: item.date.split(" "),status:true,id:index }
+        //         }
+        //         else{
+        //           return {date: item.date.split(" "),status:false,id:index}
+        //         }
+        //     }))
+        //   })
+        //   .catch((error) => console.error('error',error.message))
+        //   .finally(() => {
+        //     setLoading(false)
+        //     fl=0 ;
+        //   });
 
   }, []);
 

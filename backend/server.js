@@ -1,4 +1,4 @@
-const express = require('express');
+const express = NodeRequire('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');

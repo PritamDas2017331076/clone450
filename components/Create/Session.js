@@ -28,7 +28,7 @@ export default function Sessions({navigation}){
     const department = useSelector(selectDepartment)
 
     
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
         //e.preventDefault()
 
         if(!session){
@@ -47,16 +47,24 @@ export default function Sessions({navigation}){
         }
         
         console.log(Details,ip)
+        try{
+          const res=await axios.post(`${ip}/session/add`,Details)
+          console.log('session data ',res.data)
+          navigation.navigate('Home')
+        }catch(error){
+          console.log(error.message)
+          alert('stop it')
+        }
 
-         axios.post(`${ip}/session/add`,Details)
-          .then(res => {
-            console.log('dhead data ',res.data)
-               navigation.navigate('Home')
-             })
-          .catch((error) => {
-            console.log(error.message)
-            alert('stop it')
-          })
+        //  axios.post(`${ip}/session/add`,Details)
+        //   .then(res => {
+        //     console.log('session data ',res.data)
+        //        navigation.navigate('Home')
+        //      })
+        //   .catch((error) => {
+        //     console.log(error.message)
+        //     alert('stop it')
+        //   })
 
         /* onAdd({user,email,password,passwordr}) */
 

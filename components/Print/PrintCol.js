@@ -11,28 +11,47 @@ export default function PrintCol({route, navigation}){
     const [use, setUse] = useState('')
     const [text, onChangeText] = useState('')
     const [acc, setAcc] = useState('')
+    const effect = async()=>{
+        try{
+            const res=await axios.get(`${ip}/teacher/${id}`)
+            console.log('data for this id ',res.data)
+            setUse(res.data)
+        }catch(error){
+            console.log(error)
+        }
+       
+    }
 
     useEffect(() => {
-        axios.get(`${ip}/teacher/${id}`)
-            .then(res => {
-                console.log('data for this id ',res.data)
-                setUse(res.data)
-            })
+        effect()
+        // axios.get(`${ip}/teacher/${id}`)
+        //     .then(res => {
+        //         console.log('data for this id ',res.data)
+        //         setUse(res.data)
+        //     })
 
             
     },[])
 
-    const Accept = ()=>{
+    const Accept = async()=>{
         const chg = {
             id: id,
         }
         console.log(chg)
 
-        axios.patch(`${ip}/course/collaboratord/${course_id}`,chg)
-            .then(res => {
-                console.log('data deleted in colaborator ',res.data)
-                navigation.goBack();
-            })
+        try{
+            const res=await axios.patch(`${ip}/course/collaboratord/${course_id}`,chg)
+            console.log('data deleted in colaborator ',res.data)
+            navigation.goBack();
+        }catch(error){
+            console.log(error)
+        }
+
+        // axios.patch(`${ip}/course/collaboratord/${course_id}`,chg)
+        //     .then(res => {
+        //         console.log('data deleted in colaborator ',res.data)
+        //         navigation.goBack();
+        //     })
         
     }
 

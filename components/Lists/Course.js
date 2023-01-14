@@ -31,22 +31,33 @@ export default function Course({route, navigation}){
     console.log('session id in course ',session_id)
     let f=0
     const [loading, setLoading] = useState(true)
+    const effect = async()=>{
+        try{
+          const res=await axios.get(`${ip}/course/session?session_id=${session_id}`)
+          console.log(' data ', res.data, session) 
+          setList(res.data)
+          setLoading(false)
+        }catch(error){
+          console.error(error)
+        }
+      }
 
 
     useEffect(() => {
         let fl=1
         const unsubscribe = navigation.addListener('focus', () => {
             console.log('in course it is working')
-            axios.get(`${ip}/course/session?session_id=${session_id}`)
-            .then(res => {
-                console.log(' data ', res.data, session) 
-                setList(res.data)
-             })
-             .catch((error) => console.error(error))
-             .finally(() => {
-               setLoading(false)
-               fl=0 ;
-             });
+            effect()
+            // axios.get(`${ip}/course/session?session_id=${session_id}`)
+            // .then(res => {
+            //     console.log(' data ', res.data, session) 
+            //     setList(res.data)
+            //  })
+            //  .catch((error) => console.error(error))
+            //  .finally(() => {
+            //    setLoading(false)
+            //    fl=0 ;
+            //  });
         });
     
         return unsubscribe;
@@ -54,10 +65,10 @@ export default function Course({route, navigation}){
 
    console.log('check it out ',f,list)
 
-    const accept = (item)=>{
+    const accept = async(item)=>{
 
-        axios.get(`${ip}/access`)
-         .then(res=>{
+        try{
+            const res=await axios.get(`${ip}/access`)
             let data=res.data
             data=data.filter(ele => (ele.course_id==item._id && ele.teacher==item.teacher_id && ele.id==id))
             if(data.length==0){
@@ -67,7 +78,22 @@ export default function Course({route, navigation}){
             }else{
                 alert('you have already requested')
             }
-         })
+        }catch(error){
+            console.log('error in coursejs accet func',error)
+        }
+
+        // axios.get(`${ip}/access`)
+        //  .then(res=>{
+        //     let data=res.data
+        //     data=data.filter(ele => (ele.course_id==item._id && ele.teacher==item.teacher_id && ele.id==id))
+        //     if(data.length==0){
+        //         navigation.navigate('Sectionform',{
+        //             course_id: item._id,
+        //          })
+        //     }else{
+        //         alert('you have already requested')
+        //     }
+        //  })
 
         
 
@@ -87,9 +113,19 @@ export default function Course({route, navigation}){
         else return true
     }
 
-    const colab = (item)=>{
-        axios.get(`${ip}/approveCo/`)
-         .then(res =>{
+    const funn = async(dat)=>{
+        try{
+            const ress=await axios.post(`${ip}/approveCo/add`,dat)
+            console.log('approval for colaboration',ress.data)
+
+        }catch(err){
+            console.log('error in coursejs funn',err)
+        }
+    }
+
+    const colab = async(item)=>{
+        try{
+            const res=await axios.get(`${ip}/approveCo/`)
             let data=res.data
             data=data.filter(ele=>(ele.course_id==item._id && ele.teacher==item.teacher_id && ele.id==id))
             if(data.length==0){
@@ -104,20 +140,53 @@ export default function Course({route, navigation}){
                     teacher: item.teacher_id,
                     avatar: avatar
                 }
+                funn(dat)
         
-                axios.post(`${ip}/approveCo/add`,dat)
-                  .then(res=>{
-                    console.log('approval for colaboration',res.data)
-                  })
-                  .catch(err=>{
-                    console.log('error while colab approval',err)
-                  })
+                // axios.post(`${ip}/approveCo/add`,dat)
+                //   .then(res=>{
+                //     console.log('approval for colaboration',res.data)
+                //   })
+                //   .catch(err=>{
+                //     console.log('error while colab approval',err)
+                //   })
             }
             else{
                 alert('you have requested already')
             }
 
-         })
+        }catch(error){
+            console.log('error in coursejs colab func',error)
+        }
+        // axios.get(`${ip}/approveCo/`)
+        //  .then(res =>{
+        //     let data=res.data
+        //     data=data.filter(ele=>(ele.course_id==item._id && ele.teacher==item.teacher_id && ele.id==id))
+        //     if(data.length==0){
+        //         const dat = {
+        //             id: id,
+        //             name: name,
+        //             email: email, 
+        //             university: university,
+        //             department: department,
+        //             course_id: item._id,
+        //             course_name: item.name,
+        //             teacher: item.teacher_id,
+        //             avatar: avatar
+        //         }
+        
+        //         axios.post(`${ip}/approveCo/add`,dat)
+        //           .then(res=>{
+        //             console.log('approval for colaboration',res.data)
+        //           })
+        //           .catch(err=>{
+        //             console.log('error while colab approval',err)
+        //           })
+        //     }
+        //     else{
+        //         alert('you have requested already')
+        //     }
+
+        //  })
 
 
     }
@@ -134,11 +203,11 @@ export default function Course({route, navigation}){
         student = student.filter(item =>{
             return (item.id==id)
         })
-        student.forEach(item => {
+        student.forEach(async(item) => {
             let section = item.section
             let registration_number = item.registration_number
-            axios.get(`${ip}/byreg/srro?course_id=${course_id}&section=${section}&registration_number=${registration_number}`)
-             .then(res=>{
+            try{
+                const res=await axios.get(`${ip}/byreg/srro?course_id=${course_id}&section=${section}&registration_number=${registration_number}`)
                 const data=res.data
                 console.log(data)
                 navigation.navigate('PrintRg',{
@@ -146,7 +215,19 @@ export default function Course({route, navigation}){
                     course_id: course_id,
                     section: section
                 })
-             })
+            }catch(error){
+                console.log('error in coursejs colas function',error)
+            }
+            // axios.get(`${ip}/byreg/srro?course_id=${course_id}&section=${section}&registration_number=${registration_number}`)
+            //  .then(res=>{
+            //     const data=res.data
+            //     console.log(data)
+            //     navigation.navigate('PrintRg',{
+            //         record: data.record,
+            //         course_id: course_id,
+            //         section: section
+            //     })
+            //  })
         })
     }
 

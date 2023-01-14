@@ -13,18 +13,29 @@ export default function University({navigation}){
     let f=0
     const [loading, setLoading] = useState(true)
 
+    const effect = async()=>{
+      try{
+        const res=await axios.get(`${ip}/universities`)
+        console.log(' data ', res.data) 
+        setList(res.data)
+      }catch(error){
+        console.log('error in univerity',error)
+      }
+    }
+
     useEffect(() => {
       let fl=1
-      axios.get(`${ip}/university_admin`)
-        .then(res => {
-            console.log(' data ', res.data) 
-            setList(res.data)
-         })
-         .catch((error) => console.error(error))
-         .finally(() => {
-               setLoading(false)
-               fl=0 ;
-          });
+      effect()
+      // axios.get(`${ip}/universities`)
+      //   .then(res => {
+      //       console.log(' data ', res.data) 
+      //       setList(res.data)
+      //    })
+      //    .catch((error) => console.error(error))
+      //    .finally(() => {
+      //          setLoading(false)
+      //          fl=0 ;
+      //     });
     }, []);
 
    console.log('check it out ',f,list)

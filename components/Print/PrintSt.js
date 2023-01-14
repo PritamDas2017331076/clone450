@@ -12,12 +12,24 @@ export default function PrintSt({route, navigation}){
     const [text, onChangeText] = useState('')
     const [acc, setAcc] = useState('')
 
+    const effect = async()=>{
+        try{
+            const res=await axios.get(`${ip}/student/${id}`)
+            console.log('data for this id ',res.data)
+            setUse(res.data)
+        }catch(error){
+            console.log(error)
+        }
+       
+    }
+
     useEffect(() => {
-        axios.get(`${ip}/student/${id}`)
-            .then(res => {
-                console.log('data for this id ',res.data)
-                setUse(res.data)
-            })
+        effect()
+        // axios.get(`${ip}/student/${id}`)
+        //     .then(res => {
+        //         console.log('data for this id ',res.data)
+        //         setUse(res.data)
+        //     })
 
             
     },[])

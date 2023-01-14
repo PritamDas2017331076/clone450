@@ -11,24 +11,41 @@ export default function Date({route, navigation}){
     const { course_id, section } = route.params
     const [list,setList]=useState([])
     const [loading, setLoading] = useState(true)
-
-
-    useEffect(() => {
-        let fl=1
+    const effect = async()=>{
+      try{
         console.log(course_id,section)
-        axios.get(`${ip}/byreg/srr?course_id=${course_id}&section=${section}`)
-        .then(res => {
-            console.log(' data ', res.data)
-            let arr=res.data
-            console.log(arr)
-         //   arr=arr.filter(item=>(item.section==section))
-            console.log(arr)
-            setList(arr.map((item,index)=>{
-                return {registration_number:item.registration_number,record:item.record,avatar:item.avatar,id:index}
-            }))
-       })
-       .catch(err=>{console.log('error reg.js',err)})
-       .finally(()=>{setLoading(false) })
+        const res=await axios.get(`${ip}/byreg/srr?course_id=${course_id}&section=${section}`)
+        console.log(' data ', res.data)
+          let arr=res.data
+          console.log(arr)
+       //   arr=arr.filter(item=>(item.section==section))
+          console.log(arr)
+          setList(arr.map((item,index)=>{
+              return {registration_number:item.registration_number,record:item.record,avatar:item.avatar,id:index}
+          }))
+          setLoading(false)
+      }catch(err){
+        console.log('error reg.js',err)
+      }
+    }
+
+    useEffect(async() => {
+        effect()
+      //   let fl=1
+      //   console.log(course_id,section)
+      //   axios.get(`${ip}/byreg/srr?course_id=${course_id}&section=${section}`)
+      //   .then(res => {
+      //       console.log(' data ', res.data)
+      //       let arr=res.data
+      //       console.log(arr)
+      //    //   arr=arr.filter(item=>(item.section==section))
+      //       console.log(arr)
+      //       setList(arr.map((item,index)=>{
+      //           return {registration_number:item.registration_number,record:item.record,avatar:item.avatar,id:index}
+      //       }))
+      //  })
+      //  .catch(err=>{console.log('error reg.js',err)})
+      //  .finally(()=>{setLoading(false) })
 
   }, []);
   console.log(list)

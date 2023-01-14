@@ -41,46 +41,131 @@ export default function Sectionform({route, navigation}){
     const [loading3, setLoading3] = useState(true)
 
 
-
-
-    useEffect(() => {
+    const effect=async()=>{
       console.log(avatar)
       let f1=1,f2=1,f3=1
-      axios.get(`${ip}/course/${course_id}`)
-        .then(res => {
-            console.log(' data ', res.data)
-            setList(res.data.section.map( (s) => {
-                return {value:s._id, label:s.section}
-            }))
-            setTeacher(res.data.teacher_id)
-            setCame(res.data.name)
-         })
-         .catch((error) => console.error(error))
-         .finally(() => {
-               setLoading1(false)
-               f1=0 ;
-          });
+      try{
+        const res=await axios.get(`${ip}/course/${course_id}`)
+        console.log(' data ', res.data)
+        setList(res.data.section.map( (s) => {
+            return {value:s._id, label:s.section}
+        }))
+        setTeacher(res.data.teacher_id)
+        setCame(res.data.name)
+        setLoading1(false)
+      }catch(error){
+        console.log('error in sectionformjs try1',error)
+      }
+      // axios.get(`${ip}/course/${course_id}`)
+      //   .then(res => {
+      //       console.log(' data ', res.data)
+      //       setList(res.data.section.map( (s) => {
+      //           return {value:s._id, label:s.section}
+      //       }))
+      //       setTeacher(res.data.teacher_id)
+      //       setCame(res.data.name)
+      //    })
+      //    .catch((error) => console.error(error))
+      //    .finally(() => {
+      //          setLoading1(false)
+      //          f1=0 ;
+      //     });
 
-       axios.get(`${ip}/${post}/me`,{
+      try{
+        const res=await axios.get(`${ip}/${post}/me`,{
           headers:{ 'Authorization': token }
         })
-        .then(res=>{
-            //console.log('logged in person ',res.data)
-            setName(res.data.name)
-            setId(res.data._id)
-            setRG(res.data.registration_number)
-            console.log('student info',name,id,registration_number)
-        })
-        .catch((error) => console.error(error))
-        .finally(() => {
-               setLoading2(false)
-               f2=0 ;
-          });
+        setName(res.data.name)
+        setId(res.data._id)
+        setRG(res.data.registration_number)
+        console.log('student info',name,id,registration_number)
+        setLoading2(false)
+      }catch(error){
+        console.log('error in try2',error)
+      }
+
+      //  axios.get(`${ip}/${post}/me`,{
+      //     headers:{ 'Authorization': token }
+      //   })
+      //   .then(res=>{
+      //       //console.log('logged in person ',res.data)
+      //       setName(res.data.name)
+      //       setId(res.data._id)
+      //       setRG(res.data.registration_number)
+      //       console.log('student info',name,id,registration_number)
+      //   })
+      //   .catch((error) => console.error(error))
+      //   .finally(() => {
+      //          setLoading2(false)
+      //          f2=0 ;
+      //     });
+
+    }
+
+    useEffect(() => {
+      effect()
+      // console.log(avatar)
+      // let f1=1,f2=1,f3=1
+      // try{
+      //   const res=await axios.get(`${ip}/course/${course_id}`)
+      //   console.log(' data ', res.data)
+      //   setList(res.data.section.map( (s) => {
+      //       return {value:s._id, label:s.section}
+      //   }))
+      //   setTeacher(res.data.teacher_id)
+      //   setCame(res.data.name)
+      //   setLoading1(false)
+      // }catch(error){
+      //   console.log('error in sectionformjs try1',error)
+      // }
+      // // axios.get(`${ip}/course/${course_id}`)
+      // //   .then(res => {
+      // //       console.log(' data ', res.data)
+      // //       setList(res.data.section.map( (s) => {
+      // //           return {value:s._id, label:s.section}
+      // //       }))
+      // //       setTeacher(res.data.teacher_id)
+      // //       setCame(res.data.name)
+      // //    })
+      // //    .catch((error) => console.error(error))
+      // //    .finally(() => {
+      // //          setLoading1(false)
+      // //          f1=0 ;
+      // //     });
+
+      // try{
+      //   const res=await axios.get(`${ip}/${post}/me`,{
+      //     headers:{ 'Authorization': token }
+      //   })
+      //   setName(res.data.name)
+      //   setId(res.data._id)
+      //   setRG(res.data.registration_number)
+      //   console.log('student info',name,id,registration_number)
+      //   setLoading2(false)
+      // }catch(error){
+      //   console.log('error in try2',error)
+      // }
+
+      // //  axios.get(`${ip}/${post}/me`,{
+      // //     headers:{ 'Authorization': token }
+      // //   })
+      // //   .then(res=>{
+      // //       //console.log('logged in person ',res.data)
+      // //       setName(res.data.name)
+      // //       setId(res.data._id)
+      // //       setRG(res.data.registration_number)
+      // //       console.log('student info',name,id,registration_number)
+      // //   })
+      // //   .catch((error) => console.error(error))
+      // //   .finally(() => {
+      // //          setLoading2(false)
+      // //          f2=0 ;
+      // //     });
 
     }, []);
 
     
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
         //e.preventDefault()
 
         if(!dist){
@@ -140,15 +225,22 @@ export default function Sectionform({route, navigation}){
 
         }
         console.log('details ',details)
-        axios.post(`${ip}/access/add`,details)
-        .then(res=>{
+        try{
+          const res=await axios.post(`${ip}/access/add`,details)
           console.log(res.data)
-
-        })
-        .catch((error) => {
+        }catch(error){
           console.log(error.message)
           alert('error in sending request to teacher')
-        })
+        }
+        // axios.post(`${ip}/access/add`,details)
+        // .then(res=>{
+        //   console.log(res.data)
+
+        // })
+        // .catch((error) => {
+        //   console.log(error.message)
+        //   alert('error in sending request to teacher')
+        // })
 
         /*axios.get(`${ip}/section/cids?course_id=${course_id}&section=${dist}`)
           .then( (res) => {

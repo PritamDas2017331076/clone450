@@ -31,18 +31,30 @@ export default function Department({route, navigation}){
     let f=0
     const [loading, setLoading] = useState(true)
 
+    const effect = async()=>{
+      try{
+        const res=await axios.get(`${ip}/department_head?university=${university}`)
+        console.log('for ',university,' data ', res.data)
+        setList(res.data)
+        setLoading(false)
+      }catch(error){
+        console.log('error in department',error)
+      }
+    }
+
     useEffect(() => {
-      let fl=1
-      axios.get(`${ip}/department_head?university=${university}`)
-        .then(res => {
-            console.log('for ',university,' data ', res.data)
-            if(fl==1) setList(res.data)
-        })
-        .catch((error) => console.error(error))
-        .finally(() => {
-          setLoading(false)
-          fl=0 ;
-        });
+      effect()
+      // let fl=1
+      // axios.get(`${ip}/department_head?university=${university}`)
+      //   .then(res => {
+      //       console.log('for ',university,' data ', res.data)
+      //       setList(res.data)
+      //   })
+      //   .catch((error) => console.error(error))
+      //   .finally(() => {
+      //     setLoading(false)
+      //     fl=0 ;
+      //   });
 
     }, []);
 

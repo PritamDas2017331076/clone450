@@ -14,20 +14,31 @@ export default function Session({route, navigation}){
     const [loading, setLoading] = useState(true)
 
     let f=0
+    const effect = async()=>{
+      try{
+        const res=await axios.get(`${ip}/session/ud?university=${university}&department=${department}`)
+        console.log(' data ', res.data)
+        setList(res.data)
+        setLoading(false)
+      }catch(error){
+        console.log('error in sessionjs',error)
+      }
+    }
 
     useEffect(() => {
       console.log('we are here in session list')
       let fl=1
-      axios.get(`${ip}/session/ud?university=${university}&department=${department}`)
-        .then(res => {
-            console.log(' data ', res.data)
-            if(fl) setList(res.data)
-        })
-        .catch((error) => console.error(error))
-        .finally(() => {
-          setLoading(false)
-          fl=0 ;
-        });
+      effect()
+      // axios.get(`${ip}/session/ud?university=${university}&department=${department}`)
+      //   .then(res => {
+      //       console.log(' data ', res.data)
+      //       if(fl) setList(res.data)
+      //   })
+      //   .catch((error) => console.error(error))
+      //   .finally(() => {
+      //     setLoading(false)
+      //     fl=0 ;
+      //   });
     }, []);
 
    if(loading==false) console.log('check it out ',f,list)

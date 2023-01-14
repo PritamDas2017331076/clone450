@@ -27,22 +27,34 @@ export default function AccessTlist({navigation}){
     const id= useSelector(selectId)
     let f=0
     const [loading, setLoading] = useState(true)
+    const effect = async()=>{
+      try{
+        const res=await axios.get(`${ip}/approveCo/teacher?teacher=${id}`)
+        console.log('for ',university,' data ', res.data) 
+        setList(res.data)
+        setLoading(false)
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
 
 
     useEffect(() => {
         console.log(id)
         let fl=1
         const unsubscribe = navigation.addListener('focus', () => {
-            axios.get(`${ip}/approveCo/teacher?teacher=${id}`)
-            .then(res => {
-                console.log('for ',university,' data ', res.data) 
-                setList(res.data)
-             })
-             .catch((error) => console.error(error))
-             .finally(() => {
-               setLoading(false)
-               fl=0 ;
-             });
+            effect()
+            // axios.get(`${ip}/approveCo/teacher?teacher=${id}`)
+            // .then(res => {
+            //     console.log('for ',university,' data ', res.data) 
+            //     setList(res.data)
+            //  })
+            //  .catch((error) => console.error(error))
+            //  .finally(() => {
+            //    setLoading(false)
+            //    fl=0 ;
+            //  });
         });
     
         return unsubscribe;

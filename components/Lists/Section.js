@@ -16,22 +16,34 @@ export default function Section({route, navigation}){
     const [tid, setTid]=useState()
 
     let f=0
+    const effect = async()=>{
+      try{
+        const res=await axios.get(`${ip}/course/${course_id}`)
+        console.log(' data ', res.data) 
+        setList(res.data.section)
+        setTid(res.data.teacher_id)
+        setLoading(false)
+      }catch(error){
+        console.log('error in dheadall',error)
+      }
+    }
 
     useEffect(() => {
       let fl=1
       const unsubscribe = navigation.addListener('focus', () => {
             console.log('in section it is not')
-            axios.get(`${ip}/course/${course_id}`)
-            .then(res => {
-                console.log(' data ', res.data) 
-                setList(res.data.section)
-                setTid(res.data.teacher_id)
-             })
-             .catch((error) => console.error(error))
-             .finally(() => {
-               setLoading(false)
-               fl=0 ;
-             });
+            effect()
+            // axios.get(`${ip}/course/${course_id}`)
+            // .then(res => {
+            //     console.log(' data ', res.data) 
+            //     setList(res.data.section)
+            //     setTid(res.data.teacher_id)
+            //  })
+            //  .catch((error) => console.error(error))
+            //  .finally(() => {
+            //    setLoading(false)
+            //    fl=0 ;
+            //  });
         });
     
         return unsubscribe;

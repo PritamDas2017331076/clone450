@@ -47,42 +47,86 @@ export default function Studentregister({navigation}){
     const [secureTextEntry, setSecureTextEntry] = useState(true)
     const [visible, setVisible] = React.useState(false);
 
+    const effect = async()=>{
+      try{
+        const res=await axios.get(`${ip}/universities`)
+        console.log('data university', res.data) 
+        setList(res.data.map( (s) => {
+          return {value:s.abbreviation, label:s.university}
+        }))
+        console.log(list)
+      }catch(err){
+        console.log('university find for student register',err)
+      }
+    }
+
     useEffect(() => {
-          axios.get(`${ip}/universities`)
-          .then(res => {
-              console.log('data university', res.data) 
-              setList(res.data.map( (s) => {
-                return {value:s.abbreviation, label:s.university}
-            }))
-            console.log(list)
-         }) ;
+      effect()
+        //   axios.get(`${ip}/universities`)
+        //   .then(res => {
+        //       console.log('data university', res.data) 
+        //       setList(res.data.map( (s) => {
+        //         return {value:s.abbreviation, label:s.university}
+        //     }))
+        //     console.log(list)
+        //  }) ;
   
     }, []);
-    useEffect(() => {
 
-     axios.get(`${ip}/departments/uni?university=${university}`)
-      .then(res => {
-          console.log('data department ', res.data) 
+    const effectDept = async()=>{
+      try{
+        const res=await axios.get(`${ip}/departments/uni?university=${university}`)
+        console.log('data department ', res.data) 
 
           setDist(res.data.map( (s) => {
             return {value:s.abbreviation, label:s.department}
         }))
         console.log(dist)
-     }) ;
+      }catch(err){
+        console.log('department find for student register',err)
+      }
+    }
+    useEffect(() => {
+      effectDept()
+
+    //  axios.get(`${ip}/departments/uni?university=${university}`)
+    //   .then(res => {
+    //       console.log('data department ', res.data) 
+
+    //       setDist(res.data.map( (s) => {
+    //         return {value:s.abbreviation, label:s.department}
+    //     }))
+    //     console.log(dist)
+    //  }) ;
 
     }, [university]);
-
-    useEffect(() => {
-
-      axios.get(`${ip}/session/ud?university=${university}&department=${department}`)
-       .then(res => {
-           console.log('data department ', res.data) 
+    
+    const effectSession = async()=>{
+      try{
+        const res=await axios.get(`${ip}/session/ud?university=${university}&department=${department}`)
+        console.log('data session ', res.data) 
  
            setFist(res.data.map( (s) => {
              return {value:s.session, label:s.session}
          }))
          console.log(dist)
-      }) ;
+      }catch(err){
+        console.log('session find for student register',err)
+      }
+    }
+    useEffect(() => {
+
+      effectSession()
+
+      // axios.get(`${ip}/session/ud?university=${university}&department=${department}`)
+      //  .then(res => {
+      //      console.log('data department ', res.data) 
+ 
+      //      setFist(res.data.map( (s) => {
+      //        return {value:s.session, label:s.session}
+      //    }))
+      //    console.log(dist)
+      // }) ;
  
      }, [department]);
 
@@ -138,7 +182,7 @@ export default function Studentregister({navigation}){
     };
 
     const dispatch = useDispatch()
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
         // e.preventDefault()
         if(!name){
           alert('Please enter name')
@@ -258,26 +302,45 @@ export default function Studentregister({navigation}){
         // }
         
         console.log(ip,university,department)
-
-         axios.post(`${ip}/student/add`,formData,{
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'multipart/form-data',
-          },
-         })
-          .then(res => {
-                  console.log(res.data)
+        try{
+          const res=await axios.post(`${ip}/student/add`,formData,{
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'multipart/form-data',
+            },
+           })
+           console.log(res.data)
 
                   ///
                   if (res.data.success) {
                     navigation.dispatch(StackActions.replace('UserProfile'));
                     setVisible(true)
                   }
-                  // navigation.navigate('Home')
-          })
-          .catch((error) => {
-            console.log(error,error.message)
-          })
+                   navigation.navigate('Home')
+        }catch(error){
+          console.log(error)
+          alert(error.message)
+        }
+
+        //  axios.post(`${ip}/student/add`,formData,{
+        //   headers: {
+        //     Accept: 'application/json',
+        //     'Content-Type': 'multipart/form-data',
+        //   },
+        //  })
+        //   .then(res => {
+        //           console.log(res.data)
+
+        //           ///
+        //           if (res.data.success) {
+        //             navigation.dispatch(StackActions.replace('UserProfile'));
+        //             setVisible(true)
+        //           }
+        //           // navigation.navigate('Home')
+        //   })
+        //   .catch((error) => {
+        //     console.log(error,error.message)
+        //   })
 
         /* onAdd({user,email,password,passwordr}) */
 
@@ -296,7 +359,7 @@ export default function Studentregister({navigation}){
         
     }
 
-    const force = (e) => {
+    const force = async(e) => {
       // e.preventDefault()
       if(!name){
         alert('Please enter name')
@@ -417,24 +480,44 @@ export default function Studentregister({navigation}){
       
       console.log(ip,university,department)
 
-       axios.post(`${ip}/student/addd`,formData,{
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'multipart/form-data',
-        },
-       })
-        .then(res => {
-                console.log(res.data)
+      //  axios.post(`${ip}/student/addd`,formData,{
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'multipart/form-data',
+      //   },
+      //  })
+      //   .then(res => {
+      //           console.log(res.data)
 
-                ///
-                if (res.data.success) {
-                  navigation.dispatch(StackActions.replace('UserProfile'));
-                }
-                navigation.navigate('Home')
-        })
-        .catch((error) => {
-          console.log(error,error.message)
-        })
+      //           ///
+      //           if (res.data.success) {
+      //             navigation.dispatch(StackActions.replace('UserProfile'));
+      //           }
+      //           navigation.navigate('Home')
+      //   })
+      //   .catch((error) => {
+      //     console.log(error,error.message)
+      //   })
+
+        try{
+          const res=await axios.post(`${ip}/student/addd`,formData,{
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'multipart/form-data',
+            },
+           })
+           console.log(res.data)
+
+                  ///
+                  if (res.data.success) {
+                    navigation.dispatch(StackActions.replace('UserProfile'));
+                    setVisible(true)
+                  }
+                   navigation.navigate('Home')
+        }catch(error){
+          console.log(error)
+          alert(error.message)
+        }
 
       /* onAdd({user,email,password,passwordr}) */
 

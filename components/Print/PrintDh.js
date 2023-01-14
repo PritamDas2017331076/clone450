@@ -9,48 +9,88 @@ export default function PrintAdmin({route, navigation}){
 
     const [use, setUse] = useState('')
     const [text, onChangeText] = useState('')
+    const effect = async()=>{
+        try{
+            const res=await axios.get(`${ip}/department_head/${id}`)
+            console.log('data for this id ',res.data)
+            setUse(res.data)
+        }catch(error){
+            console.log(error)
+        }
+       
+    }
 
     useEffect(() => {
-        let fl=1
-      if(fl==1){axios.get(`${ip}/department_head/${id}`)
-            .then(res => {
-                console.log('data for this id ',res.data)
-                setUse(res.data)
-            })}
-            return () => {
-                fl=0
-                };
+        effect()
+    //     let fl=1
+    //   if(fl==1){axios.get(`${ip}/department_head/${id}`)
+    //         .then(res => {
+    //             console.log('data for this id ',res.data)
+    //             setUse(res.data)
+    //         })}
+    //         return () => {
+    //             fl=0
+    //             };
     },[])
 
-    const Accept = ()=>{
+    const Accept = async()=>{
         const chg = {
             activated: true
         }
 
-        axios.patch(`${ip}/department_head/${id}`,chg)
-            .then(res => {
-                console.log('data updated in dhead ',res.data)
-                setUse(res.data)
-            })
+        try{
+            const res=await axios.patch(`${ip}/department_head/${id}`,chg)
+            console.log('data updated in dhead ',res.data)
+            setUse(res.data)
+        }catch(error){
+            console.log(error)
+        }
 
-        axios.delete(`${ip}/approveDh/${un}`)
-           .then(res => {
-                console.log('data deleted in approveDh ',res.data)
-            })
+        // axios.patch(`${ip}/department_head/${id}`,chg)
+        //     .then(res => {
+        //         console.log('data updated in dhead ',res.data)
+        //         setUse(res.data)
+        //     })
+
+        try{
+            const res=await axios.delete(`${ip}/approveDh/${un}`)
+            console.log('data deleted in approveDh ',res.data)
+        }catch(error){
+            console.log(error)
+        }
+
+        // axios.delete(`${ip}/approveDh/${un}`)
+        //    .then(res => {
+        //         console.log('data deleted in approveDh ',res.data)
+        //     })
         navigation.goBack();
     }
 
-    const Reject = ()=>{
+    const Reject = async()=>{
 
-        axios.delete(`${ip}/approveDh/${un}`)
-           .then(res => {
-                console.log('data deleted in approve ',res.data)
-            })
+        try{
+            const res=await axios.delete(`${ip}/approveDh/${un}`)
+            console.log('data deleted in approveDh ',res.data)
+        }catch(error){
+            console.log(error)
+        }
 
-        axios.delete(`${ip}/department_head/${id}`)
-            .then(res => {
-                console.log('data deleted in uadmin ',res.data)
-            })
+        // axios.delete(`${ip}/approveDh/${un}`)
+        //    .then(res => {
+        //         console.log('data deleted in approve ',res.data)
+        //     })
+
+        try{
+            const res=await axios.delete(`${ip}/department_head/${id}`)
+            console.log('data deleted in uadmin ',res.data)
+        }catch(error){
+            console.log(error)
+        }
+
+        // axios.delete(`${ip}/department_head/${id}`)
+        //     .then(res => {
+        //         console.log('data deleted in uadmin ',res.data)
+        //     })
         navigation.goBack();
     }
 

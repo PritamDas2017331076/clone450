@@ -10,15 +10,25 @@ export default function StudentAll({navigation}) {
   const university = useSelector(selectUniversity)
   const department = useSelector(selectDepartment)
   const [list, setList] = useState([])
+  const effect = async()=>{
+    try{
+      const res=await axios.get(`${ip}/student?university=${university}&department=${department}`)
+      console.log(' data ', res.data) 
+      setList(res.data)
+    }catch(error){
+      console.log('error in studentall',error)
+    }
+  }
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-        axios.get(`${ip}/student?university=${university}&department=${department}`)
-        .then(res => {
-            console.log(' data ', res.data) 
-            setList(res.data)
-         })
-         .catch((error) => console.error(error))
+        effect()
+        // axios.get(`${ip}/student?university=${university}&department=${department}`)
+        // .then(res => {
+        //     console.log(' data ', res.data) 
+        //     setList(res.data)
+        //  })
+        //  .catch((error) => console.error(error))
     });
 
     return unsubscribe;

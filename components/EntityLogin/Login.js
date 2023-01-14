@@ -62,7 +62,7 @@ export default function Studentlogin({navigation}){
         </View>
       )
     }
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
        // e.preventDefault()
 
         if(!email){
@@ -89,34 +89,52 @@ export default function Studentlogin({navigation}){
         console.log("ip = ",Details,ip)
         
         const pp=ip
+        try{
+          const res=await axios.post(`${ip}/${post}/login`,Details)
+          console.log('data ',res.data)
+          //  console.log('post ',res.data.admin.post)
+          console.log('data token ',res.data.token)
+          dispatch(updateToken(res.data.token))
+          dispatch(updatePost(res.data.post))
+          dispatch(updateId(res.data.id))
+          if(res.data.university) dispatch(updateUniversity(res.data.university))
+          if(res.data.department) dispatch(updateDepartment(res.data.department))
+          if(res.data.name) dispatch(updateName(res.data.name))
+          if(res.data.email) dispatch(updateEmail(res.data.email))
+          if(res.data.avatar) dispatch(updateAvatar(res.data.avatar))
+          navigation.navigate('Home')
+        }catch(err){
+          console.log(err.response.data)
+          alert(err.response.data)
+        }
 
-        axios.post(`${ip}/${post}/login`,Details)
-          .then(
-              res => {
-               //   dispatch({type:"USER",payload:user})
-                //  console.log(state)
+        // axios.post(`${ip}/${post}/login`,Details)
+        //   .then(
+        //       res => {
+        //        //   dispatch({type:"USER",payload:user})
+        //         //  console.log(state)
 
-                  console.log('data ',res.data)
-                //  console.log('post ',res.data.admin.post)
-                  console.log('data token ',res.data.token)
-                  dispatch(updateToken(res.data.token))
-                  dispatch(updatePost(res.data.post))
-                  dispatch(updateId(res.data.id))
-                  if(res.data.university) dispatch(updateUniversity(res.data.university))
-                  if(res.data.department) dispatch(updateDepartment(res.data.department))
-                  if(res.data.name) dispatch(updateName(res.data.name))
-                  if(res.data.email) dispatch(updateEmail(res.data.email))
-                  if(res.data.avatar) dispatch(updateAvatar(res.data.avatar))
-                  navigation.navigate('Home')
-              }
-           ) 
-           // pd17021999@gmail.com
-           .catch(err =>{
-              console.log(err.response.data)
-              alert(err.response.data)
-            //  console.log(err)
-              //   erralert(err.message.msg)
-           })
+        //           console.log('data ',res.data)
+        //         //  console.log('post ',res.data.admin.post)
+        //           console.log('data token ',res.data.token)
+        //           dispatch(updateToken(res.data.token))
+        //           dispatch(updatePost(res.data.post))
+        //           dispatch(updateId(res.data.id))
+        //           if(res.data.university) dispatch(updateUniversity(res.data.university))
+        //           if(res.data.department) dispatch(updateDepartment(res.data.department))
+        //           if(res.data.name) dispatch(updateName(res.data.name))
+        //           if(res.data.email) dispatch(updateEmail(res.data.email))
+        //           if(res.data.avatar) dispatch(updateAvatar(res.data.avatar))
+        //           navigation.navigate('Home')
+        //       }
+        //    ) 
+        //    // pd17021999@gmail.com
+        //    .catch(err =>{
+        //       console.log(err.response.data)
+        //       alert(err.response.data)
+        //     //  console.log(err)
+        //       //   erralert(err.message.msg)
+        //    })
 
         setEmail('')
         setPost('')

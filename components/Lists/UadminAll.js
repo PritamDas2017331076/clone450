@@ -8,15 +8,25 @@ import { useSelector, useDispatch } from 'react-redux';
 
 export default function UadminAll({navigation}) {
   const [list, setList] = useState([])
+  const effect = async()=>{
+    try{
+      const res=await axios.get(`${ip}/university_admin`)
+      console.log(' data ', res.data) 
+      setList(res.data)
+    }catch(error){
+      console.log('error in uadminall',error)
+    }
+  }
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-        axios.get(`${ip}/universities`)
-        .then(res => {
-            console.log(' data ', res.data) 
-            setList(res.data)
-         })
-         .catch((error) => console.error(error))
+      effect()
+        // axios.get(`${ip}/universities`)
+        // .then(res => {
+        //     console.log(' data ', res.data) 
+        //     setList(res.data)
+        //  })
+        //  .catch((error) => console.error(error))
     });
 
     return unsubscribe;

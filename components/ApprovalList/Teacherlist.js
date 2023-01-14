@@ -13,20 +13,32 @@ export default function Teacherlist({navigation}){
     const department = useSelector(selectDepartment)
     const [loading, setLoading] = useState(true)
     let f=0
+    const effect = async()=>{
+      try{
+        const res=await axios.get(`${ip}/approveT?university=${university}&department=${department}`)
+        console.log('for ',university, department,' data ', res.data) 
+        setList(res.data)
+        setLoading(false)
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
 
     useEffect(() => {
       let fl=1
       const unsubscribe = navigation.addListener('focus', () => {
-            axios.get(`${ip}/approveT?university=${university}&department=${department}`)
-            .then(res => {
-                console.log('for ',university, department,' data ', res.data) 
-                setList(res.data)
-            })
-            .catch((error) => console.error(error))
-            .finally(() => {
-               setLoading(false)
-               fl=0 ;
-             });
+            effect()
+            // axios.get(`${ip}/approveT?university=${university}&department=${department}`)
+            // .then(res => {
+            //     console.log('for ',university, department,' data ', res.data) 
+            //     setList(res.data)
+            // })
+            // .catch((error) => console.error(error))
+            // .finally(() => {
+            //    setLoading(false)
+            //    fl=0 ;
+            //  });
         });
     
         return unsubscribe;

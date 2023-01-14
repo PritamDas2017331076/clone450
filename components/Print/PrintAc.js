@@ -14,26 +14,42 @@ export default function PrintAc({route, navigation}){
     const [acc, setAcc] = useState('')
     const university = useSelector(selectUniversity)
     const department = useSelector(selectDepartment)
-
+    const effect = async()=>{
+        try{
+            const res=await axios.get(`${ip}/student/${id}`)
+            console.log('data for this id ',res.data)
+            setUse(res.data)
+        }catch(error){
+            console.log(error)
+        }
+        try{
+            const res=await axios.get(`${ip}/access/${un}`)
+            console.log('data for this acc ',res.data)
+            setAcc(res.data)
+        }catch(error){
+            console.log(error)
+        }
+    }
     useEffect(() => {
         let fl=1
-      if(fl==1){axios.get(`${ip}/student/${id}`)
-            .then(res => {
-                console.log('data for this id ',res.data)
-                setUse(res.data)
-            })
+        effect()
+    //   if(fl==1){axios.get(`${ip}/student/${id}`)
+    //         .then(res => {
+    //             console.log('data for this id ',res.data)
+    //             setUse(res.data)
+    //         })
 
-            axios.get(`${ip}/access/${un}`)
-            .then(res => {
-                console.log('data for this acc ',res.data)
-                setAcc(res.data)
-            })}
-            return () => {
-                fl=0
-                };
+    //         axios.get(`${ip}/access/${un}`)
+    //         .then(res => {
+    //             console.log('data for this acc ',res.data)
+    //             setAcc(res.data)
+    //         })}
+    //         return () => {
+    //             fl=0
+    //             };
     },[])
 
-    const Accept = ()=>{
+    const Accept = async()=>{
         const chg = {
             registration_number: use.registration_number,
             id: use._id, 
@@ -54,31 +70,57 @@ export default function PrintAc({route, navigation}){
             department: department,
             record: []
         }
+        try{
+            const res=await axios.patch(`${ip}/course/student/${acc.course_id}`,chg)
+            console.log('data added in studentlist ',res.data)
+        }catch(error){
+            console.log('error in printac accept',error)
+        }
 
-        axios.patch(`${ip}/course/student/${acc.course_id}`,chg)
-            .then(res => {
-                console.log('data added in studentlist ',res.data)
-            })
+        // axios.patch(`${ip}/course/student/${acc.course_id}`,chg)
+        //     .then(res => {
+        //         console.log('data added in studentlist ',res.data)
+        //     })
 
-        axios.post(`${ip}/byreg/add`,chk)
-            .then(res => {
-                console.log('data added in byreg ',res.data)
-            })
+        try{
+            const res=await axios.post(`${ip}/byreg/add`,chk)
+            console.log('data added in byreg ',res.data)
+        }catch(error){
+            console.log('error in printac accept',error)
+        }
 
-        axios.delete(`${ip}/access/${un}`)
-           .then(res => {
-                console.log('data deleted in approve access ',res.data)
-            })
+        // axios.post(`${ip}/byreg/add`,chk)
+        //     .then(res => {
+        //         console.log('data added in byreg ',res.data)
+        //     })
+
+        try{
+            const res=await axios.delete(`${ip}/access/${un}`)
+            console.log('data deleted in approve access ',res.data)
+        }catch(error){
+            console.log('error in printac accept',error)
+        }
+        // axios.delete(`${ip}/access/${un}`)
+        //    .then(res => {
+        //         console.log('data deleted in approve access ',res.data)
+        //     })
         navigation.goBack();
     }
 
-    const Reject = ()=>{
+    const Reject = async()=>{
+
+        try{
+            const res=await axios.delete(`${ip}/access/${un}`)
+            console.log('data deleted in teacher ',res.data)
+        }catch(error){
+            console.log('error in printac reject',error)
+        }
 
 
-        axios.delete(`${ip}/access/${un}`)
-            .then(res => {
-                console.log('data deleted in teacher ',res.data)
-            })
+        // axios.delete(`${ip}/access/${un}`)
+        //     .then(res => {
+        //         console.log('data deleted in teacher ',res.data)
+        //     })
         navigation.goBack();
     }
 

@@ -34,7 +34,7 @@ export default function Courses({route, navigation}){
     console.log('post ',post,'token ',token)
 
     
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
         //e.preventDefault()
 
         if(!section){
@@ -59,16 +59,24 @@ export default function Courses({route, navigation}){
           section: section
         }
         console.log(Details,ip)
+        try{
+          const res=await axios.patch(`${ip}/course/section/${course_id}`,Details)
+          console.log('section data ',res.data)
+          navigation.goBack()
+        }catch(error){
+          console.log(error.message)
+          alert('stop it')
+        }
 
-         axios.patch(`${ip}/course/section/${course_id}`,Details)
-          .then(res => {
-            console.log('section data ',res.data)
-               navigation.goBack()
-             })
-          .catch((error) => {
-            console.log(error.message)
-            alert('stop it')
-          })
+        //  axios.patch(`${ip}/course/section/${course_id}`,Details)
+        //   .then(res => {
+        //     console.log('section data ',res.data)
+        //        navigation.goBack()
+        //      })
+        //   .catch((error) => {
+        //     console.log(error.message)
+        //     alert('stop it')
+        //   })
 
         /* onAdd({user,email,password,passwordr}) */
 

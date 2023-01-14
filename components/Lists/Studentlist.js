@@ -19,37 +19,70 @@ export default function StudentlistL({route, navigation}){
     const id=useSelector(selectId)
     const post = useSelector(selectPost)
     let f=0
+    const effect = async()=>{
+      try{
+        const res=await axios.get(`${ip}/course/${course_id}`)
+        console.log(' data ', res.data.student)
+        let arr=res.data.student
+        console.log('arr',arr)
+        arr=arr.filter(item=>(item.section==section))
+        arr.sort(function(a,b){
+          if(a.registration_number<b.registration_number) return -1
+          else return 0
+        })
+        console.log('all',arr)
+        let obj=arr[arr.length-1].registration_number.substring(0,4)
+        let brr=[]
+        let crr=[]
+        arr.forEach((a)=>{
+          if(a.registration_number.substring(0,4)==obj)brr.push(a)
+          else crr.push(a)
+        })
+        brr=brr.concat(crr)
+        console.log(brr,'thennn',crr)
+        arr=brr
+        setCol(res.data.collaborator)
+        setStu(res.data.student)
+        setTid(res.data.teacher_id)
+        setList(arr.map((item,index)=>{
+            return {registration_number:item.registration_number,status:false,avatar:item.avatar,id:index}
+        }))
+      }catch(error){
+        console.log('error in studentlist',error)
+      }
+    }
 
     useEffect(() => {
       console.log('section',section)
-    axios.get(`${ip}/course/${course_id}`)
-      .then(res => {
-          console.log(' data ', res.data.student)
-          let arr=res.data.student
-          console.log('arr',arr)
-          arr=arr.filter(item=>(item.section==section))
-          arr.sort(function(a,b){
-            if(a.registration_number<b.registration_number) return -1
-            else return 0
-          })
-          console.log('all',arr)
-          let obj=arr[arr.length-1].registration_number.substring(0,4)
-          let brr=[]
-          let crr=[]
-          arr.forEach((a)=>{
-            if(a.registration_number.substring(0,4)==obj)brr.push(a)
-            else crr.push(a)
-          })
-          brr=brr.concat(crr)
-          console.log(brr,'thennn',crr)
-          arr=brr
-          setCol(res.data.collaborator)
-          setStu(res.data.student)
-          setTid(res.data.teacher_id)
-          setList(arr.map((item,index)=>{
-              return {registration_number:item.registration_number,status:false,avatar:item.avatar,id:index}
-          }))
-     }) ;
+      effect()
+    // axios.get(`${ip}/course/${course_id}`)
+    //   .then(res => {
+    //       console.log(' data ', res.data.student)
+    //       let arr=res.data.student
+    //       console.log('arr',arr)
+    //       arr=arr.filter(item=>(item.section==section))
+    //       arr.sort(function(a,b){
+    //         if(a.registration_number<b.registration_number) return -1
+    //         else return 0
+    //       })
+    //       console.log('all',arr)
+    //       let obj=arr[arr.length-1].registration_number.substring(0,4)
+    //       let brr=[]
+    //       let crr=[]
+    //       arr.forEach((a)=>{
+    //         if(a.registration_number.substring(0,4)==obj)brr.push(a)
+    //         else crr.push(a)
+    //       })
+    //       brr=brr.concat(crr)
+    //       console.log(brr,'thennn',crr)
+    //       arr=brr
+    //       setCol(res.data.collaborator)
+    //       setStu(res.data.student)
+    //       setTid(res.data.teacher_id)
+    //       setList(arr.map((item,index)=>{
+    //           return {registration_number:item.registration_number,status:false,avatar:item.avatar,id:index}
+    //       }))
+    //  }) ;
   }, []);
 
    console.log('check it out ',f,list)

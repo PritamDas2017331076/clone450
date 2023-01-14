@@ -14,12 +14,11 @@ export default function PrintDt({route, navigation}){
     const [total, setTotal]=useState(0)
     const present=record.length
 
-
-    useEffect(() => {
+    const effect = async()=>{
       console.log('got it na??')
-      axios.get(`${ip}/course/${course_id}`)
-      .then(res=>{
-        //console.log('student data in printdt',res.data.student)
+      try{
+        const res=await axios.get(`${ip}/course/${course_id}`)
+        console.log('student data in printdt',res.data.student)
         let arr=res.data.student
         arr=arr.filter(ele=>(ele.section==section))
         //console.log('arr',arr)
@@ -48,28 +47,93 @@ export default function PrintDt({route, navigation}){
           }
 
         }))
-      })
+      }catch(error){
+        console.log(error)
+      }
+
+    }
+
+
+    useEffect(() => {
+      effect()
+      
+      // axios.get(`${ip}/course/${course_id}`)
+      // .then(res=>{
+      //   console.log('student data in printdt',res.data.student)
+      //   let arr=res.data.student
+      //   arr=arr.filter(ele=>(ele.section==section))
+      //   //console.log('arr',arr)
+      //   arr.sort(function(a,b){
+      //     if(a.registration_number<b.registration_number) return -1
+      //     else return 0
+      //   })
+      //  // console.log('all arry',arr)
+      //   let obj=arr[arr.length-1].registration_number.substring(0,4)
+      //   let brr=[]
+      //   let crr=[]
+      //   arr.forEach((a)=>{
+      //     if(a.registration_number.substring(0,4)==obj)brr.push(a)
+      //     else crr.push(a)
+      //   })
+      //   brr=brr.concat(crr)
+      //   arr=brr
+      //   console.log('sorted array arr',brr)
+      //   //console.log('sortted in printdt',arr)
+      //   setList(arr.map((item, index)=>{
+      //     let arr=record.filter((ele)=>(ele.registration_number==item.registration_number))
+      //     if(arr.length==0){
+      //       return {registration_number: item.registration_number, id: index, avatar: item.avatar, status: false}
+      //     } else{
+      //       return {registration_number: item.registration_number, id: index, avatar: item.avatar, status: true}
+      //     }
+
+      //   }))
+      // })
     },[])
 
-    const func = ()=>{
+    const func = async()=>{
       const chg={date: date }
       const chh={date: date, section: section }
-      axios.delete(`${ip}/bydate/${id}`)
-        .then(res=>{
-          console.log('successfully deleted bydate')
-          axios.patch(`${ip}/byreg/regd?course_id=${course_id}&section=${section}`,chg)
-            .then(res=>{
-              console.log('successfully updated in byreg')
-              axios.patch(`${ip}/course/recordd/${course_id}`,chh)
-                .then(res=>{
-                  console.log('successfully updated in course record')
-                })
-                .catch(err=>{console.log('error occurred course record',err)})
-                .finally(()=>{navigation.goBack()})
-            })
-            .catch(err=>{console.log('error occurred in byreg',err)})
-        })
-        .catch(err=>{console.log('error occurred bydate',err)})
+      try{
+        const res=await axios.delete(`${ip}/bydate/${id}`)
+        console.log('successfully deleted bydate')
+        console.log(res.data)
+      }catch(err){
+        console.log('error occurred in bydate while delete',err)
+      }
+      try{
+        const res=await axios.patch(`${ip}/byreg/regd?course_id=${course_id}&section=${section}`,chg)
+        console.log('successfully updated in byreg')
+        console.log(res.data)
+      }catch(err){
+        console.log('error occurred byreg while patch',err)
+      }
+      try{
+        const res=await axios.patch(`${ip}/course/recordd/${course_id}`,chh)
+        console.log('successfully updated in course record')
+        console.log(res.data)
+        navigation.goBack()
+      }catch(err){
+        console.log('error occurred course record while patch',err)
+      }
+      // axios.delete(`${ip}/bydate/${id}`)
+      //   .then(res=>{
+      //     console.log('successfully deleted bydate')
+      //     axios.patch(`${ip}/byreg/regd?course_id=${course_id}&section=${section}`,chg)
+      //       .then(res=>{
+      //         console.log('successfully updated in byreg')
+      //         axios.patch(`${ip}/course/recordd/${course_id}`,chh)
+      //           .then(res=>{
+      //             console.log('successfully updated in course record')
+      //           })
+      //           .catch(err=>{console.log('error occurred course record',err)})
+      //           .finally(()=>{navigation.goBack()})
+      //       })
+      //       .catch(err=>{console.log('error occurred in byreg',err)})
+      //   })
+      //   .catch(err=>{console.log('error occurred bydate',err)})
+
+
       // axios.patch(`http://${ip}:5000/byreg/regd?course_id=${course_id}&section=${section}`,chg)
       //   .then(res=>{
       //     console.log('successfully updated in byreg')

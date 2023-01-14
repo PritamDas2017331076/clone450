@@ -15,40 +15,75 @@ export default function Utake({route, navigation}){
     const [lost,setLost]=useState([])
     console.log('dist',dist)
     let f=0
+    const effect = async()=>{
+      try{
+        const res=await axios.get(`${ip}/course/${course_id}`)
+        console.log('data',res.data.student)
+        let arr=res.data.student
+        arr=arr.filter(ele=>(ele.section==section))
+        arr.sort(function(a,b){
+          if(a.registration_number<b.registration_number) return -1
+          else return 0
+        })
+        console.log('all',arr)
+        let obj=arr[arr.length-1].registration_number.substring(0,4)
+        let brr=[]
+        let crr=[]
+        arr.forEach((a)=>{
+          if(a.registration_number.substring(0,4)==obj)brr.push(a)
+          else crr.push(a)
+        })
+        brr=brr.concat(crr)
+        console.log(brr,'thennn',crr)
+        arr=brr
+        setDist(arr.map((item,index)=>{
+          let br=record.filter(ele=>(item.registration_number==ele.registration_number))
+          if(br.length==0){
+              return {registration_number: item.registration_number, avatar: item.avatar, id: item.id, status: false}
+          }else{
+              return {registration_number: item.registration_number, avatar: item.avatar, id: item.id, status: true}
+          }
+        }))
+      }
+      catch(err){
+        console.log('could not find data',err)
+      }
+    }
 
     useEffect(() => {
-      axios.get(`${ip}/course/${course_id}`)
-       .then(res=>{
-          console.log('data',res.data.student)
-          let arr=res.data.student
-          arr=arr.filter(ele=>(ele.section==section))
-          arr.sort(function(a,b){
-            if(a.registration_number<b.registration_number) return -1
-            else return 0
-          })
-          console.log('all',arr)
-          let obj=arr[arr.length-1].registration_number.substring(0,4)
-          let brr=[]
-          let crr=[]
-          arr.forEach((a)=>{
-            if(a.registration_number.substring(0,4)==obj)brr.push(a)
-            else crr.push(a)
-          })
-          brr=brr.concat(crr)
-          console.log(brr,'thennn',crr)
-          arr=brr
-          setDist(arr.map((item,index)=>{
-            let br=record.filter(ele=>(item.registration_number==ele.registration_number))
-            if(br.length==0){
-                return {registration_number: item.registration_number, avatar: item.avatar, id: item.id, status: false}
-            }else{
-                return {registration_number: item.registration_number, avatar: item.avatar, id: item.id, status: true}
-            }
-          }))
-       })
-       .catch(err=>{
-        console.log('could not find data',err)
-       })
+      effect()
+      // axios.get(`${ip}/course/${course_id}`)
+      //  .then(res=>{
+      //     console.log('data',res.data.student)
+      //     let arr=res.data.student
+      //     arr=arr.filter(ele=>(ele.section==section))
+      //     arr.sort(function(a,b){
+      //       if(a.registration_number<b.registration_number) return -1
+      //       else return 0
+      //     })
+      //     console.log('all',arr)
+      //     let obj=arr[arr.length-1].registration_number.substring(0,4)
+      //     let brr=[]
+      //     let crr=[]
+      //     arr.forEach((a)=>{
+      //       if(a.registration_number.substring(0,4)==obj)brr.push(a)
+      //       else crr.push(a)
+      //     })
+      //     brr=brr.concat(crr)
+      //     console.log(brr,'thennn',crr)
+      //     arr=brr
+      //     setDist(arr.map((item,index)=>{
+      //       let br=record.filter(ele=>(item.registration_number==ele.registration_number))
+      //       if(br.length==0){
+      //           return {registration_number: item.registration_number, avatar: item.avatar, id: item.id, status: false}
+      //       }else{
+      //           return {registration_number: item.registration_number, avatar: item.avatar, id: item.id, status: true}
+      //       }
+      //     }))
+      //  })
+      //  .catch(err=>{
+      //   console.log('could not find data',err)
+      //  })
 
 
   }, []);

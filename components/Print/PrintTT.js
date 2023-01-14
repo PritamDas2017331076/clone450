@@ -10,36 +10,70 @@ export default function PrintTT({route, navigation}){
     const [use, setUse] = useState('')
     const [text, onChangeText] = useState('')
 
+    const effect = async()=>{
+        try{
+            const res=await axios.get(`${ip}/teacher/${id}`)
+            console.log('data for this id ',res.data)
+            setUse(res.data)
+        }catch(error){
+            console.log(error)
+        }
+       
+    }
+
     useEffect(() => {
-        axios.get(`${ip}/teacher/${id}`)
-            .then(res => {
-                console.log('data for this id ',res.data)
-                setUse(res.data)
-            })
+        effect()
+        // axios.get(`${ip}/teacher/${id}`)
+        //     .then(res => {
+        //         console.log('data for this id ',res.data)
+        //         setUse(res.data)
+        //     })
       
     },[])
 
-    const Accept = ()=>{
+    const Accept = async()=>{
 
-        axios.delete(`${ip}/teacher/${id}`)
-           .then(res => {
-                console.log('data deleted in teacher ',res.data)
-                navigation.goBack();
-            })
+        try{
+            const res=await axios.delete(`${ip}/teacher/${id}`)
+            console.log('data deleted in teacher ',res.data)
+            navigation.goBack();
+        }catch(error){
+            console.log(error)
+        }
+
+        // axios.delete(`${ip}/teacher/${id}`)
+        //    .then(res => {
+        //         console.log('data deleted in teacher ',res.data)
+        //         navigation.goBack();
+        //     })
         
     }
 
-    const Reject = ()=>{
+    const Reject = async()=>{
 
-        axios.delete(`${ip}/approveT/${un}`)
-           .then(res => {
-                console.log('data deleted in approve ',res.data)
-            })
+        try{
+            const res=await axios.delete(`${ip}/approveT/${un}`)
+            console.log('data deleted in approve ',res.data)
+        }catch(error){
+            console.log(error)
+        }
 
-        axios.delete(`${ip}/teacher/${id}`)
-            .then(res => {
-                console.log('data deleted in teacher ',res.data)
-            })
+        // axios.delete(`${ip}/approveT/${un}`)
+        //    .then(res => {
+        //         console.log('data deleted in approve ',res.data)
+        //     })
+
+        try{
+            const res=await axios.delete(`${ip}/teacher/${id}`)
+            console.log('data deleted in teacher ',res.data)
+        }catch(error){
+            console.log(error)
+        }
+
+        // axios.delete(`${ip}/teacher/${id}`)
+        //     .then(res => {
+        //         console.log('data deleted in teacher ',res.data)
+        //     })
         navigation.goBack();
     }
 

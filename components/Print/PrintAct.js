@@ -11,23 +11,40 @@ export default function PrintAct({route, navigation}){
     const [use, setUse] = useState('')
     const [text, onChangeText] = useState('')
     const [acc, setAcc] = useState('')
+    const effect = async()=>{
+        try{
+            const res=await axios.get(`${ip}/teacher/${id}`)
+            console.log('data for this id ',res.data)
+            setUse(res.data)
+        }catch(error){
+            console.log(error)
+        }
+        try{
+            const res=await axios.get(`${ip}/approveCo/${un}`)
+            console.log('data for this acc ',res.data)
+            setAcc(res.data)
+        }catch(error){
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
-        let fl=1
-      if(fl==1){axios.get(`${ip}/teacher/${id}`)
-            .then(res => {
-                console.log('data for this id ',res.data)
-                setUse(res.data)
-            })
+        effect()
+    //     let fl=1
+    //   if(fl==1){axios.get(`${ip}/teacher/${id}`)
+    //         .then(res => {
+    //             console.log('data for this id ',res.data)
+    //             setUse(res.data)
+    //         })
 
-            axios.get(`${ip}/approveCo/${un}`)
-            .then(res => {
-                console.log('data for this acc ',res.data)
-                setAcc(res.data)
-            })}
-            return () => {
-                fl=0
-                };
+    //         axios.get(`${ip}/approveCo/${un}`)
+    //         .then(res => {
+    //             console.log('data for this acc ',res.data)
+    //             setAcc(res.data)
+    //         })}
+    //         return () => {
+    //             fl=0
+    //             };
     },[])
 
     const Accept = async()=>{
@@ -53,13 +70,16 @@ export default function PrintAct({route, navigation}){
         navigation.goBack();
     }
 
-    const Reject = ()=>{
+    const Reject = async()=>{
+
+        try{
+            const res=await axios.delete(`${ip}/approveCo/${un}`)
+            console.log('data deleted teacher approval colab ',res.data)
+        }catch(e){
+            console.log('error delete',e)
+        }
 
 
-        axios.delete(`${ip}/approveCo/${un}`)
-            .then(res => {
-                console.log('data deleted teacher approval colab ',res.data)
-            })
         navigation.goBack();
     }
 

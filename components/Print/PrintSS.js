@@ -10,22 +10,43 @@ export default function PrintSS({route, navigation}){
     const [use, setUse] = useState('')
     const [text, onChangeText] = useState('')
 
+    const effect = async()=>{
+        try{
+            const res=await axios.get(`${ip}/student/${id}`)
+            console.log('data for this id ',res.data)
+            setUse(res.data)
+        }catch(error){
+            console.log(error)
+        }
+       
+    }
+
+
     useEffect(() => {
-        axios.get(`${ip}/student/${id}`)
-            .then(res => {
-                console.log('data for this id ',res.data)
-                setUse(res.data)
-            })
+        effect()
+        // axios.get(`${ip}/student/${id}`)
+        //     .then(res => {
+        //         console.log('data for this id ',res.data)
+        //         setUse(res.data)
+        //     })
       
     },[])
 
-    const Accept = ()=>{
+    const Accept = async()=>{
 
-        axios.delete(`${ip}/student/${id}`)
-           .then(res => {
-                console.log('data deleted in teacher ',res.data)
-                navigation.goBack();
-            })
+        try{
+            const res=await axios.delete(`${ip}/student/${id}`)
+            console.log('data deleted in teacher ',res.data)
+            navigation.goBack();
+        }catch(error){
+            console.log(error)
+        }
+
+        // axios.delete(`${ip}/student/${id}`)
+        //    .then(res => {
+        //         console.log('data deleted in teacher ',res.data)
+        //         navigation.goBack();
+        //     })
         
     }
 

@@ -10,12 +10,24 @@ export default function UadminDelete({route, navigation}){
     const [use, setUse] = useState('')
     const [text, onChangeText] = useState('')
 
+    const effect = async()=>{
+        try{
+            const res=await axios.get(`${ip}/universities/${id}`)
+            console.log('data for this id ',res.data)
+            setUse(res.data)
+        }catch(error){
+            console.log(error)
+        }
+       
+    }
+
     useEffect(() => {
-        axios.get(`${ip}/universities/${id}`)
-            .then(res => {
-                console.log('data for this id ',res.data)
-                setUse(res.data)
-            })
+        effect()
+        // axios.get(`${ip}/universities/${id}`)
+        //     .then(res => {
+        //         console.log('data for this id ',res.data)
+        //         setUse(res.data)
+        //     })
       
     },[])
 

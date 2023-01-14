@@ -28,7 +28,7 @@ export default function DepartmentAdd({navigation}){
     const [abbreviation, setAbbreviation] = useState('')
     const dispatch = useDispatch()
 
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
         
         if(!university){
             alert('Please enter department')
@@ -47,16 +47,26 @@ export default function DepartmentAdd({navigation}){
         }
         
         console.log(Details,ip)
+        try{
+          const res=await axios.post(`${ip}/universities/add`,Details)
+          console.log(res.data)
+          navigation.navigate('Home')
+        }
+        catch(error){
+          console.log(error.message)
+          alert('failed to add university')
+        }
 
-         axios.post(`${ip}/universities/add`,Details)
-          .then(res => {
-            console.log(res.data)
-            navigation.navigate('Home')
-          })
-          .catch((error) => {
-            console.log(error.message)
-            alert('failed to add department')
-          })
+
+        //  axios.post(`${ip}/universities/add`,Details)
+        //   .then(res => {
+        //     console.log(res.data)
+        //     navigation.navigate('Home')
+        //   })
+        //   .catch((error) => {
+        //     console.log(error.message)
+        //     alert('failed to add department')
+        //   })
 
         /* onAdd({user,email,password,passwordr}) */
 

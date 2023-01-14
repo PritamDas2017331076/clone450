@@ -22,7 +22,7 @@ import {
     const [password, setPassword] = useState('')
     const [rpassword, setRPassword] = useState('')
 
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
         //e.preventDefault()
 
         if(!phone){
@@ -58,21 +58,34 @@ import {
         }
         
         console.log(adminDetails,ip)
+        try{
+          const res=await axios.post(`${ip}/admin/add`,adminDetails)
+          console.log(res.data)
+          console.log(res.data.token)
+          dispatch(updatePost(res.data.post))
+          dispatch(updateToken(res.data.token))
+          dispatch(updateEmail(res.data.email))
+          dispatch(updateName('admin'))
+          navigation.navigate('Home')
+        }catch(error){
+          console.log(error.message)
+          alert('stop it')
+        }
 
-         axios.post(`${ip}/admin/add`,adminDetails)
-          .then(res => {
-            console.log(res.data)
-            console.log(res.data.token)
-            dispatch(updatePost(res.data.post))
-            dispatch(updateToken(res.data.token))
-            dispatch(updateEmail(res.data.email))
-            dispatch(updateName('admin'))
-            navigation.navigate('Home')
-          })
-          .catch((error) => {
-            console.log(error.message)
-            alert('stop it')
-          })
+        //  axios.post(`${ip}/admin/add`,adminDetails)
+        //   .then(res => {
+        //     console.log(res.data)
+        //     console.log(res.data.token)
+        //     dispatch(updatePost(res.data.post))
+        //     dispatch(updateToken(res.data.token))
+        //     dispatch(updateEmail(res.data.email))
+        //     dispatch(updateName('admin'))
+        //     navigation.navigate('Home')
+        //   })
+        //   .catch((error) => {
+        //     console.log(error.message)
+        //     alert('stop it')
+        //   })
 
         /* onAdd({user,email,password,passwordr}) */
 

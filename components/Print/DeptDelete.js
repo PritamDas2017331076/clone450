@@ -9,13 +9,24 @@ export default function DeptDelete({route, navigation}){
 
     const [use, setUse] = useState('')
     const [text, onChangeText] = useState('')
+    const effect = async()=>{
+        try{
+            const res=await axios.get(`${ip}/departments/${id}`)
+            console.log('data for this id ',res.data)
+            setUse(res.data)
+        }catch(error){
+            console.log(error)
+        }
+       
+    }
 
     useEffect(() => {
-        axios.get(`${ip}/departments/${id}`)
-            .then(res => {
-                console.log('data for this id ',res.data)
-                setUse(res.data)
-            })
+        effect()
+        // axios.get(`${ip}/departments/${id}`)
+        //     .then(res => {
+        //         console.log('data for this id ',res.data)
+        //         setUse(res.data)
+        //     })
       
     },[])
 
@@ -35,6 +46,7 @@ export default function DeptDelete({route, navigation}){
         //         console.log('data deleted in university ',res.data)
         //         navigation.goBack();
         //     })
+        navigation.goBack();
         
     }
 

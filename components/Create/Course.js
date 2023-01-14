@@ -35,7 +35,7 @@ export default function Courses({route, navigation}){
     console.log('post ',post,'token ',token)
 
     
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
         //e.preventDefault()
 
         if(!code){
@@ -70,16 +70,24 @@ export default function Courses({route, navigation}){
           teacher_id: id
         }
         console.log(Details,ip)
+        try{
+          const res=await axios.post(`${ip}/course/add`,Details)
+          console.log('course data ',res.data)
+          navigation.goBack()
+        }catch(error){
+          console.log(error.message)
+          alert('stop it')
+        }
 
-         axios.post(`${ip}/course/add`,Details)
-          .then(res => {
-            console.log('dhead data ',res.data)
-               navigation.goBack()
-             })
-          .catch((error) => {
-            console.log(error.message)
-            alert('stop it')
-          })
+        //  axios.post(`${ip}/course/add`,Details)
+        //   .then(res => {
+        //     console.log('dhead data ',res.data)
+        //        navigation.goBack()
+        //      })
+        //   .catch((error) => {
+        //     console.log(error.message)
+        //     alert('stop it')
+        //   })
 
         /* onAdd({user,email,password,passwordr}) */
 

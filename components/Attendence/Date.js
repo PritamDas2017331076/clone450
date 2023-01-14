@@ -30,23 +30,38 @@ export default function Date({route, navigation}){
     const [loading, setLoading] = useState(true)
     const [jsDate,setJsDate] = useState([])
     let fl=1
+    const effect = async()=>{
+      try{
+        const res=await axios.get(`${ip}/bydate/sec?course_id=${course_id}&section=${section}`)
+        // console.log(course_id,res.data)
+        setDist(res.data.map((item,index)=>{
+          // let splitDate = item.date.split(' ')
+          // console.log('split date',splitDate)
+          return {date:item.date.split(" "),record:item.record,id:item._id}
+        }))
+        setLoading(false)
+      }catch(error){
+        console.log(error)
+      }
+    }
     useEffect(() => {
       console.log('i have enterd in date list')
       const unsubscribe = navigation.addListener('focus', () => {
-        axios.get(`${ip}/bydate/sec?course_id=${course_id}&section=${section}`)
-          .then(res=>{
-            // console.log(course_id,res.data)
-            setDist(res.data.map((item,index)=>{
-                // let splitDate = item.date.split(' ')
-                // console.log('split date',splitDate)
-                return {date:item.date.split(" "),record:item.record,id:item._id}
-            }))
-          })
-          .catch((error) => console.error(error))
-          .finally(() => {
-            setLoading(false)
-            fl=0 ;
-          });
+        effect()
+        // axios.get(`${ip}/bydate/sec?course_id=${course_id}&section=${section}`)
+        //   .then(res=>{
+        //     // console.log(course_id,res.data)
+        //     setDist(res.data.map((item,index)=>{
+        //         // let splitDate = item.date.split(' ')
+        //         // console.log('split date',splitDate)
+        //         return {date:item.date.split(" "),record:item.record,id:item._id}
+        //     }))
+        //   })
+        //   .catch((error) => console.error(error))
+        //   .finally(() => {
+        //     setLoading(false)
+        //     fl=0 ;
+        //   });
         })
 
   }, [navigation]);

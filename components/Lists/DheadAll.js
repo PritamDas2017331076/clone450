@@ -10,14 +10,25 @@ export default function DheadAll({navigation}) {
   const [list, setList] = useState([])
   const uni=useSelector(selectUniversity)
 
+  const effect = async()=>{
+    try{
+      const res=await axios.get(`${ip}/department_head?university=${uni}`)
+      console.log(' data ', res.data)
+      setList(res.data)
+    }catch(error){
+      console.log('error in dheadall',error)
+    }
+  }
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-        axios.get(`${ip}/department_head?university=${uni}`)
-        .then(res => {
-            console.log(' data ', res.data)
-            setList(res.data)
-         })
-         .catch((error) => console.error(error))
+      effect()
+        // axios.get(`${ip}/department_head?university=${uni}`)
+        // .then(res => {
+        //     console.log(' data ', res.data)
+        //     setList(res.data)
+        //  })
+        //  .catch((error) => console.error(error))
     });
 
     return unsubscribe;

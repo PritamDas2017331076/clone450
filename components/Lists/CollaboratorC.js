@@ -9,15 +9,19 @@ import { useSelector, useDispatch } from 'react-redux';
 export default function CollaboratorC({route, navigation}) {
   const { course_id, section } = route.params
   const [list, setList] = useState([])
+  const effect = async()=>{
+    try{
+      const res=await axios.get(`${ip}/course/${course_id}`)
+      console.log(' data ', res.data) 
+      setList(res.data.collaborator)
+    }catch(error){
+      console.error(error)
+    }
+  }
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-        axios.get(`${ip}/course/${course_id}`)
-        .then(res => {
-            console.log(' data ', res.data) 
-            setList(res.data.collaborator)
-         })
-         .catch((error) => console.error(error))
+        effect()
     });
 
     return unsubscribe;
