@@ -7,7 +7,7 @@ const cloudinary = require('../helper/imageUpload')
 const Dhead = require('../db/Dhead');
 const authDhead = require('../middleware/authDhead');
 const auth = require('../middleware/authDhead')
-
+const DIR = './public/';
 const ApprovalDh = require('../db/ApprovalDh')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -21,18 +21,37 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 })
 
-const storage = multer.diskStorage({});
+// const storage = multer.diskStorage({});
 
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image')) {
-        cb(null, true);
-    } else {
-        cb('invalid image file!', false);
+// const fileFilter = (req, file, cb) => {
+//     if (file.mimetype.startsWith('image')) {
+//         cb(null, true);
+//     } else {
+//         cb('invalid image file!', false);
+//     }
+// };
+// const upload = multer({ storage, fileFilter });
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null, uuidv4() + '-' + fileName)
     }
-};
-const upload = multer({ storage, fileFilter });
-
-
+});
+var upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+    }
+});
 
 router.get('/me', authDhead, async(req, res) => {
     try {
@@ -85,6 +104,8 @@ router.post('/add', upload.single('avatar'), async(req, res) => {
     const post = 'department_head'
     const status = false
     const secret = await jwt.sign({ email: email }, 'thisisnewdhead')
+    const url = req.protocol + '://' + req.get('host')
+    const avatar = url + '/public/' + req.file.filename
     let f = 0
 
     try {
@@ -92,6 +113,13 @@ router.post('/add', upload.single('avatar'), async(req, res) => {
         console.log('result which I want to observe', res)
         if (res != null) console.log('got one')
         if (res != null) {
+            f = 1
+        }
+
+        const ress = await Dhead.findOne({ university: university, department: department })
+        console.log('result which I want to observe dup', ress)
+        if (ress != null) console.log('got one')
+        if (ress != null) {
             f = 1
         }
     } catch (e) {
@@ -103,22 +131,6 @@ router.post('/add', upload.single('avatar'), async(req, res) => {
         res.status(200).send('department head exists')
         return
     }
-    let image
-    try {
-        image = await cloudinary.uploader.upload(req.file.path, {
-            public_id: `${secret}_profile`,
-            width: 100,
-            height: 100,
-            crop: 'fill',
-        });
-        console.log('image', image)
-    } catch (error) {
-        res
-            .status(500)
-            .json({ success: false, message: 'server error, try after some time' });
-        console.log('Error while uploading profile image', error.message);
-    }
-    const avatar = image.url
 
     const newDhead = new Dhead({ email, name, phone, university, department, avatar, post, status, secret, password, activated });
     console.log(newDhead)

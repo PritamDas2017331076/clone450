@@ -282,13 +282,25 @@ export default function Course({route, navigation}){
             />
                    :<FlatList
                          data={list}
-                         contentContainerStyle={{paddingBottom:150}}
+                         contentContainerStyle={{paddingBottom:200}}
                          renderItem={renderItem}
                          keyExtractor={item => item._id}
+                         ListFooterComponent={
+                            <View style={{maxWidth:250,marginHorizontal:'18%',paddingTop:20}}>
+                            {
+                                post=='teacher'?<Button onPress={()=>{
+                                    navigation.navigate('Create Course',{
+                                        session_id: session_id,
+                                        session: session
+                                    })
+                                }} title="create  course"/>:null
+                            }
+                            </View>
+                        }
                        />
                     }
 
-            <View style={{maxWidth:250,marginHorizontal:'18%'}}>
+            {/* <View style={{maxWidth:250,marginHorizontal:'18%'}}>
             {
                 post=='teacher'?<Button onPress={()=>{
                     navigation.navigate('Create Course',{
@@ -297,7 +309,7 @@ export default function Course({route, navigation}){
                     })
                 }} title="create  course"/>:null
             }
-            </View>
+            </View> */}
             
         </View>
     )

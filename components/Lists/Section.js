@@ -88,9 +88,21 @@ export default function Section({route, navigation}){
                          contentContainerStyle={{paddingBottom:150}}
                          renderItem={renderItem}
                          keyExtractor={item => item._id}
+                         ListFooterComponent={
+                          <View style={{maxWidth:250,marginHorizontal:'18%',paddingTop:20}}>
+                          {
+                              post=='teacher'?<Button
+                              onPress={()=>{
+                                  navigation.navigate('Create Section',{
+                                      course_id: course_id
+                                  })
+                              }}>Create Section</Button>:null
+                          }
+                          </View>
+                      }
                        />
                     }
-            <View style={{Width:50,marginHorizontal:'10%'}}>
+            {/* <View style={{Width:50,marginHorizontal:'10%'}}>
             {
                 post=='teacher'?<Button
                 onPress={()=>{
@@ -99,7 +111,7 @@ export default function Section({route, navigation}){
                     })
                 }}>Create Section</Button>:null
             }
-            </View>
+            </View> */}
         </View>
     )
 

@@ -32,7 +32,7 @@ export default function SectionDelete({route, navigation}){
 
     const Accept = async()=>{
 
-        const dept=use.adepartment
+        const dept=use.department
         console.log(dept,id)
         try{
             const chh={section: section}

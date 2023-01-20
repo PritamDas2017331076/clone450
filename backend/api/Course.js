@@ -112,6 +112,7 @@ router.patch('/sectiond/:id', async(req, res) => {
     let col = course.section
     let cll = course.record
     let css = course.student
+    console.log('col cll css', col, cll, css)
     col = col.filter((ele) => (ele.section != req.body.section))
     cll = cll.filter(ele => ele.section != req.body.section)
     css = css.filter(ele => ele.section != req.body.section)

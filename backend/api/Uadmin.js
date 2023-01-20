@@ -4,6 +4,7 @@ let express = require('express'),
     uuidv4 = require('uuid/v4'),
     router = express.Router();
 const cloudinary = require('../helper/imageUpload')
+const DIR = './public/';
 const UAdmin = require('../db/Uadmin');
 const authUAdmin = require('../middleware/authUadmin');
 const auth = require('../middleware/authUadmin')
@@ -12,16 +13,37 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const SALT_FACTOR = 10;
 
-const storage = multer.diskStorage({});
+//const storage = multer.diskStorage({});
 
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image')) {
-        cb(null, true);
-    } else {
-        cb('invalid image file!', false);
+// const fileFilter = (req, file, cb) => {
+//     if (file.mimetype.startsWith('image')) {
+//         cb(null, true);
+//     } else {
+//         cb('invalid image file!', false);
+//     }
+// };
+// const upload = multer({ storage, fileFilter });
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null, uuidv4() + '-' + fileName)
     }
-};
-const upload = multer({ storage, fileFilter });
+});
+var upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+    }
+});
 
 router.use(express.json())
 router.route('/').get((req, res) => {
@@ -87,6 +109,8 @@ router.post('/add', upload.single('avatar'), async(req, res, next) => {
     const post = 'university_admin'
     const status = false;
     const secret = await jwt.sign({ email: email }, 'thisisnewuadmin')
+    const url = req.protocol + '://' + req.get('host')
+    const avatar = url + '/public/' + req.file.filename
     let f = 0
 
     try {
@@ -94,6 +118,13 @@ router.post('/add', upload.single('avatar'), async(req, res, next) => {
         console.log('result which I want to observe', res)
         if (res != null) console.log('got one')
         if (res != null) {
+            f = 1
+        }
+
+        const ress = await UAdmin.findOne({ university: university })
+        console.log('result which I want to observe', ress)
+        if (ress != null) console.log('got one')
+        if (ress != null) {
             f = 1
         }
     } catch (e) {
@@ -106,28 +137,6 @@ router.post('/add', upload.single('avatar'), async(req, res, next) => {
         return
     }
 
-    let image
-    try {
-        image = await cloudinary.uploader.upload(req.file.path, {
-            public_id: `${secret}_profile`,
-            width: 100,
-            height: 100,
-            crop: 'fill',
-        });
-        console.log('image', image)
-    } catch (error) {
-        res
-            .status(500)
-            .json({ success: false, message: 'server error, try after some time' });
-        console.log('Error while uploading profile image', error.message);
-    }
-    const avatar = image.url
-        // if (f) {
-        //     console.log('ft', f)
-        //     res.status(200).send('it exists')
-        //     return
-        // }
-
     const newUAdmin = new UAdmin({ email, name, phone, university, post, avatar, password, activated, status, secret });
     console.log(newUAdmin)
         /* if (newUAdmin.isModified('password')) {
@@ -137,6 +146,7 @@ router.post('/add', upload.single('avatar'), async(req, res, next) => {
     try {
         await newUAdmin.save((err) => {
             if (err) {
+                console.log('error here 2', err)
                 res.status(500).send({ message: err });
                 return;
             }

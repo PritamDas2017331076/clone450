@@ -6,7 +6,7 @@ let express = require('express'),
 const Teacher = require('../db/Teacher');
 const authTeacher = require('../middleware/authTeacher')
 const cloudinary = require('../helper/imageUpload')
-
+const DIR = './public/';
 const ApprovalT = require('../db/ApprovalT')
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -64,16 +64,37 @@ const sendConfirmationEmail = (name, email, secret) => {
     });
 };
 
-const storage = multer.diskStorage({});
+// const storage = multer.diskStorage({});
 
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image')) {
-        cb(null, true);
-    } else {
-        cb('invalid image file!', false);
+// const fileFilter = (req, file, cb) => {
+//     if (file.mimetype.startsWith('image')) {
+//         cb(null, true);
+//     } else {
+//         cb('invalid image file!', false);
+//     }
+// };
+// const upload = multer({ storage, fileFilter });
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null, uuidv4() + '-' + fileName)
     }
-};
-const upload = multer({ storage, fileFilter });
+});
+var upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+    }
+});
 
 
 router.post('/add', upload.single('avatar'), async(req, res) => {
@@ -87,6 +108,8 @@ router.post('/add', upload.single('avatar'), async(req, res) => {
     const activated = false
     const status = false
     const secret = await jwt.sign({ email: email }, 'thisisnewteacher')
+    const url = req.protocol + '://' + req.get('host')
+    const avatar = url + '/public/' + req.file.filename
     let f = 0
 
     try {
@@ -105,22 +128,7 @@ router.post('/add', upload.single('avatar'), async(req, res) => {
         res.status(200).send('teacher exists')
         return
     }
-    let image
-    try {
-        image = await cloudinary.uploader.upload(req.file.path, {
-            public_id: `${secret}_profile`,
-            width: 100,
-            height: 100,
-            crop: 'fill',
-        });
-        console.log('image', image)
-    } catch (error) {
-        res
-            .status(500)
-            .json({ success: false, message: 'server error, try after some time' });
-        console.log('Error while uploading profile image', error.message);
-    }
-    const avatar = image.url
+
     let newTeacher = new Teacher({ email, name, phone, university, secret, department, avatar, post, status, activated, password });
     console.log('new ', newTeacher)
 
