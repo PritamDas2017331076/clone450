@@ -7,15 +7,21 @@ import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay/lib';
 import { Card } from '@ui-kitten/components';
+import DatePicker from 'react-native-date-picker'
+//import RNDateTimePicker from '@react-native-community/datetimepicker';
+//import DateTimePicker from '@react-native-community/datetimepicker';
 export default function PrintRg({route, navigation}){
     const { course_id, record, section } = route.params
     const [dist, setDist] = useState([])
     const [loading, setLoading] = useState(true)
+    const [open, setOpen] = useState(false)
     console.log('course id',course_id,record)
     const [list, setList]=useState([])
     const [total, setTotal]=useState(0)
     const present=record.length
     const [zdate,setZdate] = useState()
+    const [d1, setD1] = useState(new Date())
+    const [d2, setD2] = useState(new Date())
     let fl=1
     const effect = async()=>{
       try{
@@ -24,6 +30,22 @@ export default function PrintRg({route, navigation}){
         let arr=res.data.record
         arr=arr.filter(ele=>(ele.section==section))
         setTotal(arr.length)
+        // let dd1,dd2
+        // if(d1=='') dd1='2000-01-01'
+        // else dd1=d1
+        // if(d2=='') dd2='5000-01-01'
+        // else dd2=d2
+        // arr=arr.filter(ele=>{
+        //   const d3=new Date(ele.date)
+        //   let y=d3.getFullYear(),m=d3.getMonth()+1,dd=d3.getDate()
+        //   let z="0";
+        //   if(m<10) m=z.concat(m)
+        //   if(dd<10) dd=z.concat(dd)
+        //   let dd3=y+'-'+m+'-'+dd
+        //   return (dd3>=dd1 && dd3<=dd2)
+
+        // })
+
         setDist(arr.map((item,index)=>{
             let rec=record.filter(ele=>(ele.date==item.date))
             if(rec.length!=0){
@@ -91,19 +113,51 @@ export default function PrintRg({route, navigation}){
                       textContent={'Loading...'}
                       textStyle={styles.spinnerTextStyle}
                     />
-                   :<FlatList
-                         data={dist}
-                         contentContainerStyle={{paddingBottom:150}}
-                         renderItem={renderItem}
-                         keyExtractor={item => item.id}
-                         ListFooterComponent={
-                          <Card style={{margin:10}}>
-                            <Text>Total Classes: {total}</Text>
-                            <Text>Present: {present}</Text>
-                            <Text>Percentage: {((present*1*100)/(total)).toFixed(2)}%</Text>
-                          </Card>
-                         }
-                       />
+                   :<View>
+                        {/* <Text style={styles.text}>From : <Button title="choose" onPress={() => setOpen(true)} /></Text>
+                        <DatePicker
+                          modal
+                          open={open}
+                          date={d1}
+                          onConfirm={(date) => {
+                            setOpen(false)
+                            setD1(date)
+                          }}
+                          onCancel={() => {
+                            setOpen(false)
+                          }}
+                        />
+                        <Text style={styles.text}>To : <Button title="choose" onPress={() => setOpen(true)} /></Text>
+                        <DatePicker
+                          modal
+                          open={open}
+                          date={d2}
+                          onConfirm={(date) => {
+                            setOpen(false)
+                            setD2(date)
+                          }}
+                          onCancel={() => {
+                            setOpen(false)
+                          }}
+                        />
+                        <Button onPress={() => effect()} title="Filter" />
+                        <Button onPress={() => {
+                          setD1(''); setD2('') ; effect();
+                        }} title="Reset" /> */}
+                        <FlatList
+                            data={dist}
+                            contentContainerStyle={{paddingBottom:150}}
+                            renderItem={renderItem}
+                            keyExtractor={item => item.id}
+                            ListFooterComponent={
+                              <Card style={{margin:10}}>
+                                <Text>Total Classes: {total}</Text>
+                                <Text>Present: {present}</Text>
+                                <Text>Percentage: {((present*1*100)/(total)).toFixed(2)}%</Text>
+                              </Card>
+                            }
+                          />
+                    </View>
                     }
        
         </View>
@@ -136,4 +190,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
   },
+  datePickerStyle: {
+    width: 230,
+  }
 });

@@ -12,6 +12,8 @@ export default function PrintDt({route, navigation}){
     console.log('kkd',course_id,id,date)
     const [list, setList]=useState([])
     const [total, setTotal]=useState(0)
+    const [low,setLow]=useState('')
+    const [high,setHigh]=useState('')
     const present=record.length
 
     const effect = async()=>{
@@ -19,6 +21,11 @@ export default function PrintDt({route, navigation}){
       try{
         const res=await axios.get(`${ip}/course/${course_id}`)
         console.log('student data in printdt',res.data.student)
+        var lo,hi
+        if(low=='') lo='1'
+        else lo=low
+        if(high=='') hi='999999999999'
+        else hi=high
         let arr=res.data.student
         arr=arr.filter(ele=>(ele.section==section))
         //console.log('arr',arr)
@@ -37,6 +44,7 @@ export default function PrintDt({route, navigation}){
         brr=brr.concat(crr)
         arr=brr
         console.log('sorted array arr',brr)
+        arr=arr.filter(item=>(item.registration_number>=lo && item.registration_number<=hi))
         //console.log('sortted in printdt',arr)
         setList(arr.map((item, index)=>{
           let arr=record.filter((ele)=>(ele.registration_number==item.registration_number))
@@ -192,6 +200,20 @@ export default function PrintDt({route, navigation}){
                        ))
                 }
             </ul>*/}
+              <TextInput
+                onChangeText={setLow}
+                value={low}
+                placeholder="Enter Lower Registration"
+              />
+              <TextInput
+                onChangeText={setHigh}
+                value={high}
+                placeholder="Enter Higher Registration"
+              />
+              <Button onPress={() => effect()} title="Filter" />
+              <Button onPress={() => {
+                setLow(''); setHigh('') ; effect();
+              }} title="Reset" />
               <FlatList
                   data={list}
                   contentContainerStyle={{paddingBottom:150}}
