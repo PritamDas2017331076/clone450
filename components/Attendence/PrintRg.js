@@ -10,6 +10,8 @@ import { Card } from '@ui-kitten/components';
 import DatePicker from 'react-native-date-picker'
 //import RNDateTimePicker from '@react-native-community/datetimepicker';
 //import DateTimePicker from '@react-native-community/datetimepicker';
+import { Datepicker, Layout,} from '@ui-kitten/components';
+
 export default function PrintRg({route, navigation}){
     const { course_id, record, section } = route.params
     const [dist, setDist] = useState([])
@@ -20,8 +22,9 @@ export default function PrintRg({route, navigation}){
     const [total, setTotal]=useState(0)
     const present=record.length
     const [zdate,setZdate] = useState()
-    const [d1, setD1] = useState(new Date())
-    const [d2, setD2] = useState(new Date())
+    const [d1, setD1] = useState(new Date("2000/1/1"))
+    const [d2, setD2] = useState(new Date("5000/1/1"))
+    const [date, setDate] = useState(new Date());
     let fl=1
     const effect = async()=>{
       try{
@@ -103,7 +106,8 @@ export default function PrintRg({route, navigation}){
   const renderItem = ({ item }) => (
     <Item item={item}  />
    );
-    
+
+   
 
 
     return(
@@ -114,6 +118,28 @@ export default function PrintRg({route, navigation}){
                       textStyle={styles.spinnerTextStyle}
                     />
                    :<View>
+                     <Layout style={styles.dateContainer} level='1'>
+                        <Text category='h6'>
+                          Selected date: {date.toLocaleDateString()}
+                        </Text>
+
+                        <Datepicker
+                          date={d1}
+                          onSelect={nextDate => setD1(nextDate)}
+                          min = {new Date("2010/1/1")}
+                          max = {new Date("2050/1/1")}
+                        />
+                        <Datepicker
+                          date={d2}
+                          onSelect={nextDate => setD2(nextDate)}
+                          min = {new Date("2010/1/1")}
+                          max = {new Date("2050/1/1")}
+                        />
+                        <Button onPress={() => effect()} title="Filter" />
+                        <Button onPress={() => {
+                          setD1(''); setD2('') ; effect();
+                        }} title="Reset" />
+                      </Layout>
                         {/* <Text style={styles.text}>From : <Button title="choose" onPress={() => setOpen(true)} /></Text>
                         <DatePicker
                           modal
@@ -127,6 +153,7 @@ export default function PrintRg({route, navigation}){
                             setOpen(false)
                           }}
                         />
+                        <DatePicker date={d1} onDateChange={setD1} />
                         <Text style={styles.text}>To : <Button title="choose" onPress={() => setOpen(true)} /></Text>
                         <DatePicker
                           modal
@@ -140,6 +167,7 @@ export default function PrintRg({route, navigation}){
                             setOpen(false)
                           }}
                         />
+                        <DatePicker date={d2} onDateChange={setD2} />
                         <Button onPress={() => effect()} title="Filter" />
                         <Button onPress={() => {
                           setD1(''); setD2('') ; effect();
@@ -165,6 +193,9 @@ export default function PrintRg({route, navigation}){
 }
 
 const styles = StyleSheet.create({
+  dateContainer: {
+    minHeight: 150,
+  },
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
