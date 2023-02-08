@@ -35,6 +35,7 @@ import PrintAc from '../Print/PrintAc'
 import PrintAct from '../Print/PrintAct'
 import PrintCol from '../Print/PrintCol'
 import PrintSt from '../Print/PrintSt'
+//import Mycourses from './Mycourses'
 import {
   updateEmail,
   updateName,

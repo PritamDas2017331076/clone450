@@ -7,38 +7,42 @@ import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay/lib';
 import { Button } from '@ui-kitten/components';
-const getParsedDate = (strDate)=>{
-  var strSplitDate = String(strDate).split(' ');
-  var date = new Date(strSplitDate[0]);
-  // alert(date);
-  var dd = date.getDate();
-  var mm = date.getMonth() + 1; //January is 0!
+import { Datepicker, Layout,} from '@ui-kitten/components';
+// const getParsedDate = (strDate)=>{
+//   var strSplitDate = String(strDate).split(' ');
+//   var date = new Date(strSplitDate[0]);
+//   // alert(date);
+//   var dd = date.getDate();
+//   var mm = date.getMonth() + 1; //January is 0!
 
-  var yyyy = date.getFullYear();
-  if (dd < 10) {
-      dd = '0' + dd;
-  }
-  if (mm < 10) {
-      mm = '0' + mm;
-  }
-  date =  dd + "-" + mm + "-" + yyyy;
-  return date.toString();
-}
+//   var yyyy = date.getFullYear();
+//   if (dd < 10) {
+//       dd = '0' + dd;
+//   }
+//   if (mm < 10) {
+//       mm = '0' + mm;
+//   }
+//   date =  dd + "-" + mm + "-" + yyyy;
+//   return date.toString();
+// }
 export default function Date({route, navigation}){
     const { course_id,section } = route.params
     const [dist,setDist]=useState([])
     const [loading, setLoading] = useState(true)
-    const [jsDate,setJsDate] = useState([])
+    const [d1, setD1] = useState('')
+    const [d2, setD2] = useState('')
+    //const [dat, setDate] = useState(new Date());
     let fl=1
     const effect = async()=>{
       try{
         const res=await axios.get(`${ip}/bydate/sec?course_id=${course_id}&section=${section}`)
-        // console.log(course_id,res.data)
+        console.log('got my stuff',course_id,res.data)
         setDist(res.data.map((item,index)=>{
           // let splitDate = item.date.split(' ')
           // console.log('split date',splitDate)
           return {date:item.date.split(" "),record:item.record,id:item._id}
         }))
+       // console.log('dist',dist)
         setLoading(false)
       }catch(error){
         console.log(error)
@@ -48,21 +52,7 @@ export default function Date({route, navigation}){
       console.log('i have enterd in date list')
       const unsubscribe = navigation.addListener('focus', () => {
         effect()
-        // axios.get(`${ip}/bydate/sec?course_id=${course_id}&section=${section}`)
-        //   .then(res=>{
-        //     // console.log(course_id,res.data)
-        //     setDist(res.data.map((item,index)=>{
-        //         // let splitDate = item.date.split(' ')
-        //         // console.log('split date',splitDate)
-        //         return {date:item.date.split(" "),record:item.record,id:item._id}
-        //     }))
-        //   })
-        //   .catch((error) => console.error(error))
-        //   .finally(() => {
-        //     setLoading(false)
-        //     fl=0 ;
-        //   });
-        })
+      })
 
   }, [navigation]);
 
@@ -115,12 +105,32 @@ export default function Date({route, navigation}){
                       textStyle={styles.spinnerTextStyle}
                     />
 
-                   :<FlatList
+                   :<View>
+                       {/* <Layout style={styles.dateContainer} level='1'>
+                          <Datepicker
+                            date={d1}
+                            onSelect={nextDate => setD1(nextDate)}
+                            min = {new Date("2010/1/1")}
+                            max = {new Date("2050/1/1")}
+                          />
+                          <Datepicker
+                            date={d2}
+                            onSelect={nextDate => setD2(nextDate)}
+                            min = {new Date("2010/1/1")}
+                            max = {new Date("2050/1/1")}
+                          />
+                          <Button onPress={() => effect()} title="Filter" />
+                          <Button onPress={() => {
+                            setD1('') ; setD2('') ; effect();
+                          }} title="Reset" />
+                      </Layout> */}
+                       <FlatList
                          data={dist}
                          contentContainerStyle={{paddingBottom:150}}
                          renderItem={renderItem}
                          keyExtractor={item => item.id}
                        />
+                    </View>
                     }
         </View>
     )
@@ -151,4 +161,10 @@ const styles = StyleSheet.create({
     title: {
       fontSize: 32,
     },
+    dateContainer: {
+      minHeight: 150,
+    },
+    datePickerStyle: {
+      width: 230,
+    }
   });

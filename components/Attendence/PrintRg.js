@@ -7,7 +7,6 @@ import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay/lib';
 import { Card } from '@ui-kitten/components';
-import DatePicker from 'react-native-date-picker'
 //import RNDateTimePicker from '@react-native-community/datetimepicker';
 //import DateTimePicker from '@react-native-community/datetimepicker';
 import { Datepicker, Layout,} from '@ui-kitten/components';
@@ -20,10 +19,10 @@ export default function PrintRg({route, navigation}){
     console.log('course id',course_id,record)
     const [list, setList]=useState([])
     const [total, setTotal]=useState(0)
-    const present=record.length
+    const [present, setPresent] = useState(0)
     const [zdate,setZdate] = useState()
-    const [d1, setD1] = useState(new Date("2000/1/1"))
-    const [d2, setD2] = useState(new Date("5000/1/1"))
+    const [d1, setD1] = useState('')
+    const [d2, setD2] = useState('')
     const [date, setDate] = useState(new Date());
     let fl=1
     const effect = async()=>{
@@ -33,21 +32,50 @@ export default function PrintRg({route, navigation}){
         let arr=res.data.record
         arr=arr.filter(ele=>(ele.section==section))
         setTotal(arr.length)
-        // let dd1,dd2
-        // if(d1=='') dd1='2000-01-01'
-        // else dd1=d1
-        // if(d2=='') dd2='5000-01-01'
-        // else dd2=d2
-        // arr=arr.filter(ele=>{
-        //   const d3=new Date(ele.date)
-        //   let y=d3.getFullYear(),m=d3.getMonth()+1,dd=d3.getDate()
-        //   let z="0";
-        //   if(m<10) m=z.concat(m)
-        //   if(dd<10) dd=z.concat(dd)
-        //   let dd3=y+'-'+m+'-'+dd
-        //   return (dd3>=dd1 && dd3<=dd2)
+        let dd1,dd2
+        if(d1=='') dd1='2000-01-01'
+        else
+        {
+          let y=d1.getFullYear(),m=d1.getMonth()+1,dd=d1.getDate()
+          let z="0";
+          if(m<10) m=z.concat(m)
+          if(dd<10) dd=z.concat(dd)
+          dd1=y+'-'+m+'-'+dd
+        }
+        if(d2=='') dd2='5000-01-01'
+        else
+        {
+          let y=d2.getFullYear(),m=d2.getMonth()+1,dd=d2.getDate()
+          let z="0";
+          if(m<10) m=z.concat(m)
+          if(dd<10) dd=z.concat(dd)
+          dd2=y+'-'+m+'-'+dd
+        }
+        console.log('dd1',dd1,'dd2',dd2)
+        arr=arr.filter(ele=>{
+          const d3=new Date(ele.date)
+          let y=d3.getFullYear(),m=d3.getMonth()+1,dd=d3.getDate()
+          let z="0";
+          if(m<10) m=z.concat(m)
+          if(dd<10) dd=z.concat(dd)
+          let dd3=y+'-'+m+'-'+dd
+          return (dd3>=dd1 && dd3<=dd2)
 
-        // })
+        })
+
+        let brr=record.filter(ele=>{
+          const d3=new Date(ele.date)
+          let y=d3.getFullYear(),m=d3.getMonth()+1,dd=d3.getDate()
+          let z="0";
+          if(m<10) m=z.concat(m)
+          if(dd<10) dd=z.concat(dd)
+          let dd3=y+'-'+m+'-'+dd
+          return (dd3>=dd1 && dd3<=dd2)
+
+        })
+        console.log('brr',brr)
+        setD1('')
+        setD2('')
 
         setDist(arr.map((item,index)=>{
             let rec=record.filter(ele=>(ele.date==item.date))
@@ -58,6 +86,9 @@ export default function PrintRg({route, navigation}){
               return {date: item.date.split(" "),status:false,id:index}
             }
         }))
+        setTotal(arr.length)
+        setPresent(brr.length)
+        console.log('dist',dist)
         setLoading(false)
       }catch(error){
         console.error('error',error.message)
@@ -136,42 +167,11 @@ export default function PrintRg({route, navigation}){
                           max = {new Date("2050/1/1")}
                         />
                         <Button onPress={() => effect()} title="Filter" />
-                        <Button onPress={() => {
-                          setD1(''); setD2('') ; effect();
+                        <Button onPress={async() => {
+                          setD1('') ; setD2('') ; effect();
                         }} title="Reset" />
                       </Layout>
-                        {/* <Text style={styles.text}>From : <Button title="choose" onPress={() => setOpen(true)} /></Text>
-                        <DatePicker
-                          modal
-                          open={open}
-                          date={d1}
-                          onConfirm={(date) => {
-                            setOpen(false)
-                            setD1(date)
-                          }}
-                          onCancel={() => {
-                            setOpen(false)
-                          }}
-                        />
-                        <DatePicker date={d1} onDateChange={setD1} />
-                        <Text style={styles.text}>To : <Button title="choose" onPress={() => setOpen(true)} /></Text>
-                        <DatePicker
-                          modal
-                          open={open}
-                          date={d2}
-                          onConfirm={(date) => {
-                            setOpen(false)
-                            setD2(date)
-                          }}
-                          onCancel={() => {
-                            setOpen(false)
-                          }}
-                        />
-                        <DatePicker date={d2} onDateChange={setD2} />
-                        <Button onPress={() => effect()} title="Filter" />
-                        <Button onPress={() => {
-                          setD1(''); setD2('') ; effect();
-                        }} title="Reset" /> */}
+                        
                         <FlatList
                             data={dist}
                             contentContainerStyle={{paddingBottom:150}}
