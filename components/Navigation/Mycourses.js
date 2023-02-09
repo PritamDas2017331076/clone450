@@ -30,6 +30,7 @@ export default function Mycourses({route, navigation}){
     const id=useSelector(selectId)
     let fl=1
     const effect = async()=>{
+      // setLoading(true)
       try{
         const res=await axios.get(`${ip}/course`)
         // console.log('course info ',course_id,res.data)
@@ -45,7 +46,15 @@ export default function Mycourses({route, navigation}){
         })
         console.log('arrb',arr)
         arr=brr
+        arr.sort(function(a,b){
+          if(a.name<b.name) return -1
+          else if(a.name>b.name) return 1
+          else if(a.department<b.department) return -1
+          else if(a.department>b.department) return 1
+          return 0;
+        })
         setDist(arr)
+        setLoading(false)
         
       }catch(error){
         console.error('error',error.message)
@@ -105,12 +114,14 @@ export default function Mycourses({route, navigation}){
 
     return(
         <View>
-            {loading?<Spinner
+            {
+            loading?<Spinner
                       visible={true}
                       textContent={'Loading...'}
                       textStyle={styles.spinnerTextStyle}
                     />
-                   :<View>
+                   :
+                   <View>
                         <FlatList
                             data={dist}
                             contentContainerStyle={{paddingBottom:150}}
