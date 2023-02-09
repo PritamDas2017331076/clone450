@@ -14,7 +14,7 @@ import UniversityAdd from '../Add/UniversityAdd'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import Date from '../Attendence/Date'
+import Date from '../Attendence/DateF'
 import PrintDt from '../Attendence/PrintDt'
 import Reg from '../Attendence/Reg'
 import PrintRg from '../Attendence/PrintRg'

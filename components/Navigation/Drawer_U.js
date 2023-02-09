@@ -14,7 +14,7 @@ import PrintDh from '../Print/PrintDh'
 import PrintAdmin from '../Print/PrintAdmin'
 import DepartmentAdd from '../Add/DepartmentAdd'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Date from '../Attendence/Date'
+import Date from '../Attendence/DateF'
 import PrintDt from '../Attendence/PrintDt'
 import Reg from '../Attendence/Reg'
 import PrintRg from '../Attendence/PrintRg'

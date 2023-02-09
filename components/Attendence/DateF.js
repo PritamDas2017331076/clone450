@@ -25,19 +25,52 @@ import { Datepicker, Layout,} from '@ui-kitten/components';
 //   date =  dd + "-" + mm + "-" + yyyy;
 //   return date.toString();
 // }
-export default function Date({route, navigation}){
+export default function DateF({route, navigation}){
     const { course_id,section } = route.params
     const [dist,setDist]=useState([])
     const [loading, setLoading] = useState(true)
     const [d1, setD1] = useState('')
     const [d2, setD2] = useState('')
-    //const [dat, setDate] = useState(new Date());
+    const [date, setDate] = useState(new Date());
     let fl=1
     const effect = async()=>{
       try{
         const res=await axios.get(`${ip}/bydate/sec?course_id=${course_id}&section=${section}`)
         console.log('got my stuff',course_id,res.data)
-        setDist(res.data.map((item,index)=>{
+        let arr=res.data
+        let dd1,dd2
+        if(d1=='') dd1='2000-01-01'
+        else
+        {
+          let y=d1.getFullYear(),m=d1.getMonth()+1,dd=d1.getDate()
+          let z="0";
+          if(m<10) m=z.concat(m)
+          if(dd<10) dd=z.concat(dd)
+          dd1=y+'-'+m+'-'+dd
+        }
+        if(d2=='') dd2='5000-01-01'
+        else
+        {
+          let y=d2.getFullYear(),m=d2.getMonth()+1,dd=d2.getDate()
+          let z="0";
+          if(m<10) m=z.concat(m)
+          if(dd<10) dd=z.concat(dd)
+          dd2=y+'-'+m+'-'+dd
+        }
+        console.log('dd1',dd1,'dd2',dd2)
+        setD1('')
+        setD2('')
+        arr=arr.filter(ele=>{
+          const d3=new Date(ele.date)
+          let y=d3.getFullYear(),m=d3.getMonth()+1,dd=d3.getDate()
+          let z="0";
+          if(m<10) m=z.concat(m)
+          if(dd<10) dd=z.concat(dd)
+          let dd3=y+'-'+m+'-'+dd
+          return (dd3>=dd1 && dd3<=dd2)
+
+        })
+        setDist(arr.map((item,index)=>{
           // let splitDate = item.date.split(' ')
           // console.log('split date',splitDate)
           return {date:item.date.split(" "),record:item.record,id:item._id}
@@ -106,24 +139,28 @@ export default function Date({route, navigation}){
                     />
 
                    :<View>
-                       {/* <Layout style={styles.dateContainer} level='1'>
-                          <Datepicker
-                            date={d1}
-                            onSelect={nextDate => setD1(nextDate)}
-                            min = {new Date("2010/1/1")}
-                            max = {new Date("2050/1/1")}
-                          />
-                          <Datepicker
-                            date={d2}
-                            onSelect={nextDate => setD2(nextDate)}
-                            min = {new Date("2010/1/1")}
-                            max = {new Date("2050/1/1")}
-                          />
-                          <Button onPress={() => effect()} title="Filter" />
-                          <Button onPress={() => {
-                            setD1('') ; setD2('') ; effect();
-                          }} title="Reset" />
-                      </Layout> */}
+                       <Layout style={styles.dateContainer} level='1'>
+                        <Text category='h6'>
+                          Selected date: {date.toLocaleDateString()}
+                        </Text>
+
+                        <Datepicker
+                          date={d1}
+                          onSelect={nextDate => setD1(nextDate)}
+                          min = {new Date("2010/1/1")}
+                          max = {new Date("2050/1/1")}
+                        />
+                        <Datepicker
+                          date={d2}
+                          onSelect={nextDate => setD2(nextDate)}
+                          min = {new Date("2010/1/1")}
+                          max = {new Date("2050/1/1")}
+                        />
+                        <Button onPress={() => effect()} title="Filter" />
+                        <Button onPress={() => {
+                          setD1('') ; setD2('') ; effect();
+                        }} title="Reset" />
+                      </Layout>
                        <FlatList
                          data={dist}
                          contentContainerStyle={{paddingBottom:150}}
