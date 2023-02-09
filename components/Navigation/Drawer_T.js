@@ -35,7 +35,7 @@ import PrintAc from '../Print/PrintAc'
 import PrintAct from '../Print/PrintAct'
 import PrintCol from '../Print/PrintCol'
 import PrintSt from '../Print/PrintSt'
-//import Mycourses from './Mycourses'
+import Mycourses from './Mycourses'
 import {
   updateEmail,
   updateName,
@@ -199,6 +199,7 @@ export default function Drawer_T({navigation}){
           <Drawer.Screen component={ApprovalList} name="DepartmentList" />
           <Drawer.Screen component={AccessList} name="AccessListStudent" />
           <Drawer.Screen component={AccessListTeacher} name="AccessListeacher" />
+          <Drawer.Screen component={Mycourses} name="My Courses" />
           <Drawer.Screen component={Home} name="Home" />
           <Drawer.Screen component={About} name="About" />
         </Drawer.Navigator>

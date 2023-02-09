@@ -22,10 +22,6 @@ import {
   } from '../Loginslice'  
 import Spinner from 'react-native-loading-spinner-overlay/lib';
 import { Card } from '@ui-kitten/components';
-import DatePicker from 'react-native-date-picker'
-//import RNDateTimePicker from '@react-native-community/datetimepicker';
-//import DateTimePicker from '@react-native-community/datetimepicker';
-import { Datepicker, Layout,} from '@ui-kitten/components';
 
 export default function Mycourses({route, navigation}){
     const [dist, setDist] = useState([])
