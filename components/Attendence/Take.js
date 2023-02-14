@@ -15,7 +15,7 @@ export default function Take({route, navigation}){
     const [date, setDate]=useState('')
     const dat=new Date().toString()
     const zdat = dat.split(" ")
-    const [dist, setDist] = useState(list)
+    const [dist, setDist] = useState()
     const [record,setRecord]=useState([])
     const [lost,setLost]=useState([])
     const university = useSelector(selectUniversity)
@@ -29,7 +29,32 @@ export default function Take({route, navigation}){
       try{
         // console.log('i am here to do it**********************************')
         const rs=await axios.get(`${ip}/course/${course_id}`)
-         console.log('course in this case',rs.data)
+        let arr=rs.data.student
+      //  console.log('arr',arr)
+        arr=arr.filter(item=>(item.section==section))
+        arr.sort(function(a,b){
+          if(a.registration_number<b.registration_number) return -1
+          else return 0
+        })
+      //  console.log('all',arr)
+        let obj=arr[arr.length-1].registration_number.substring(0,4)
+        console.log('objjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj',obj)
+        let brr=[]
+        let crr=[]
+        arr.forEach((a)=>{
+          if(a.registration_number.substring(0,4)==obj)brr.push(a)
+          else crr.push(a)
+        })
+        brr=brr.concat(crr)
+      //  console.log(brr,'thennn',crr)
+        arr=brr
+        // setCol(res.data.collaborator)
+        // setStu(res.data.student)
+        // setTid(res.data.teacher_id)
+        setDist(arr.map((item,index)=>{
+            return {registration_number:item.registration_number,status:false,avatar:item.avatar,id:index}
+        }))
+        // console.log('course in this case',rs.data)
         setAcc(rs.data)
       }catch(e){
         console.log('error in take effect',e)
@@ -188,10 +213,10 @@ export default function Take({route, navigation}){
                     ))
                 }
             </ul>*/}
-            <View style={{flexDirection:'row',justifyContent:'space-around',padding:10}}>
+            {/* <View style={{flexDirection:'row',justifyContent:'space-around',padding:10}}>
               <Text>{zdat[1]} {zdat[2]}</Text>
               <Text> {zdat[4]}</Text>
-            </View>
+            </View> */}
             <View>
               <FlatList style={{backgroundColor:'white',padding:'5%'}}
                 data={dist}
@@ -199,6 +224,12 @@ export default function Take({route, navigation}){
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 ListFooterComponent={<Button onPress={Submit} title="Submit" />}
+                ListHeaderComponent={
+                  <View style={{flexDirection:'row',justifyContent:'space-around',padding:10}}>
+                    <Text>{zdat[1]} {zdat[2]}</Text>
+                    <Text> {zdat[4]}</Text>
+                  </View>
+                }
               />
               {/* <Button style={{marginBottom:-100}}  onPress={Submit} title="Submit" /> */}
             </View>

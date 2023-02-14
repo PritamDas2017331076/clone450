@@ -17,7 +17,7 @@ export default function Date({route, navigation}){
       try{
         console.log(course_id,section)
         const res=await axios.get(`${ip}/byreg/srr?course_id=${course_id}&section=${section}`)
-        console.log(' data ', res.data)
+       // console.log(' data ', res.data)
         var lo,hi
         if(low=='') lo='1'
         else lo=low
@@ -30,18 +30,21 @@ export default function Date({route, navigation}){
         })
         console.log('all',arr)
         let obj=arr[arr.length-1].registration_number.substring(0,4)
+        console.log('testt',obj)
         let brr=[]
         let crr=[]
         arr.forEach((a)=>{
           if(a.registration_number.substring(0,4)==obj)brr.push(a)
           else crr.push(a)
         })
+        console.log('brrrrrrrrrrrrrrrrr',brr)
+        console.log('crrrrrrrrrrrrrrrrr',crr)
         brr=brr.concat(crr)
-        console.log(brr,'thennn',crr)
+     //   console.log(brr,'thennn',crr)
         arr=brr
-        console.log(arr)
+      //  console.log(arr)
         arr=arr.filter(item=>(item.registration_number>=lo && item.registration_number<=hi))
-        console.log(arr)
+      //  console.log(arr)
         setList(arr.map((item,index)=>{
             return {registration_number:item.registration_number,record:item.record,avatar:item.avatar,id:index}
         }))
@@ -107,7 +110,7 @@ export default function Date({route, navigation}){
                     />
                    :
                    <View>
-                    <TextInput
+                    {/* <TextInput
                       onChangeText={setLow}
                       value={low}
                       placeholder="Enter Lower Registration"
@@ -120,13 +123,31 @@ export default function Date({route, navigation}){
                     <Button onPress={() => effect()} title="Filter" />
                     <Button onPress={() => {
                       setLow(''); setHigh('') ; effect();
-                    }} title="Reset" />
+                    }} title="Reset" /> */}
 
                     <FlatList
                          data={list}
                          contentContainerStyle={{paddingBottom:150}}
                          renderItem={renderItem}
                          keyExtractor={item => item.id}
+                         ListHeaderComponent={
+                          <View>
+                            <TextInput
+                              onChangeText={setLow}
+                              value={low}
+                              placeholder="Enter Lower Registration"
+                            />
+                            <TextInput
+                              onChangeText={setHigh}
+                              value={high}
+                              placeholder="Enter Higher Registration"
+                            />
+                            <Button onPress={() => effect()} title="Filter" />
+                            <Button onPress={() => {
+                              setLow(''); setHigh('') ; effect();
+                            }} title="Reset" />
+                          </View>
+                        }
                        />
                    </View>
                     }
