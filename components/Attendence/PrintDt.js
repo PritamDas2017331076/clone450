@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 export default function PrintDt({route, navigation}){
     const { record, course_id, section,id,date } = route.params
-    console.log('kkd',course_id,id,date)
+    console.log('kkd',course_id,id,date,section)
     const [list, setList]=useState([])
     const [total, setTotal]=useState(0)
     const [low,setLow]=useState('')
@@ -102,24 +102,25 @@ export default function PrintDt({route, navigation}){
     const func = async()=>{
       const chg={date: date }
       const chh={date: date, section: section }
+      console.log('chh',chh)
       try{
         const res=await axios.delete(`${ip}/bydate/${id}`)
         console.log('successfully deleted bydate')
-        console.log(res.data)
+        //console.log(res.data)
       }catch(err){
         console.log('error occurred in bydate while delete',err)
       }
       try{
         const res=await axios.patch(`${ip}/byreg/regd?course_id=${course_id}&section=${section}`,chg)
         console.log('successfully updated in byreg')
-        console.log(res.data)
+        //console.log(res.data)
       }catch(err){
         console.log('error occurred byreg while patch',err)
       }
       try{
         const res=await axios.patch(`${ip}/course/recordd/${course_id}`,chh)
         console.log('successfully updated in course record')
-        console.log(res.data)
+        //console.log(res.data)
         navigation.goBack()
       }catch(err){
         console.log('error occurred course record while patch',err)
@@ -200,7 +201,7 @@ export default function PrintDt({route, navigation}){
                        ))
                 }
             </ul>*/}
-              <TextInput
+              {/* <TextInput
                 onChangeText={setLow}
                 value={low}
                 placeholder="Enter Lower Registration"
@@ -213,13 +214,31 @@ export default function PrintDt({route, navigation}){
               <Button onPress={() => effect()} title="Filter" />
               <Button onPress={() => {
                 setLow(''); setHigh('') ; effect();
-              }} title="Reset" />
+              }} title="Reset" /> */}
               <FlatList
                   data={list}
                   contentContainerStyle={{paddingBottom:150}}
                   renderItem={renderItem}
                   keyExtractor={item => item.id}
                   ListFooterComponent={<Button onPress={func} title="Delete" />}
+                  ListHeaderComponent={
+                    <View>
+                      <TextInput
+                        onChangeText={setLow}
+                        value={low}
+                        placeholder="Enter Lower Registration"
+                      />
+                      <TextInput
+                        onChangeText={setHigh}
+                        value={high}
+                        placeholder="Enter Higher Registration"
+                      />
+                      <Button onPress={() => effect()} title="Filter" />
+                      <Button onPress={() => {
+                        setLow(''); setHigh('') ; effect();
+                      }} title="Reset" />
+                    </View>
+                  }
                 />
             </View>
        

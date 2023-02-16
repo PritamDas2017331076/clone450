@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, FlatList, StatusBar, TouchableOpacity, CheckBox } from 'react-native';
+import { Button, View, Text, StyleSheet, Image, FlatList, StatusBar, TouchableOpacity, CheckBox } from 'react-native';
 import {ip} from '../ip'
 import { selectUniversity, selectId } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,6 +15,23 @@ export default function StudentC({route, navigation}) {
       console.log(' data ', res.data) 
       let dd=res.data.student
       dd=dd.filter(st=>st.section==section)
+      let arr=dd
+      arr.sort(function(a,b){
+        if(a.registration_number<b.registration_number) return -1
+        else return 0
+      })
+      console.log('all',arr)
+      let obj=arr[arr.length-1].registration_number.substring(0,4)
+      let brr=[]
+      let crr=[]
+      arr.forEach((a)=>{
+        if(a.registration_number.substring(0,4)==obj)brr.push(a)
+        else crr.push(a)
+      })
+      brr=brr.concat(crr)
+      console.log(brr,'thennn',crr)
+      arr=brr
+      dd=arr
       setList(dd)
     }catch(error){
       console.log('error in studentc',error)
@@ -49,6 +66,12 @@ export default function StudentC({route, navigation}) {
     })}>
         <Text>{item.id}</Text>
         <Text>{item.registration_number}</Text>
+        <Image
+            style={styles.tinyLogo}
+            source={{
+                uri: item.avatar,
+            }}
+        />
     </TouchableOpacity>
     </View>
   );
@@ -82,6 +105,10 @@ const styles = StyleSheet.create({
     },
     title: {
       fontSize: 32,
+    },
+    tinyLogo: {
+      width: 50,
+      height: 50,
     },
   });
   

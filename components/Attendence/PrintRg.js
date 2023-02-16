@@ -149,7 +149,7 @@ export default function PrintRg({route, navigation}){
                       textStyle={styles.spinnerTextStyle}
                     />
                    :<View>
-                     <Layout style={styles.dateContainer} level='1'>
+                     {/* <Layout style={styles.dateContainer} level='1'>
                         <Text category='h6'>
                           Selected date: {date.toLocaleDateString()}
                         </Text>
@@ -170,7 +170,7 @@ export default function PrintRg({route, navigation}){
                         <Button onPress={async() => {
                           setD1('') ; setD2('') ; effect();
                         }} title="Reset" />
-                      </Layout>
+                      </Layout> */}
                         
                         <FlatList
                             data={dist}
@@ -184,6 +184,29 @@ export default function PrintRg({route, navigation}){
                                 <Text>Percentage: {((present*1*100)/(total)).toFixed(2)}%</Text>
                               </Card>
                             }
+                            ListHeaderComponent={
+                            <Layout style={styles.dateContainer} level='1'>
+                                <Text category='h6'>
+                                  Selected date: {date.toLocaleDateString()}
+                                </Text>
+        
+                                <Datepicker
+                                  date={d1}
+                                  onSelect={nextDate => setD1(nextDate)}
+                                  min = {new Date("2010/1/1")}
+                                  max = {new Date("2050/1/1")}
+                                />
+                                <Datepicker
+                                  date={d2}
+                                  onSelect={nextDate => setD2(nextDate)}
+                                  min = {new Date("2010/1/1")}
+                                  max = {new Date("2050/1/1")}
+                                />
+                                <Button onPress={() => effect()} title="Filter" />
+                                <Button onPress={async() => {
+                                  setD1('') ; setD2('') ; effect();
+                                }} title="Reset" />
+                          </Layout>}
                           />
                     </View>
                     }

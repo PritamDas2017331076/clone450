@@ -26,6 +26,7 @@ import StudentlistL from '../Lists/Studentlist'
 import University from '../Lists/University'
 import UadminAll from '../Lists/UadminAll'
 import UadminDelete from '../Print/UadminDelete'
+import PasswordUpdate from '../EntityUpdate/PasswordUpdate';
 import {
   updateEmail,
   updateName,
@@ -173,6 +174,7 @@ export default function Drawer({navigation}){
           <Drawer.Screen component={ApprovalList} name="Approvals" />
           <Drawer.Screen component={UniversityAdd} name="UniversityAdd" />
           <Drawer.Screen component={DeleteUadmin} name="University Admin List" />
+          <Drawer.Screen name="Update Password" component={PasswordUpdate}  />
         </Drawer.Navigator>
       )
     }

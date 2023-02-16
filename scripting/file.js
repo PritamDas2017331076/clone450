@@ -17,13 +17,13 @@ const func = async() => {
             let x = (student.registration_number * 1) % 10
             if ((x * 1) % 2) sec = 'A'
             const obj = {
-                course_id: '6351700852f31974bec41f04',
+                course_id: '63ebe6e3c99bed2944c34849',
                 section: sec,
-                teacher: '6351603f52f31974bec41b07',
+                teacher: '632d9eaa79103800168728ef',
                 name: student.name,
                 registration_number: student.registration_number,
                 id: student._id,
-                course_name: 'Demo',
+                course_name: 'CSE999',
                 university: 'SUST',
                 avatar: student.avatar
             }

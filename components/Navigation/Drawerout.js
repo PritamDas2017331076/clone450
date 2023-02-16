@@ -12,6 +12,7 @@ import Studentregister from '../EntityRegister/Studentregister'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import UAdminRegister from '../EntityRegister/UAdminRegister';
 import DheadRegister from '../EntityRegister/DheadRegister'
+import PasswordUpdate from '../EntityUpdate/PasswordUpdate';
 
 
   
@@ -162,6 +163,7 @@ export default function Drawerout({navigation}){
           <Drawer.Screen name="Department Head Register" component={DheadRegister}  />
           <Drawer.Screen name="Teacherregister" component={Teacherregister}  />
           <Drawer.Screen name="Login" component={Login}  />
+          <Drawer.Screen name="Update Password" component={PasswordUpdate}  />
         </Drawer.Navigator>
       </NavigationContainer>
 

@@ -184,7 +184,7 @@ export default function Studentregister({navigation}){
     const dispatch = useDispatch()
     const onSubmit = async(e) => {
         // e.preventDefault()
-        if(!name){
+      if(!name){
           alert('Please enter name')
           return
       }

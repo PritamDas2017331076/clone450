@@ -6,8 +6,8 @@ const ip = 'http://localhost:5000'
 
 const func = async() => {
     try {
-        const res = await axios.get(`${ip}/access/teacher?teacher=6351603f52f31974bec41b07`)
-            //console.log('success', res.data)
+        const res = await axios.get(`${ip}/access/teacher?teacher=632d9eaa79103800168728ef`)
+        console.log('success', res.data)
         let list = res.data
         let ct = 0
         let use
@@ -16,7 +16,7 @@ const func = async() => {
         for (let data of list) {
             const id = data.id;
             const un = data._id
-                // console.log(id, un)
+            console.log(id, un)
             try {
                 const r1 = await axios.get(`${ip}/student/${id}`)
                 use = r1.data

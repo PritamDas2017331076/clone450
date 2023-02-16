@@ -73,7 +73,7 @@ export default function DateF({route, navigation}){
         setDist(arr.map((item,index)=>{
           // let splitDate = item.date.split(' ')
           // console.log('split date',splitDate)
-          return {date:item.date.split(" "),record:item.record,id:item._id}
+          return {dat:item.date,date:item.date.split(" "),record:item.record,id:item._id}
         }))
        // console.log('dist',dist)
         setLoading(false)
@@ -98,7 +98,7 @@ export default function DateF({route, navigation}){
               course_id: course_id,
               section: section,
               id:item.id,
-              date: item.date
+              date: item.dat
          })}>
           <View style={{flexDirection:'row',justifyContent:'space-between'}}>
             {/* <View style={{flexDirection:'row',justifyContent:'space-between'}}> */}
@@ -139,7 +139,7 @@ export default function DateF({route, navigation}){
                     />
 
                    :<View>
-                       <Layout style={styles.dateContainer} level='1'>
+                       {/* <Layout style={styles.dateContainer} level='1'>
                         <Text category='h6'>
                           Selected date: {date.toLocaleDateString()}
                         </Text>
@@ -156,15 +156,43 @@ export default function DateF({route, navigation}){
                           min = {new Date("2010/1/1")}
                           max = {new Date("2050/1/1")}
                         />
-                        <Button onPress={() => effect()} title="Filter" />
+                        
+                      </Layout> */}
+                      {/* <Button onPress={() => effect()}>Filter</Button>
                         <Button onPress={() => {
                           setD1('') ; setD2('') ; effect();
-                        }} title="Reset" />
-                      </Layout>
+                        }}>Reset</Button> */}
                        <FlatList
                          data={dist}
                          contentContainerStyle={{paddingBottom:150}}
                          renderItem={renderItem}
+                         ListHeaderComponent={
+                          <View>
+                            <Layout style={styles.dateContainer} level='1'>
+                              <Text category='h6'>
+                                Selected date: {date.toLocaleDateString()}
+                              </Text>
+
+                              <Datepicker
+                                date={d1}
+                                onSelect={nextDate => setD1(nextDate)}
+                                min = {new Date("2010/1/1")}
+                                max = {new Date("2050/1/1")}
+                              />
+                              <Datepicker
+                                date={d2}
+                                onSelect={nextDate => setD2(nextDate)}
+                                min = {new Date("2010/1/1")}
+                                max = {new Date("2050/1/1")}
+                              />
+                              
+                            </Layout>
+                            <Button onPress={() => effect()}>Filter</Button>
+                            <Button onPress={() => {
+                              setD1('') ; setD2('') ; effect();
+                            }}>Reset</Button>
+                          </View>
+                         }
                          keyExtractor={item => item.id}
                        />
                     </View>
