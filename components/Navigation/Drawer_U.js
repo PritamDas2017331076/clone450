@@ -27,6 +27,9 @@ import { TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import DheadAll from '../Lists/DheadAll'
 import DeptDelete from '../Print/DeptDelete'
+import PasswordUpdate from '../EntityUpdate/PasswordUpdate';
+import AvatarUpdate from '../EntityUpdate/AvatarUpdate';
+
 import {
   updateEmail,
   updateName,
@@ -159,6 +162,8 @@ export default function Drawer_U({navigation}){
           <Drawer.Screen component={ApprovalList} name="ApprovalList" />
           <Drawer.Screen component={DepartmentAdd} name="DepartmentAdd" />
           <Drawer.Screen component={Departments} name="Department Delete" />
+          <Drawer.Screen name="Update Password" component={PasswordUpdate}  />
+          <Drawer.Screen name="Update Avatar" component={AvatarUpdate}  />
         </Drawer.Navigator>
       )
     }

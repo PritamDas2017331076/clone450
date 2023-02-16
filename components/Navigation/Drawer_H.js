@@ -36,7 +36,8 @@ import PrintRg from '../Attendence/PrintRg'
 import CourseAll from '../Lists/CourseAll'
 import CourseDelete from '../Print/CourseDelete'
 import SectionDelete from '../Print/SectionDelete'
-
+import PasswordUpdate from '../EntityUpdate/PasswordUpdate';
+import AvatarUpdate from '../EntityUpdate/AvatarUpdate';
 import {
   updateEmail,
   updateName,
@@ -191,6 +192,8 @@ export default function Drawer_H({navigation}){
           <Drawer.Screen component={TeacherList} name="Teachers" />
           <Drawer.Screen component={StudentList} name="Students" />
           <Drawer.Screen component={Sessions} name="Create Session" />
+          <Drawer.Screen name="Update Password" component={PasswordUpdate}  />
+          <Drawer.Screen name="Update Avatar" component={AvatarUpdate}  />
         </Drawer.Navigator>
       )
     }

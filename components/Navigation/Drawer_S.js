@@ -21,6 +21,9 @@ import Section from '../Lists/Section'
 import StudentlistL from '../Lists/Studentlist'
 import Sectionform from '../Lists/Sectionform'
 import Sections from '../Create/Section'
+import PasswordUpdate from '../EntityUpdate/PasswordUpdate';
+import AvatarUpdate from '../EntityUpdate/AvatarUpdate';
+
 import {
   updateEmail,
   updateName,
@@ -141,6 +144,8 @@ export default function Drawer_S({navigation}){
           <Drawer.Screen component={ApprovalList} name="Sessions" />
           <Drawer.Screen component={Home} name="Home" />
           <Drawer.Screen component={About} name="About" />
+          <Drawer.Screen name="Update Password" component={PasswordUpdate}  />
+          <Drawer.Screen name="Update Avatar" component={AvatarUpdate}  />
         </Drawer.Navigator>
       )
     }

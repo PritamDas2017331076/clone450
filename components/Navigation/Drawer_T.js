@@ -36,6 +36,9 @@ import PrintAct from '../Print/PrintAct'
 import PrintCol from '../Print/PrintCol'
 import PrintSt from '../Print/PrintSt'
 import Mycourses from './Mycourses'
+import PasswordUpdate from '../EntityUpdate/PasswordUpdate';
+import AvatarUpdate from '../EntityUpdate/AvatarUpdate';
+
 import {
   updateEmail,
   updateName,
@@ -202,6 +205,8 @@ export default function Drawer_T({navigation}){
           <Drawer.Screen component={Mycourses} name="My Courses" />
           <Drawer.Screen component={Home} name="Home" />
           <Drawer.Screen component={About} name="About" />
+          <Drawer.Screen name="Update Password" component={PasswordUpdate}  />
+          <Drawer.Screen name="Update Avatar" component={AvatarUpdate}  />
         </Drawer.Navigator>
       )
     }
