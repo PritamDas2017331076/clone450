@@ -1,8 +1,9 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, TouchableOpacity, Pressable, TextInput, SafeAreaView, StatusBar, FlatList, Image } from 'react-native';
+import { Button, View, StyleSheet, TouchableOpacity, Pressable, TextInput, SafeAreaView, StatusBar, FlatList, Image } from 'react-native';
 import {ip} from '../ip'
+import { Card, Text } from '@ui-kitten/components';
 import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -158,36 +159,30 @@ export default function Utake({route, navigation}){
    }
 
    const Item = ({ item }) => (
-    <View style={styles.checkboxContainer}>
-      <View style={{flexDirection: 'row'}}>
-          
-          <View>
-              <Image
-                  style={styles.tinyLogo}
-                  source={{
-                      uri: item.avatar,
-                  }}
-              />
-          </View>
-          <Text>{item.registration_number}</Text>
+    <View style={{flexDirection: 'row'}} >
+    {/* <Pressable
+       style={[styles.checkboxBase, item.status && styles.checkboxChecked]}
+       onPress={()=>setVal(item.id)}>
+       {item.status && <Ionicons name="checkmark" size={24} color="white" /> } 
+    </Pressable> */}
+    <Card footer={
+      <Pressable onPress={()=>setVal(item.id)}>
+        <Text>{item.registration_number}</Text>
           <Pressable
-             style={[styles.checkboxBase, item.status && styles.checkboxChecked]}
-             onPress={()=>setVal(item.id)}>
-             {item.status && <Ionicons name="checkmark" size={24} color="white" /> } 
+            style={[styles.checkboxBase, item.status && styles.checkboxChecked]}
+            onPress={()=>setVal(item.id)}>
+            {item.status && <Ionicons name="checkmark" size={32} color="white" /> }
           </Pressable>
-      </View>
-          {/* <Pressable
-             style={[styles.checkboxBase, checked && styles.checkboxChecked]}
-             onPress={onCheckmarkPress}>
-             {item.status && <Ionicons name="checkmark" size={24} color="white" /> } <Text>{item.registration_number}</Text>
-          </Pressable>
-          <CheckBox
-              value={item.status}
-              onValueChange={()=>setVal(item.id)}
-              style={styles.checkbox}
-          />
-              <Text>{item.registration_number}</Text> */}
-    </View>
+      </Pressable>
+    } style={{marginBottom:20}}>
+        <Image
+            style={styles.tinyLogo}
+            source={{
+                uri: item.avatar,
+            }}
+        />
+    </Card>
+</View>
   );
 
   const renderItem = ({ item }) => (
