@@ -159,21 +159,21 @@ export default function Take({route, navigation}){
 
    const Item = ({ item }) => (
     <View >
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row'}} >
           {/* <Pressable
              style={[styles.checkboxBase, item.status && styles.checkboxChecked]}
              onPress={()=>setVal(item.id)}>
              {item.status && <Ionicons name="checkmark" size={24} color="white" /> } 
           </Pressable> */}
           <Card footer={
-            <View >
+            <Pressable onPress={()=>setVal(item.id)}>
               <Text>{item.registration_number}</Text>
                 <Pressable
                   style={[styles.checkboxBase, item.status && styles.checkboxChecked]}
                   onPress={()=>setVal(item.id)}>
                   {item.status && <Ionicons name="checkmark" size={32} color="white" /> }
                 </Pressable>
-            </View>
+            </Pressable>
           } style={{marginBottom:20}}>
               <Image
                   style={styles.tinyLogo}
