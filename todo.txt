@@ -8,3 +8,8 @@
 8) add new feature(query,search etc)
 9) offline use
 1
+
+
+
+/// creating apk
+eas build -p android --profile preview
