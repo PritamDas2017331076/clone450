@@ -157,6 +157,17 @@ export default function StudentlistL({route, navigation}){
                 {
                     (id==tid)?
                     <Card style={styles.child}
+                    onPress={()=>navigation.navigate('Add Students',{
+                      course_id: course_id,
+                      section: section
+                   })} 
+                     >
+                       <Text style={{textAlign:'center'}}>Add student</Text>
+                   </Card>:null
+                }
+                {
+                    (id==tid)?
+                    <Card style={styles.child}
                     onPress={()=>navigation.navigate('Students List',{
                       course_id: course_id,
                       section: section

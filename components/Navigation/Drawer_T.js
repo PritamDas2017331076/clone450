@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet } from 'react-native';
+import { Button, View, Text, StyleSheet, Image } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Department from '../Lists/Department'
 import Session from '../Lists/Session'
 import Course from '../Lists/Course'
+import AddStudents from '../Lists/AddStudents'
 import Courses from '../Create/Course'
 import Take from '../Attendence/Take'
 import Utake from '../Attendence/Utake'
@@ -51,7 +52,8 @@ import {
   selectToken,
   selectPost,
   selectUniversity,
-  selectDepartment
+  selectDepartment,
+  selectAvatar
   
 } from '../Loginslice'
 
@@ -97,6 +99,7 @@ function ApprovalList(){
           <Stack.Screen name="Students List" component={StudentC} />
           <Stack.Screen name="Print Student" component={PrintSt} />
           <Stack.Screen component={Courses} name="Create Course" />
+          <Stack.Screen component={AddStudents} name="Add Students" />
       </Stack.Navigator>
   )
 }
@@ -110,6 +113,7 @@ export default function Drawer_T({navigation}){
     const dispatch = useDispatch()
     const name = useSelector(selectName)
     const email = useSelector(selectEmail)
+    const avatar=useSelector(selectAvatar)
     console.log(token)
 
     const logoutClick = ()=>{
@@ -152,6 +156,12 @@ export default function Drawer_T({navigation}){
               <View>
                 <Text>{name}</Text>
                 <Text>{email}</Text>
+                <Image
+                  style={styles.tinyLogo}
+                  source={{
+                      uri: avatar,
+                  }}
+              />
               </View>
             </View>
             <DrawerItemList {...props} />
@@ -218,3 +228,10 @@ export default function Drawer_T({navigation}){
 
     )
 }
+
+const styles=StyleSheet.create({
+  tinyLogo: {
+    width: 50,
+    height: 50,
+  },
+})
