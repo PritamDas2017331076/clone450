@@ -1,10 +1,5 @@
-1) add all the students ( writing scripts preferred)
-2) alert
-3) improve ui for faster use
-4) generate apk
-5) update heroku/expo publish
-6) method to print/get attendance
-7) fault tolerance
-8) add new feature(query,search etc)
-9) offline use
-1
+1) let user to take photo when registering
+
+
+/// creating apk
+eas build -p android --profile preview
