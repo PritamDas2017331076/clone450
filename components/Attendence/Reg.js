@@ -28,8 +28,13 @@ export default function Date({route, navigation}){
           if(a.registration_number<b.registration_number) return -1
           else return 0
         })
+        let obj;
         console.log('all',arr)
-        let obj=arr[arr.length-1].registration_number.substring(0,4)
+        if(arr.length == 0){
+          obj = "0000";
+        }
+        else
+          obj=arr[arr.length-1].registration_number.substring(0,4)
         console.log('testt',obj)
         let brr=[]
         let crr=[]
