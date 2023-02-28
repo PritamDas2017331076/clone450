@@ -24,6 +24,9 @@ export default function PrintRg({route, navigation}){
     const [d1, setD1] = useState('')
     const [d2, setD2] = useState('')
     const [date, setDate] = useState(new Date());
+    const [presentList, setPresentList] = useState([])
+    const [AbsentList, setAbsentList] = useState([])
+
     let fl=1
     const effect = async()=>{
       try{
@@ -86,6 +89,19 @@ export default function PrintRg({route, navigation}){
               return {date: item.date.split(" "),status:false,id:index}
             }
         }))
+        setPresentList(arr.map((item,index)=>{
+          let rec=record.filter(ele=>(ele.date==item.date))
+          if(rec.length!=0){
+            return {date: item.date.split(" "),status:true,id:index }
+          }
+        }))
+        setAbsentList(arr.map((item,index)=>{
+          let rec=record.filter(ele=>(ele.date==item.date))
+          if(rec.length==0){
+            return {date: item.date.split(" "),status:false,id:index}
+          }
+        }))
+
         setTotal(arr.length)
         setPresent(brr.length)
         console.log('dist',dist)

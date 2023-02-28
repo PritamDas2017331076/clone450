@@ -15,6 +15,8 @@ export default function PrintDt({route, navigation}){
     const [low,setLow]=useState('')
     const [high,setHigh]=useState('')
     const present=record.length
+    const [presentList, setPresentList] = useState([])
+    const [AbsentList, setAbsentList] = useState([])
 
     const effect = async()=>{
       console.log('got it na??')
@@ -55,6 +57,20 @@ export default function PrintDt({route, navigation}){
           }
 
         }))
+
+        setPresentList(arr.map((item,index)=>{
+          let arr=record.filter((ele)=>(ele.registration_number==item.registration_number))
+          if(arr.length!=0){
+            return {registration_number: item.registration_number, id: index, avatar: item.avatar, status: true}
+          }
+        }))
+        setAbsentList(arr.map((item,index)=>{
+          let arr=record.filter((ele)=>(ele.registration_number==item.registration_number))
+          if(arr.length==0){
+            return {registration_number: item.registration_number, id: index, avatar: item.avatar, status: false}
+          } 
+        }))
+
       }catch(error){
         console.log(error)
       }
