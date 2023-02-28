@@ -106,7 +106,7 @@ export default function DateF({route, navigation}){
               <Text>{item.date[4]}</Text>
             {/* </View> */}
           <View>
-              <Button style={{width:100}} onPress={()=>{
+              <Button style={{width:100,backgroundColor:'green'}} onPress={()=>{
                     navigation.navigate('Utake',{
                         course_id: course_id,
                         section: section,
@@ -169,11 +169,11 @@ export default function DateF({route, navigation}){
                          ListHeaderComponent={
                           <View>
                             <Layout style={styles.dateContainer} level='1'>
-                              <Text category='h6'>
+                              <Text category='h6' style={{marginBottom:10}}>
                                 Selected date: {date.toLocaleDateString()}
                               </Text>
 
-                              <Datepicker
+                              <Datepicker style={{marginBottom:15}}
                                 date={d1}
                                 onSelect={nextDate => setD1(nextDate)}
                                 min = {new Date("2010/1/1")}
@@ -187,8 +187,8 @@ export default function DateF({route, navigation}){
                               />
                               
                             </Layout>
-                            <Button onPress={() => effect()}>Filter</Button>
-                            <Button onPress={() => {
+                            <Button style={styles.button}onPress={() => effect()}>Filter</Button>
+                            <Button style={styles.button} onPress={() => {
                               setD1('') ; setD2('') ; effect();
                             }}>Reset</Button>
                           </View>
@@ -228,8 +228,16 @@ const styles = StyleSheet.create({
     },
     dateContainer: {
       minHeight: 150,
+      padding:20,
+      margin:10
     },
     datePickerStyle: {
       width: 230,
-    }
+    },
+    button:{
+        width:300,
+        marginVertical:5,
+        // backgroundColor:'green',
+        marginHorizontal:'10%'      
+      }
   });

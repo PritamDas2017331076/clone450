@@ -129,10 +129,10 @@ const styles = StyleSheet.create({
     item: {
       backgroundColor: 'white',
       padding: 5,
-      width:350,
+      width:250,
       marginVertical: 8,
       flex:1,
-      marginHorizontal:'10%',
+      marginHorizontal:'18%',
       // flexDirection:'row'
     },
     title: {

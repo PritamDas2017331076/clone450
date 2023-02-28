@@ -1,4 +1,5 @@
 import React from 'react';
+import AwesomeAlert from 'react-native-awesome-alerts';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import { Button, View,StyleSheet, TouchableOpacity, Pressable, TextInput, SafeAreaView, StatusBar, FlatList, Image } from 'react-native';
@@ -11,6 +12,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 
 export default function Take({route, navigation}){
+    const[showAlert,setShowAlert] = useState(false)
     const { course_id,list,section } = route.params
     const [date, setDate]=useState('')
     const dat=new Date().toString()
@@ -69,6 +71,7 @@ export default function Take({route, navigation}){
   }, []);
 
    const Submit = async()=>{
+
     // console.log('hello')
     // console.log('record',record)
     let dd=[]
@@ -142,8 +145,10 @@ export default function Take({route, navigation}){
         console.log('error in byreg',e.message)
       }
     })
-     navigation.goBack()
-
+    setShowAlert(true)
+    setTimeout(()=>{
+      navigation.goBack()
+    },1000)
    }
 
    const setVal = (id)=>{
@@ -159,14 +164,34 @@ export default function Take({route, navigation}){
 
    const Item = ({ item }) => (
     <View >
+      <AwesomeAlert
+          show={showAlert}
+          showProgress={false}
+          title="Attendance successfully taken!"
+          // message="I Got a message!"
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={true}
+          // showCancelButton={true}
+          showConfirmButton={true}
+          // cancelText="No, cancel"
+          // confirmText="Yes, delete it"
+          confirmButtonColor="#008080"
+          // onCancelPressed={() => {
+          //   setShowAlert(false)
+          // }}
+          onConfirmPressed={() => {
+            setShowAlert(false)
+            navigation.goBack()
+          }}
+        />
       <View style={{flexDirection: 'row'}} >
           {/* <Pressable
              style={[styles.checkboxBase, item.status && styles.checkboxChecked]}
              onPress={()=>setVal(item.id)}>
              {item.status && <Ionicons name="checkmark" size={24} color="white" /> } 
           </Pressable> */}
-          <Card footer={
-            <Pressable onPress={()=>setVal(item.id)}>
+          <Card  onPress={()=>setVal(item.id)}footer={
+            <Pressable >
               <Text>{item.registration_number}</Text>
                 <Pressable
                   style={[styles.checkboxBase, item.status && styles.checkboxChecked]}

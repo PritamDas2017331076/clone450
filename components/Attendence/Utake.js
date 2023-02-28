@@ -165,7 +165,7 @@ export default function Utake({route, navigation}){
        onPress={()=>setVal(item.id)}>
        {item.status && <Ionicons name="checkmark" size={24} color="white" /> } 
     </Pressable> */}
-    <Card footer={
+    <Card onPress={()=>setVal(item.id)} footer={
       <Pressable onPress={()=>setVal(item.id)}>
         <Text>{item.registration_number}</Text>
           <Pressable
@@ -235,11 +235,14 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   checkboxBase: {
-    width: 24,
-    height: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 4,
+    width: 40,
+    height: 40,
+    // padding:10,
+    marginLeft:170,
+    marginTop:-20,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    borderRadius: 10,
     borderWidth: 2,
     borderColor: 'coral',
     backgroundColor: 'transparent',
@@ -261,11 +264,11 @@ const styles = StyleSheet.create({
   },
   checkboxLabel: {
     marginLeft: 8,
-    fontWeight: 500,
+    fontWeight: 5,
     fontSize: 18,
   },
   tinyLogo: {
-    width: 50,
-    height: 50,
+    width: 250,
+    height: 250,
   },
 });

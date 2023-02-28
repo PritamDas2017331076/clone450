@@ -190,7 +190,7 @@ export default function PrintRg({route, navigation}){
                                   Selected date: {date.toLocaleDateString()}
                                 </Text>
         
-                                <Datepicker
+                                <Datepicker 
                                   date={d1}
                                   onSelect={nextDate => setD1(nextDate)}
                                   min = {new Date("2010/1/1")}
@@ -216,6 +216,9 @@ export default function PrintRg({route, navigation}){
 }
 
 const styles = StyleSheet.create({
+  button:{
+    width:100,
+  },
   dateContainer: {
     minHeight: 150,
   },

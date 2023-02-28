@@ -90,9 +90,10 @@ const styles = StyleSheet.create({
     item: {
       backgroundColor: 'white',
       padding: 20,
+      paddingHorizontal:'15%',
       marginVertical: 8,
-      marginHorizontal: 16,
-      width:310
+      marginHorizontal: "10%",
+      width:250
     },
     title: {
       fontSize: 32,

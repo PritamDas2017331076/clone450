@@ -132,17 +132,17 @@ export default function Date({route, navigation}){
 
                     <FlatList
                          data={list}
-                         contentContainerStyle={{paddingBottom:150}}
+                         contentContainerStyle={{margin:30}}
                          renderItem={renderItem}
                          keyExtractor={item => item.id}
                          ListHeaderComponent={
                           <View>
-                            <TextInput
+                            <TextInput style = {styles.queryText}
                               onChangeText={setLow}
                               value={low}
                               placeholder="Enter Lower Registration"
                             />
-                            <TextInput
+                            <TextInput style = {styles.queryText}
                               onChangeText={setHigh}
                               value={high}
                               placeholder="Enter Higher Registration"
@@ -162,6 +162,10 @@ export default function Date({route, navigation}){
 }
 
 const styles = StyleSheet.create({
+  queryText: {
+    padding:10,
+    marginBottom:10
+  },
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,

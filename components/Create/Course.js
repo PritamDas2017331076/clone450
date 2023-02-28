@@ -1,8 +1,9 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import {Text, View, StyleSheet,ScrollView} from 'react-native'
-import { Form, FormItem, Picker } from 'react-native-form-component';
+import { Text,Form, FormItem, Picker } from 'react-native-form-component';
+import { Input,Icon, Layout} from '@ui-kitten/components';
+import {View, StyleSheet,ScrollView} from 'react-native'
 import { useSelector, useDispatch } from 'react-redux';
 import {ip} from '../ip'
 import {
@@ -103,17 +104,17 @@ export default function Courses({route, navigation}){
             <ScrollView>
             <Form onButtonPress={onSubmit}>
                 
-                <FormItem
+                <Input
                     label="Course Code"
-                    style={styles.box}
+                    style={styles.input}
                     isRequired
                     value={code}
                     onChangeText={(code) => setCode(code)}
                     asterik
                   />
-                <FormItem
+                <Input
                     label="Course Name"
-                    style={styles.box}
+                    style={styles.input}
                     isRequired
                     value={name}
                     onChangeText={(name) => setName(name)}
@@ -138,6 +139,11 @@ const styles = StyleSheet.create({
       fontSize: 20,
       justifyContent: 'center',
       fontWeight: 'bold',
+  },
+  input: {
+    width:330,
+    flex: 1,
+    margin: 4
   },
   box:{
       //flex: 1,
