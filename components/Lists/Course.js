@@ -286,7 +286,7 @@ export default function Course({route, navigation}){
                          renderItem={renderItem}
                          keyExtractor={item => item._id}
                          ListFooterComponent={
-                            <View style={{maxWidth:250,marginHorizontal:'18%',paddingTop:20}}>
+                            <View style={{maxWidth:200,marginHorizontal:'23%',paddingTop:20}}>
                             {
                                 post=='teacher'?<Button onPress={()=>{
                                     navigation.navigate('Create Course',{

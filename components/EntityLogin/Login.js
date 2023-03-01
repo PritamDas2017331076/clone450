@@ -5,6 +5,8 @@ import { Form, FormItem, Picker } from 'react-native-form-component';
 import { Input,Icon, Layout} from '@ui-kitten/components';
 import {Text, View, StyleSheet,ScrollView, TouchableOpacity, Image,TouchableWithoutFeedback} from 'react-native'
 import {ip} from '../ip'
+import Spinner from 'react-native-loading-spinner-overlay/lib';
+
 import {
   updateEmail,
   updateName,
@@ -35,6 +37,7 @@ export default function Studentlogin({navigation}){
     const [post, setPost]=useState('')
     const [password, setPassword] = useState('')
     const [secureTextEntry, setSecureTextEntry] = useState(true)
+    const [loading,setLoading] = useState(false)
     console.log(ip)
 
     const dispatch = useDispatch()
@@ -64,7 +67,7 @@ export default function Studentlogin({navigation}){
     }
     const onSubmit = async(e) => {
        // e.preventDefault()
-
+        setLoading(true)
         if(!email){
             alert('Please enter email')
             return
@@ -102,6 +105,7 @@ export default function Studentlogin({navigation}){
           if(res.data.name) dispatch(updateName(res.data.name))
           if(res.data.email) dispatch(updateEmail(res.data.email))
           if(res.data.avatar) dispatch(updateAvatar(res.data.avatar))
+          setLoading(false)
           navigation.navigate('Home')
         }catch(err){
           console.log(err.response.data)
@@ -141,7 +145,13 @@ export default function Studentlogin({navigation}){
         setPassword('')
     }
     return(
+      
         <View style={styles.container}>
+          {loading?<Spinner
+              visible={true}
+              textContent={'Loading...'}
+              textStyle={styles.spinnerTextStyle}/>
+              :
             <Form onButtonPress={onSubmit}>
             <Input
                 label="Email"
@@ -176,7 +186,9 @@ export default function Studentlogin({navigation}){
                     onSelection={(item) => setPost(item.value)}
                    />
             </Form>
-        </View>
+            }
+          </View>
+      
     )
 }
 

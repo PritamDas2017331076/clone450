@@ -2,6 +2,8 @@ import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import { Button, View, Text, StyleSheet, ScrollView, TouchableOpacity, CheckBox, TextInput, SafeAreaView, StatusBar, FlatList } from 'react-native';
+import {Tooltip } from '@ui-kitten/components';
+
 import {ip} from '../ip'
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -93,12 +95,17 @@ export default function Mycourses({route, navigation}){
         //   });
 
   }, []);
-
+  var stringFormat = (s)=>{
+    let len = 16;
+    if(s.length>=len)
+      s = s.substr(0,len) + '...'
+    return s;
+  }
   const Item = ({ item }) => (
     <View style={styles.item}>
        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-             <Text style={{marginRight :10}}>{item.name}</Text>
-             <Text style={{marginRight :10}}>{item.department}</Text>
+             <Text style={{width:160,marginVertical:'2%'}}>{stringFormat(item.name)}</Text>
+             <Text style={{marginRight :10,marginVertical:'2%'}}>{item.department}</Text>
              <Button  onPress={()=>section(item._id)} title="section"  />
             
         </View>

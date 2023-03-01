@@ -86,7 +86,8 @@ export default function Teacherlist({navigation}){
                          renderItem={renderItem}
                          keyExtractor={item => item._id}
                        />
-                    }
+                    
+            }
         </View>
     )
 
