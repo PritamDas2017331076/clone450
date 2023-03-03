@@ -36,7 +36,13 @@ export default function PrintDt({route, navigation}){
           else return 0
         })
        // console.log('all arry',arr)
-        let obj=arr[arr.length-1].registration_number.substring(0,4)
+        let obj;
+        console.log('all',arr)
+        if(arr.length == 0){
+          obj = "0000";
+        }
+        else
+          obj=arr[arr.length-1].registration_number.substring(0,4)
         let brr=[]
         let crr=[]
         arr.forEach((a)=>{
