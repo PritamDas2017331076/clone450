@@ -225,6 +225,7 @@ import {
                     // style={styles.box}
                     selectedValue={filt}
                     onSelection={(item) => {
+                        setFilt(item.value)
                         if(item.value=='All') setDist(students)
                         else if(item.value=='Even') setDist(students.filter(ele=>((ele.registration_number*1)%2==0)))
                         else setDist(students.filter(ele=>((ele.registration_number*1)%2==1)))

@@ -55,6 +55,8 @@ router.route('/').get((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 })
 
+
+
 router.get('/me', authStudent, async(req, res) => {
     try {
         res.status(200).send(req.student)
@@ -560,6 +562,15 @@ router.patch('/:id', async(req, res) => {
     }
 })
 
+router.route('/deleteAll').delete((req, res) => {
+    const uni = req.body.session
+    try{
+        const ress=Student.deleteMany({session:'2019-20'})
+        res.status(200).send(ress)
+    }catch(e){
+        res.status(400).send(e)
+    }
+})
 
 router.delete('/:id', async(req, res) => {
     try {

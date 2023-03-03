@@ -9,12 +9,12 @@ import {Card,Button,Text} from '@ui-kitten/components';
 
 
 export default function StudentlistL({route, navigation}){
-    const [list, setList] = useState([])
-    const [cur, setCur] = useState([])
+  const [list, setList] = useState([])
+  const [cur, setCur] = useState([])
     const { course_id, section } = route.params
     const [col, setCol]=useState([])
     const [stu, setStu]=useState([])
-    const [tid, setTid] = useState('')
+    const [tid, setTid] = useState()
     const [date, setDate]=useState(new Date())
     const id=useSelector(selectId)
     const post = useSelector(selectPost)
@@ -22,18 +22,18 @@ export default function StudentlistL({route, navigation}){
     const effect = async()=>{
       try{
         const res=await axios.get(`${ip}/course/${course_id}`)
-        console.log(' data ', res.data.student)
-        setCol(res.data.collaborator)
-        setStu(res.data.student)
+        console.log(' data ', res.data.student,'tid',res.data.teacher_id)
+        // setCol(res.data.collaborator)
+        // setStu(res.data.student)
         setTid(res.data.teacher_id)
         let arr=res.data.student
-        console.log('arr',arr)
+        //console.log('arr',arr)
         arr=arr.filter(item=>(item.section==section))
         arr.sort(function(a,b){
           if(a.registration_number<b.registration_number) return -1
           else return 0
         })
-        console.log('all',arr)
+        //   console.log('all',arr)
         let obj=arr[arr.length-1].registration_number.substring(0,4)
         let brr=[]
         let crr=[]
@@ -42,23 +42,26 @@ export default function StudentlistL({route, navigation}){
           else crr.push(a)
         })
         brr=brr.concat(crr)
-        console.log(brr,'thennn',crr)
+        //console.log(brr,'thennn',crr)
         arr=brr
-        setList(arr.map((item,index)=>{
+        setCol(res.data.collaborator)
+        setStu(res.data.student)
+       // setTid(res.data.teacher_id)
+       setList(arr.map((item,index)=>{
             return {registration_number:item.registration_number,status:false,avatar:item.avatar,id:index}
-        }))
-      }catch(error){
+          }))
+        }catch(error){
         console.log('error in studentlist',error)
       }
     }
-
+    
     useEffect(() => {
-      console.log('section',section)
+      //   console.log('section',section)
       effect()
-    // axios.get(`${ip}/course/${course_id}`)
-    //   .then(res => {
-    //       console.log(' data ', res.data.student)
-    //       let arr=res.data.student
+      // axios.get(`${ip}/course/${course_id}`)
+      //   .then(res => {
+        //       console.log(' data ', res.data.student)
+        //       let arr=res.data.student
     //       console.log('arr',arr)
     //       arr=arr.filter(item=>(item.section==section))
     //       arr.sort(function(a,b){
@@ -85,7 +88,7 @@ export default function StudentlistL({route, navigation}){
     //  }) ;
   }, []);
 
-   console.log('check it out ',f,list)
+   //console.log('check it out ',f,list)
 
     return(
             <View style={{flexDirection:'row',justifyContent:'flex-start',flexWrap:'wrap',marginHorizontal:'5%',marginVertical:'12%'}}>
@@ -134,7 +137,7 @@ export default function StudentlistL({route, navigation}){
                       <Text style={{textAlign:'center'}}>Student list</Text>
                   </Card>
                 {
-                    (id==tid)?
+                    (id===tid)?
                     // <View>
                     //     <Button onPress={()=>navigation.navigate('Collaborator List',{
                     //        course_id: course_id,
@@ -163,560 +166,6 @@ export default function StudentlistL({route, navigation}){
                    })} 
                      >
                        <Text style={{textAlign:'center'}}>Add student</Text>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                       ..................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................
                    </Card>:null
                 }
                 {
