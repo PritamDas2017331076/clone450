@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import {View,Button,Text,StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, StatusBar, FlatList } from 'react-native';
+import {View,Button,Text,StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, StatusBar, FlatList, Pressable } from 'react-native';
 // import { Card, Layout, Modal} from '@ui-kitten/components';
 
 import {ip} from '../ip'
@@ -257,11 +257,20 @@ export default function Course({route, navigation}){
             }
             {
                 post!='student' ? post !='teacher'
-                ?<Button onPress={()=>section(item._id)} title="section"/>:null :null
+                ?
+                <Pressable style = {[styles.button,{backgroundColor:'blue'}]} onPress={()=>section(item._id)}>
+                    <Text style={styles.text}>Section</Text>
+                </Pressable>:null:null
+                // <Button onPress={()=>section(item._id)} title="section"/>:null :null
             }
             {
                 post=='department_head'
-                ?<Button  onPress={()=>Delcourse(item._id)} title="Course Delete"/>:null
+                ?
+                <Pressable style = {[styles.button,{backgroundColor:'#d14a41'}]} onPress={()=>Delcourse(item._id)}>
+                    <Text style={styles.text}>Course Delete</Text>
+                </Pressable>:null
+                // ?<Button  onPress={()=>Delcourse(item._id)} title="Course Delete" color={"red"}/>:null
+            
             }
            
             </View>
@@ -334,5 +343,22 @@ const styles = StyleSheet.create({
     title: {
       fontSize: 32,
     },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 4,
+        elevation: 3,
+        backgroundColor: 'skyblue',
+        margin:5,
+      },
+      text: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
+      },
   });
   

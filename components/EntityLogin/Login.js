@@ -110,6 +110,7 @@ export default function Studentlogin({navigation}){
         }catch(err){
           console.log(err.response.data)
           alert(err.response.data)
+          setLoading(false)
         }
 
         // axios.post(`${ip}/${post}/login`,Details)

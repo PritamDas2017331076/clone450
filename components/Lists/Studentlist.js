@@ -16,6 +16,7 @@ export default function StudentlistL({route, navigation}){
     const [stu, setStu]=useState([])
     const [tid, setTid] = useState()
     const [date, setDate]=useState(new Date())
+    const [courseName, setCourseName]=useState('')
     const id=useSelector(selectId)
     const post = useSelector(selectPost)
     let f=0
@@ -26,6 +27,7 @@ export default function StudentlistL({route, navigation}){
         // setCol(res.data.collaborator)
         // setStu(res.data.student)
         setTid(res.data.teacher_id)
+        setCourseName(res.data.name)
         let arr=res.data.student
         //console.log('arr',arr)
         arr=arr.filter(item=>(item.section==section))
@@ -91,7 +93,9 @@ export default function StudentlistL({route, navigation}){
    //console.log('check it out ',f,list)
 
     return(
-            <View style={{flexDirection:'row',justifyContent:'flex-start',flexWrap:'wrap',marginHorizontal:'5%',marginVertical:'12%'}}>
+      <View>
+            <Text style = {{margin:20}}><Text style = {{fontWeight:'bold'}}>Course Name:</Text> {courseName}</Text>
+            <View style={{flexDirection:'row',justifyContent:'flex-start',flexWrap:'wrap',marginHorizontal:'5%',marginVertical:'5%'}}>
                 {post=='teacher' ?
                 // <Button onPress={()=>navigation.navigate('Take',{
                 //     course_id: course_id,
@@ -180,7 +184,7 @@ export default function StudentlistL({route, navigation}){
                    </Card>:null
                 }
             </View>
-           
+        </View>
         
     )
 }

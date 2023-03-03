@@ -229,6 +229,7 @@ export default function Take({route, navigation}){
 
     return(
         <View style={{marginHorizontal:10}}>
+          <Text style = {{padding:10,textAlign:'center'}}>Take Attendance</Text>
             {/*<ul>
                 {
                     list.map(item =>(

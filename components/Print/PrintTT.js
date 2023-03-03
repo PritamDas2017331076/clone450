@@ -86,7 +86,7 @@ export default function PrintTT({route, navigation}){
                     <Text>Phone: {use.phone}</Text>
                     <Text>University: {use.university}</Text>
                     <Text>Department: {use.department}</Text>
-                    <Text>Post: {use.post}</Text>
+                    {/* <Text>Post: {use.post}</Text> */}
                 </View>
                 <View>
                     <Image
@@ -113,15 +113,18 @@ const styles = StyleSheet.create({
       paddingTop: 50,
     },
     tinyLogo: {
-      width: 50,
-      height: 50,
+      width: 120,
+      height: 120,
+      marginLeft:20
     },
     logo: {
       width: 66,
       height: 58,
     },
     flat: {
-        flexDirection: 'row'
-      },
+        flexDirection: 'row',
+        margin:10,
+        padding:10
+    },
   });
   

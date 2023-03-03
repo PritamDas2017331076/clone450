@@ -188,26 +188,26 @@ export default function Drawer_T({navigation}){
           backgroundColor: '#5C6BC0',
           },
           headerTintColor: '#fff',
-          headerRight: () => {
-            return (
-              <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity
-                 style={{paddingRight: 8}}
-                 onPress={() => navigation.openDrawer()}>
-                  <Text>open</Text>
-               </TouchableOpacity>
+          // headerRight: () => {
+          //   return (
+          //     <View style={{flexDirection: 'row'}}>
+          //       <TouchableOpacity
+          //        style={{paddingRight: 8}}
+          //        onPress={() => navigation.openDrawer()}>
+          //         <Text>open</Text>
+          //      </TouchableOpacity>
 
-               <TouchableOpacity
-                 style={{paddingRight: 8}}
-                 onPress={() => navigation.closeDrawer()}>
-                  <Text>close</Text>
-               </TouchableOpacity>
+          //      <TouchableOpacity
+          //        style={{paddingRight: 8}}
+          //        onPress={() => navigation.closeDrawer()}>
+          //         <Text>close</Text>
+          //      </TouchableOpacity>
 
 
-              </View>
+          //     </View>
                
-             );
-          },
+          //    );
+          // },
 })}>
           <Drawer.Screen component={ApprovalList} name="DepartmentList" />
           <Drawer.Screen component={AccessList} name="AccessListStudent" />
