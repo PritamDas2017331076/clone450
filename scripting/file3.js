@@ -12,11 +12,7 @@ const func = async(obj) => {
         else console.log('dont know', res.data, obj.registration_number)
         console.log('')
     } catch (err) {
-<<<<<<< HEAD
         console.log('error', err,'its an error')
-=======
-        console.log('error', err)
->>>>>>> b876575c5f05fdbfb81fd9ca9d79349128d969cd
         console.log(obj)
     }
 
@@ -41,10 +37,7 @@ for (let student of data) {
         if (i == 5) obj.session = student[i]
         if (i == 6) obj.phone = student[i]
         if (i == 7) obj.file = student[i]
-<<<<<<< HEAD
      //   func(obj)
-=======
->>>>>>> b876575c5f05fdbfb81fd9ca9d79349128d969cd
     }
     func(obj)
 
