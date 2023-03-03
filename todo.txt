@@ -3,3 +3,5 @@
 
 /// creating apk
 eas build -p android --profile preview
+
+add home image to report

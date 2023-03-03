@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet } from 'react-native';
+import { Button, View, Text, StyleSheet,Image } from 'react-native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -118,18 +118,10 @@ export default function Drawer_S({navigation}){
               backgroundColor:"#f6f6f6",
               marginBottom: 20
             }}>
-                <View>
-                  <Text>{name}</Text>
-                  <Text>{email}</Text>
-                </View>
-                <View>
-                  <Image
-                      style={styles.tinyLogo}
-                      source={{
-                          uri: avatar,
-                      }}
-                  />
-                </View>
+              <View>
+                <Text>{name}</Text>
+                <Text>{email}</Text>
+              </View>
             </View>
             <DrawerItemList {...props} />
            </DrawerContentScrollView>

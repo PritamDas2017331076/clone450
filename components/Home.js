@@ -10,7 +10,12 @@ export default function Home({navigation}){
                 visible={true}
                 textContent={'Loading...'}
             /> */}
-            <Text>Home</Text>
+            <Text style = {{margin:10,fontSize:19,textAlign:'center'}}>
+                Welcome to our attendance management application. 
+            </Text>
+            <Text style = {{marginVertical:40,textAlign:'center',fontSize:16}}>
+                Please open the drawer and you will get necessary navigations to register and login.
+            </Text>
         </View>
     )
 }
@@ -20,7 +25,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 80,
         padding: 10,
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center',
         color: 'red',
         backgroundColor: '#fff'

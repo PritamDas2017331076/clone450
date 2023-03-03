@@ -107,8 +107,8 @@ const styles = StyleSheet.create({
       fontSize: 32,
     },
     tinyLogo: {
-      width: 50,
-      height: 50,
+      width: 110,
+      height: 150,
     },
   });
   
