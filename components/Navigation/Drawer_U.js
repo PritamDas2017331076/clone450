@@ -42,7 +42,8 @@ import {
   selectToken,
   selectPost,
   selectUniversity,
-  selectDepartment
+  selectDepartment,
+  selectAvatar
   
 } from '../Loginslice'
 
@@ -91,6 +92,7 @@ export default function Drawer_U({navigation}){
     const post = useSelector(selectPost)
     const name = useSelector(selectName)
     const email = useSelector(selectEmail)
+    const avatar=useSelector(selectAvatar)
     const dispatch = useDispatch()
     console.log(token)
 
@@ -131,10 +133,18 @@ export default function Drawer_U({navigation}){
               backgroundColor:"#f6f6f6",
               marginBottom: 20
             }}>
-              <View>
-                <Text>{name}</Text>
-                <Text>{email}</Text>
-              </View>
+                <View>
+                  <Text>{name}</Text>
+                  <Text>{email}</Text>
+                </View>
+                <View>
+                  <Image
+                      style={styles.tinyLogo}
+                      source={{
+                          uri: avatar,
+                      }}
+                  />
+                </View>
             </View>
             <DrawerItemList {...props} />
            </DrawerContentScrollView>
@@ -175,3 +185,9 @@ export default function Drawer_U({navigation}){
 
     )
 }
+const styles=StyleSheet.create({
+  tinyLogo: {
+    width: 50,
+    height: 50,
+  },
+})
