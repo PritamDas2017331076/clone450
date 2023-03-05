@@ -154,16 +154,18 @@ export default function Drawer_T({navigation}){
               backgroundColor:"#f6f6f6",
               marginBottom: 20
             }}>
-              <View>
-                <Text>{name}</Text>
-                <Text>{email}</Text>
-                <Image
-                  style={styles.tinyLogo}
-                  source={{
-                      uri: avatar,
-                  }}
-              />
-              </View>
+                <View>
+                  <Text>{name}</Text>
+                  <Text>{email}</Text>
+                </View>
+                <View>
+                  <Image
+                      style={styles.tinyLogo}
+                      source={{
+                          uri: avatar,
+                      }}
+                  />
+                </View>
             </View>
             <DrawerItemList {...props} />
            </DrawerContentScrollView>
