@@ -17,9 +17,93 @@ export default function StudentlistL({route, navigation}){
     const [tid, setTid] = useState()
     const [date, setDate]=useState(new Date())
     const [courseName, setCourseName]=useState('')
+    let record=[]
+    let dist=[]
+    let arr=[]
     const id=useSelector(selectId)
     const post = useSelector(selectPost)
     let f=0
+
+    const spread = async(course_id, section)=>{
+      try{
+        const res1 = await axios.get(`${ip}/course/${course_id}`)
+        console.log(res1.data)
+        record=res1.data.record
+        //setRecord(res1.data.record)
+        console.log('record',record,'recordddd')
+      }catch(e){
+        console.log('error while retriving course record',e)
+
+      }
+      try{
+        const res2 = await axios.get(`${ip}/byreg/srr?course_id=${course_id}&section=${section}`)
+        dist=res2.data
+        console.log('dist',dist,'disttttt')
+        arr=dist
+        arr.sort(function(a,b){
+          if(a.registration_number<b.registration_number) return -1
+          else return 0
+        })
+        
+        let obj='0000'
+        if(arr.length>0) obj=arr[arr.length-1].registration_number.substring(0,4)
+        console.log('till here')
+        let brr=[]
+        let crr=[]
+        arr.forEach((a)=>{
+          if(a.registration_number.substring(0,4)==obj)brr.push(a)
+          else crr.push(a)
+        })
+        brr=brr.concat(crr)
+      //  console.log(brr,'thennn',crr)
+        arr=brr
+     //   console.log('arr',arr,'arr')
+
+      }catch(e){
+        console.log('error in byreg section of spred',e)
+      }
+      let need=[]
+      let tpp=record.filter((eee)=>eee.section=section)
+   //   console.log('tpp',tpp)
+      let tr=[]
+      tr.push('')
+      tpp.forEach(ele=>{
+        const dat=new Date(ele.date)
+        let da=dat.getDate(),mo=dat.getMonth()+1,ye=dat.getFullYear()
+        let stt=''
+        if(da<10) stt+='0'
+        stt+=da
+        stt+='/'
+        if(mo<10) stt+='0'
+        stt+=mo
+        stt+='/'
+        stt+=ye
+        tr.push(stt)
+      })
+      need.push(tr)
+      arr.forEach((ele)=>{
+        let pr=[]
+        pr.push(ele.registration_number)
+        let rec=ele.record
+        let i=0,j=0
+        for(; i < tpp.length && j < rec.length ; ){
+          if(tpp[i].date==rec[j].date){i++ ; j++; pr.push(true) }
+          else {i++ ; pr.push(false) }
+        }
+        let k=tpp.length*1-i*1
+        while(k){pr.push(false) ; k--; }
+        need.push(pr)
+
+        // tpp.forEach(eee=>{
+        //   let tcc=rec.filter(ef=>ef.date==eee.date)
+        //   if(tcc.length>0) pr.push(true)
+        //   else pr.push(false)
+        // })
+      })
+      console.log('need',need)
+
+
+    }
     const effect = async()=>{
       try{
         const res=await axios.get(`${ip}/course/${course_id}`)
@@ -182,6 +266,14 @@ export default function StudentlistL({route, navigation}){
                    })} 
                      >
                        <Text style={{textAlign:'center'}}>Delete student</Text>
+                   </Card>:null
+                }
+                {
+                    (id==tid)?
+                    <Card style={styles.child}
+                    onPress={()=>spread(course_id, section)}
+                     >
+                       <Text style={{textAlign:'center'}}>Create Summary</Text>
                    </Card>:null
                 }
             </View>

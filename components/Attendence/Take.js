@@ -39,7 +39,8 @@ export default function Take({route, navigation}){
           else return 0
         })
       //  console.log('all',arr)
-        let obj=arr[arr.length-1].registration_number.substring(0,4)
+        let obj='0000'
+        if(arr.length>0) obj=arr[arr.length-1].registration_number.substring(0,4)
         console.log('objjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj',obj)
         let brr=[]
         let crr=[]
