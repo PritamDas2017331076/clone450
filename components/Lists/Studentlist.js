@@ -80,6 +80,9 @@ export default function StudentlistL({route, navigation}){
         stt+=ye
         tr.push(stt)
       })
+      tr.push('total classes')
+      tr.push('present classes')
+      tr.push('percentage')
       need.push(tr)
       arr.forEach((ele)=>{
         let pr=[]
@@ -92,6 +95,12 @@ export default function StudentlistL({route, navigation}){
         }
         let k=tpp.length*1-i*1
         while(k){pr.push(false) ; k--; }
+        let x=tpp.length,y=rec.length
+        pr.push(x)
+        pr.push(y)
+        if(x==0) pr.push(0)
+        else pr.push((y*100.0)/(x*1.0))
+
         need.push(pr)
 
         // tpp.forEach(eee=>{
