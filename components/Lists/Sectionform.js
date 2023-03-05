@@ -103,6 +103,7 @@ export default function Sectionform({route, navigation}){
     }
 
     useEffect(() => {
+      navigation.setOptions({ title: "Select Section"})
       effect()
       // console.log(avatar)
       // let f1=1,f2=1,f3=1

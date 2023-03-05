@@ -41,6 +41,7 @@ export default function AccessTlist({navigation}){
 
 
     useEffect(() => {
+      navigation.setOptions({ title: "Collaborator Access List"}) 
         console.log(id)
         let fl=1
         const unsubscribe = navigation.addListener('focus', () => {

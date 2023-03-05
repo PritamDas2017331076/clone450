@@ -19,6 +19,7 @@ export default function UadminAll({navigation}) {
   }
 
   useEffect(() => {
+    navigation.setOptions({ title: "University Admin List"})
     const unsubscribe = navigation.addListener('focus', () => {
       effect()
         // axios.get(`${ip}/universities`)

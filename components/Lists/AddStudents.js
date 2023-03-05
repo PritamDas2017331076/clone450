@@ -95,6 +95,7 @@ import {
       }
       
       useEffect(()=>{
+        navigation.setOptions({ title: "Add Students"})
         effect()
         console.log("useEffect ",students)
     },[loading])

@@ -59,6 +59,7 @@ export default function StudentlistL({route, navigation}){
     
     useEffect(() => {
       //   console.log('section',section)
+      navigation.setOptions({ title: "Navigation"})
       effect()
       // axios.get(`${ip}/course/${course_id}`)
       //   .then(res => {

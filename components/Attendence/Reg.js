@@ -1,7 +1,9 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, CheckBox, TextInput, SafeAreaView, StatusBar, FlatList  } from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, CheckBox, TextInput, SafeAreaView, StatusBar, FlatList  } from 'react-native';
+import { Button} from '@ui-kitten/components';
+
 import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -60,6 +62,7 @@ export default function Date({route, navigation}){
     }
 
     useEffect(() => {
+      navigation.setOptions({ title: "Enrolled Students"})
         effect()
       //   let fl=1
       //   console.log(course_id,section)
@@ -147,10 +150,10 @@ export default function Date({route, navigation}){
                               value={high}
                               placeholder="Enter Higher Registration"
                             />
-                            <Button onPress={() => effect()} title="Filter" />
-                            <Button onPress={() => {
+                            <Button style = {styles.button} onPress={() => effect()} >Filter </Button>
+                            <Button style = {styles.button} onPress={() => {
                               setLow(''); setHigh('') ; effect();
-                            }} title="Reset" />
+                            }}> Reset</Button>
                           </View>
                         }
                        />
@@ -163,8 +166,8 @@ export default function Date({route, navigation}){
 
 const styles = StyleSheet.create({
   queryText: {
-    padding:10,
-    marginBottom:10
+    padding:5,
+    marginBottom:5
   },
   container: {
     flex: 1,
@@ -194,4 +197,8 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
+  button:{
+    margin:5,
+    width:300,
+  }
 });

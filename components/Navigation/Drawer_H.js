@@ -58,7 +58,8 @@ const Stack = createStackNavigator();
 
 function ApprovalList(){
   return(
-      <Stack.Navigator>
+      <Stack.Navigator
+      >
           <Stack.Screen name="Teacher List" component={Teacherlist} />
           <Stack.Screen name="PrintT" component={PrintT} />
       </Stack.Navigator>
@@ -67,7 +68,7 @@ function ApprovalList(){
 
 function TeacherList(){
   return(
-      <Stack.Navigator>
+      <Stack.Navigator >
           <Stack.Screen name="Teacher All" component={TeacherAll} />
           <Stack.Screen name="Print Teacher" component={PrintTT} />
       </Stack.Navigator>
@@ -76,7 +77,7 @@ function TeacherList(){
 
 function StudentList(){
   return(
-      <Stack.Navigator>
+      <Stack.Navigator >
           <Stack.Screen name="Student All" component={StudentAll} />
           <Stack.Screen name="Print Student" component={PrintSS} />
       </Stack.Navigator>
@@ -86,7 +87,7 @@ function StudentList(){
 function NavList(){
   const uni = useSelector(selectUniversity)
   return(
-      <Stack.Navigator>
+      <Stack.Navigator >
           <Stack.Screen name="Department List" component={Department} initialParams={{university: uni}} />
           <Stack.Screen name="Session List" component={Session} />
           <Stack.Screen name="Course List" component={Course} />
@@ -183,7 +184,10 @@ export default function Drawer_H({navigation}){
     const DrawerNavigator = ()=>{
       const university= useSelector(selectUniversity)
       return (
-        <Drawer.Navigator drawerContent = {(props)=><CustomDrawer {...props} />} >
+        <Drawer.Navigator drawerContent = {(props)=><CustomDrawer {...props} />}
+        screenOptions={({navigation}) => ({
+          
+          })} >
           <Drawer.Screen component={NavList} name="Departments" />
           <Drawer.Screen component={Home} name="Home" />
           <Drawer.Screen component={About} name="About" />
@@ -193,7 +197,7 @@ export default function Drawer_H({navigation}){
           <Drawer.Screen component={StudentList} name="Students" />
           <Drawer.Screen component={Sessions} name="Create Session" />
           <Drawer.Screen name="Update Password" component={PasswordUpdate}  />
-          <Drawer.Screen name="Update Avatar" component={AvatarUpdate}  />
+          <Drawer.Screen name="Update Photo" component={AvatarUpdate}  />
         </Drawer.Navigator>
       )
     }

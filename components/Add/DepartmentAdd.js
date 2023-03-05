@@ -28,6 +28,9 @@ export default function DepartmentAdd({navigation}){
     const [abbreviation, setAbbreviation] = useState('')
     const university = useSelector(selectUniversity)
     const dispatch = useDispatch()
+    useEffect(() => {
+      navigation.setOptions({ title: "Add Department"}) 
+  },[])
 
     const onSubmit = async(e) => {
         

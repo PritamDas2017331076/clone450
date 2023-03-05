@@ -1,7 +1,8 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, CheckBox, TextInput, SafeAreaView, StatusBar, FlatList } from 'react-native';
+import {View,StyleSheet, Image, ScrollView, TouchableOpacity, CheckBox, TextInput, SafeAreaView, StatusBar, FlatList, Pressable } from 'react-native';
+import { Text,Button,Datepicker, Layout,} from '@ui-kitten/components';
 import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -85,6 +86,7 @@ export default function PrintDt({route, navigation}){
 
 
     useEffect(() => {
+      navigation.setOptions({ title: `Attendance Information`})
       effect()
       
       // axios.get(`${ip}/course/${course_id}`)
@@ -242,23 +244,24 @@ export default function PrintDt({route, navigation}){
                   contentContainerStyle={{paddingBottom:150}}
                   renderItem={renderItem}
                   keyExtractor={item => item.id}
-                  ListFooterComponent={<Button onPress={func} title="Delete" />}
+                  ListFooterComponent={<Button style = {{width:250,marginHorizontal:'20%',backgroundColor:'red'}} onPress={func}>Delete</Button>}
                   ListHeaderComponent={
-                    <View>
-                      <TextInput
+                    <View style={{padding:5,margin:6}}>
+                      <TextInput style={styles.query}
                         onChangeText={setLow}
                         value={low}
                         placeholder="Enter Lower Registration"
                       />
-                      <TextInput
+                      <TextInput style = {styles.query}
                         onChangeText={setHigh}
                         value={high}
                         placeholder="Enter Higher Registration"
                       />
-                      <Button onPress={() => effect()} title="Filter" />
-                      <Button onPress={() => {
+                      {/* <Pressable onPress={() => effect()}> <Text>Filter</Text></Pressable> */}
+                      <Button style = {styles.button} onPress={() => effect()}>Filter</Button>
+                      <Button style = {styles.button} onPress={() => {
                         setLow(''); setHigh('') ; effect();
-                      }} title="Reset" />
+                      }} > Reset </Button>
                     </View>
                   }
                 />
@@ -297,4 +300,14 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
+  query:{
+    padding:2,
+    margin:5,
+  },
+  button:{
+    margin:5,
+    padding:5,
+    width:300,
+    marginHorizontal:'10%'
+  }
 });

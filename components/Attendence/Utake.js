@@ -45,6 +45,7 @@ export default function Utake({route, navigation}){
               return {registration_number: item.registration_number, avatar: item.avatar, id: item.id, status: true}
           }
         }))
+        
       }
       catch(err){
         console.log('could not find data',err)
@@ -52,6 +53,7 @@ export default function Utake({route, navigation}){
     }
 
     useEffect(() => {
+      navigation.setOptions({ title: "Update Attendance"})
       effect()
       // axios.get(`${ip}/course/${course_id}`)
       //  .then(res=>{
@@ -191,9 +193,9 @@ export default function Utake({route, navigation}){
 
 
     return(
-        <View>
+        <View style = {{padding:10,margin:5,marginHorizontal:'10%'}}>
 
-            <Text>{date[1]} {""} {date[2]} {""} {date[4]}</Text>
+            <Text style={{marginHorizontal:'25%',padding:5}}>{date[1]} {""} {date[2]} {""} {date[4]}</Text>
             <View>
               <FlatList
                 data={dist}

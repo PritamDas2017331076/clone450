@@ -22,6 +22,7 @@ export default function PrintTT({route, navigation}){
     }
 
     useEffect(() => {
+        navigation.setOptions({ title: "Teacher Information"})
         effect()
         // axios.get(`${ip}/teacher/${id}`)
         //     .then(res => {

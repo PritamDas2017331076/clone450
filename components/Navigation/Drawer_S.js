@@ -56,7 +56,7 @@ function ApprovalList(){
   const university = useSelector(selectUniversity)
   const department = useSelector(selectDepartment)
   return(
-      <Stack.Navigator>
+      <Stack.Navigator >
           <Stack.Screen name="Session List" component={Session} initialParams={{university: university, department: department}} />
           <Stack.Screen name="Course List" component={Course} />
           <Stack.Screen name="Section List" component={Section} />
@@ -148,12 +148,18 @@ export default function Drawer_S({navigation}){
     }
     const DrawerNavigator = ()=>{
       return (
-        <Drawer.Navigator drawerContent = {(props)=><CustomDrawer {...props} />} >
+        <Drawer.Navigator drawerContent = {(props)=><CustomDrawer {...props} />} 
+        screenOptions={({navigation}) => ({
+          headerStyle: {
+          backgroundColor: '#5C6BC0',
+          },
+          headerTintColor: '#fff',
+          })}>
           <Drawer.Screen component={ApprovalList} name="Sessions" />
           <Drawer.Screen component={Home} name="Home" />
           <Drawer.Screen component={About} name="About" />
           <Drawer.Screen name="Update Password" component={PasswordUpdate}  />
-          <Drawer.Screen name="Update Avatar" component={AvatarUpdate}  />
+          <Drawer.Screen name="Update Photo" component={AvatarUpdate}  />
         </Drawer.Navigator>
       )
     }

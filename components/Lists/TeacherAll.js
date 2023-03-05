@@ -21,6 +21,7 @@ export default function TeacherAll({navigation}) {
   }
 
   useEffect(() => {
+    navigation.setOptions({ title: "Teacher List"})
     const unsubscribe = navigation.addListener('focus', () => {
       effect()
         // axios.get(`${ip}/teacher?university=${university}&department=${department}`)

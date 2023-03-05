@@ -26,6 +26,7 @@ export default function Teacherlist({navigation}){
     }
 
     useEffect(() => {
+      navigation.setOptions({ title: "Teacher Access List"}) 
       let fl=1
       const unsubscribe = navigation.addListener('focus', () => {
             effect()

@@ -20,6 +20,7 @@ export default function CollaboratorC({route, navigation}) {
   }
 
   useEffect(() => {
+    navigation.setOptions({ title: "Collaborator List"})
     const unsubscribe = navigation.addListener('focus', () => {
         effect()
     });

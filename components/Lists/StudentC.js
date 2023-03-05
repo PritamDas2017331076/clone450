@@ -39,6 +39,7 @@ export default function StudentC({route, navigation}) {
   }
 
   useEffect(() => {
+    navigation.setOptions({ title: "Student List"})
     const unsubscribe = navigation.addListener('focus', () => {
       effect()
         // axios.get(`${ip}/course/${course_id}`)
@@ -64,7 +65,7 @@ export default function StudentC({route, navigation}) {
         reg: item.registration_number,
         course_id: course_id
     })}>
-        <Text>{item.id}</Text>
+        {/* <Text>{item.id}</Text> */}
         <Text>{item.registration_number}</Text>
         <Image
             style={styles.tinyLogo}
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
       fontSize: 32,
     },
     tinyLogo: {
-      width: 110,
+      width: 150,
       height: 150,
     },
   });

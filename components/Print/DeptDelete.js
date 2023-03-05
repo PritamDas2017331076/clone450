@@ -21,6 +21,7 @@ export default function DeptDelete({route, navigation}){
     }
 
     useEffect(() => {
+        navigation.setOptions({ title: "Delete Department"})
         effect()
         // axios.get(`${ip}/departments/${id}`)
         //     .then(res => {

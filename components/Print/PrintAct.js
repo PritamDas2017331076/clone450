@@ -29,6 +29,7 @@ export default function PrintAct({route, navigation}){
     }
 
     useEffect(() => {
+        navigation.setOptions({ title: "Add Collaborator"})
         effect()
     //     let fl=1
     //   if(fl==1){axios.get(`${ip}/teacher/${id}`)

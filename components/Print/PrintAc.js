@@ -31,6 +31,7 @@ export default function PrintAc({route, navigation}){
         }
     }
     useEffect(() => {
+        navigation.setOptions({ title: "Add Student"})
         let fl=1
         effect()
     //   if(fl==1){axios.get(`${ip}/student/${id}`)

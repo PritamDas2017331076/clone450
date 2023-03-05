@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import { Button, View, Text, StyleSheet, ScrollView, TouchableOpacity, CheckBox, TextInput, SafeAreaView, StatusBar, FlatList } from 'react-native';
+import {View, Text, StyleSheet, ScrollView, TouchableOpacity, CheckBox, TextInput, SafeAreaView, StatusBar, FlatList } from 'react-native';
 import {ip} from '../ip'
 import { selectUniversity } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,10 +9,10 @@ import Spinner from 'react-native-loading-spinner-overlay/lib';
 import { Card } from '@ui-kitten/components';
 //import RNDateTimePicker from '@react-native-community/datetimepicker';
 //import DateTimePicker from '@react-native-community/datetimepicker';
-import { Datepicker, Layout,} from '@ui-kitten/components';
+import { Datepicker, Layout, Button} from '@ui-kitten/components';
 
 export default function PrintRg({route, navigation}){
-    const { course_id, record, section } = route.params
+    const { course_id, reg, record, section } = route.params
     const [dist, setDist] = useState([])
     const [loading, setLoading] = useState(true)
     const [open, setOpen] = useState(false)
@@ -112,6 +112,7 @@ export default function PrintRg({route, navigation}){
     }
 
     useEffect(() => {
+        navigation.setOptions({ title: `Student Information`})
         effect()
         // axios.get(`${ip}/course/${course_id}`)
         //   .then(res=>{
@@ -218,10 +219,10 @@ export default function PrintRg({route, navigation}){
                                   min = {new Date("2010/1/1")}
                                   max = {new Date("2050/1/1")}
                                 />
-                                <Button onPress={() => effect()} title="Filter" />
+                                <Button onPress={() => effect()}>Filter</Button>
                                 <Button onPress={async() => {
                                   setD1('') ; setD2('') ; effect();
-                                }} title="Reset" />
+                                }}>Reset</Button>
                           </Layout>}
                           />
                     </View>

@@ -50,7 +50,7 @@ const Stack = createStackNavigator();
 
 function ApprovalList(){
   return(
-      <Stack.Navigator>
+      <Stack.Navigator >
           <Stack.Screen name="Department Head List" component={Dheadlist} />
           <Stack.Screen name="PrintDh" component={PrintDh} />
       </Stack.Navigator>
@@ -59,7 +59,7 @@ function ApprovalList(){
 
 function Departments(){
   return(
-      <Stack.Navigator>
+      <Stack.Navigator >
           <Stack.Screen name="Department List" component={DheadAll} />
           <Stack.Screen name="Department Info" component={DeptDelete} />
       </Stack.Navigator>
@@ -69,7 +69,7 @@ function Departments(){
 function NavList(){
   const uni = useSelector(selectUniversity)
   return(
-      <Stack.Navigator>
+      <Stack.Navigator >
           <Stack.Screen name="Department List" component={Department} initialParams={{university: uni}} />
           <Stack.Screen name="Session List" component={Session} />
           <Stack.Screen name="Course List" component={Course} />
@@ -155,15 +155,21 @@ export default function Drawer_U({navigation}){
     }
     const DrawerNavigator = ()=>{
       return (
-        <Drawer.Navigator drawerContent = {(props)=><CustomDrawer {...props} />} >
+        <Drawer.Navigator drawerContent = {(props)=><CustomDrawer {...props} />}
+        screenOptions={({navigation}) => ({
+          headerStyle: {
+          backgroundColor: '#5C6BC0',
+          },
+          headerTintColor: '#fff',
+          })} >
           <Drawer.Screen component={NavList} name="Departments" />
           <Drawer.Screen component={Home} name="Home" />
           <Drawer.Screen component={About} name="About" />
-          <Drawer.Screen component={ApprovalList} name="ApprovalList" />
-          <Drawer.Screen component={DepartmentAdd} name="DepartmentAdd" />
-          <Drawer.Screen component={Departments} name="Department Delete" />
+          <Drawer.Screen component={ApprovalList} name="Approval List" />
+          <Drawer.Screen component={DepartmentAdd} name="Add Department" />
+          <Drawer.Screen component={Departments} name="Delete Department" />
           <Drawer.Screen name="Update Password" component={PasswordUpdate}  />
-          <Drawer.Screen name="Update Avatar" component={AvatarUpdate}  />
+          <Drawer.Screen name="Update Photo" component={AvatarUpdate}  />
         </Drawer.Navigator>
       )
     }

@@ -30,6 +30,7 @@ export default function Section({route, navigation}){
 
     useEffect(() => {
       let fl=1
+      navigation.setOptions({ title: "Section List"})
       const unsubscribe = navigation.addListener('focus', () => {
             console.log('in section it is not')
             effect()

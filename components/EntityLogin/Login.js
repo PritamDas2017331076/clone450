@@ -142,7 +142,7 @@ export default function Studentlogin({navigation}){
         //    })
 
         setEmail('')
-        setPost('')
+        setPost('') 
         setPassword('')
     }
     return(

@@ -23,6 +23,7 @@ export default function PrintCol({route, navigation}){
     }
 
     useEffect(() => {
+        navigation.setOptions({ title: "Collaborator Information"})
         effect()
         // axios.get(`${ip}/teacher/${id}`)
         //     .then(res => {

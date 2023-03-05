@@ -43,6 +43,7 @@ export default function Department({route, navigation}){
     }
 
     useEffect(() => {
+      navigation.setOptions({ title: "Department List"})
       effect()
       // let fl=1
       // axios.get(`${ip}/department_head?university=${university}`)

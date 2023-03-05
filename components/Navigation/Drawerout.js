@@ -158,10 +158,10 @@ export default function Drawerout({navigation}){
           })}>
           <Drawer.Screen name="Home" component={Home} />
           <Drawer.Screen name="About" component={About}  />
-          <Drawer.Screen name="Studentregister" component={Studentregister}  />
+          <Drawer.Screen name="Student Register" component={Studentregister}  />
           <Drawer.Screen name="University Admin Register" component={UAdminRegister}  />
           <Drawer.Screen name="Department Head Register" component={DheadRegister}  />
-          <Drawer.Screen name="Teacherregister" component={Teacherregister}  />
+          <Drawer.Screen name="Teacher Register" component={Teacherregister}  />
           <Drawer.Screen name="Login" component={Login}  />
           <Drawer.Screen name="Update Password" component={PasswordUpdate}  />
         </Drawer.Navigator>

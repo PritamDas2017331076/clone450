@@ -22,6 +22,7 @@ export default function UadminDelete({route, navigation}){
     }
 
     useEffect(() => {
+        navigation.setOptions({ title: "University Admin Information"})
         effect()
         // axios.get(`${ip}/universities/${id}`)
         //     .then(res => {

@@ -24,6 +24,7 @@ export default function University({navigation}){
     }
 
     useEffect(() => {
+      navigation.setOptions({ title: "University List"})
       let fl=1
       effect()
       // axios.get(`${ip}/universities`)

@@ -22,6 +22,7 @@ export default function Uadminlist({navigation}){
    
 
     useEffect(() => {
+      navigation.setOptions({ title: "University Admin Access List"}) 
       let fl=1
       const unsubscribe = navigation.addListener('focus', () => {
             effect()

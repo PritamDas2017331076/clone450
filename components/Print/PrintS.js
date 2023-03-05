@@ -22,6 +22,7 @@ export default function PrintS({route, navigation}){
     }
 
     useEffect(() => {
+        navigation.setOptions({ title: "Student Information"})
         effect()
     //     let fl=1
     //   if(fl==1){axios.get(`${ip}/student/${id}`)

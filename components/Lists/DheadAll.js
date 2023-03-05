@@ -21,6 +21,7 @@ export default function DheadAll({navigation}) {
   }
 
   useEffect(() => {
+    navigation.setOptions({ title: "Department Heads"})
     const unsubscribe = navigation.addListener('focus', () => {
       effect()
         // axios.get(`${ip}/department_head?university=${uni}`)

@@ -82,6 +82,7 @@ export default function DateF({route, navigation}){
       }
     }
     useEffect(() => {
+      navigation.setOptions({ title: "Query on Dates"})
       console.log('i have enterd in date list')
       const unsubscribe = navigation.addListener('focus', () => {
         effect()

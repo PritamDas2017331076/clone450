@@ -45,6 +45,7 @@ export default function Course({route, navigation}){
 
     useEffect(() => {
         let fl=1
+        navigation.setOptions({ title: "Course List"})
         const unsubscribe = navigation.addListener('focus', () => {
             console.log('in course it is working')
             effect()

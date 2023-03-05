@@ -22,6 +22,7 @@ export default function PrintT({route, navigation}){
     }
 
     useEffect(() => {
+        navigation.setOptions({ title: "Add Teacher"})
         effect()
     //     let fl=1
     //   if(fl==1){axios.get(`${ip}/teacher/${id}`)

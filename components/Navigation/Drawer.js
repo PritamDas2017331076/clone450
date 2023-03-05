@@ -172,7 +172,7 @@ export default function Drawer({navigation}){
           <Drawer.Screen component={Home} name="Home" />
           <Drawer.Screen component={About} name="About" />
           <Drawer.Screen component={ApprovalList} name="Approvals" />
-          <Drawer.Screen component={UniversityAdd} name="UniversityAdd" />
+          <Drawer.Screen component={UniversityAdd} name="University Add" />
           <Drawer.Screen component={DeleteUadmin} name="University Admin List" />
           <Drawer.Screen name="Update Password" component={PasswordUpdate}  />
         </Drawer.Navigator>

@@ -21,6 +21,7 @@ export default function SectionDelete({route, navigation}){
     }
 
     useEffect(() => {
+        navigation.setOptions({ title: "Delete Section"})
         effect()
         // axios.get(`${ip}/course/${id}`)
         //     .then(res => {

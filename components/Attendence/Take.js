@@ -65,6 +65,7 @@ export default function Take({route, navigation}){
     }
 
     useEffect(() => {
+      navigation.setOptions({ title: "Take Attendance"})
       func()
 
 

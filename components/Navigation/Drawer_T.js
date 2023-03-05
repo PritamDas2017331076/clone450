@@ -61,7 +61,7 @@ const Stack = createStackNavigator();
 
 function AccessList(){
   return(
-      <Stack.Navigator>
+      <Stack.Navigator >
           <Stack.Screen name="Access List" component={Accesslist} />
           <Stack.Screen name="PrintAc" component={PrintAc} />
       </Stack.Navigator>
@@ -70,7 +70,7 @@ function AccessList(){
 
 function AccessListTeacher(){
   return(
-      <Stack.Navigator>
+      <Stack.Navigator >
           <Stack.Screen name="Access List Teacher" component={AccessTlist} />
           <Stack.Screen name="PrintAct" component={PrintAct} />
       </Stack.Navigator>
@@ -80,7 +80,8 @@ function AccessListTeacher(){
 function ApprovalList(){
   const university = useSelector(selectUniversity)
   return(
-      <Stack.Navigator>
+      <Stack.Navigator 
+      >
           <Stack.Screen name="Department List" component={Department} initialParams={{university: university}} />
           <Stack.Screen name="Session List" component={Session} />
           <Stack.Screen name="Course List" component={Course} />
@@ -184,39 +185,20 @@ export default function Drawer_T({navigation}){
     const DrawerNavigator = ()=>{
       return (
         <Drawer.Navigator drawerContent = {(props)=><CustomDrawer {...props} />} screenOptions={({navigation}) => ({
+          // headerShown:false,
           headerStyle: {
           backgroundColor: '#5C6BC0',
           },
           headerTintColor: '#fff',
-          // headerRight: () => {
-          //   return (
-          //     <View style={{flexDirection: 'row'}}>
-          //       <TouchableOpacity
-          //        style={{paddingRight: 8}}
-          //        onPress={() => navigation.openDrawer()}>
-          //         <Text>open</Text>
-          //      </TouchableOpacity>
-
-          //      <TouchableOpacity
-          //        style={{paddingRight: 8}}
-          //        onPress={() => navigation.closeDrawer()}>
-          //         <Text>close</Text>
-          //      </TouchableOpacity>
-
-
-          //     </View>
-               
-          //    );
-          // },
-})}>
-          <Drawer.Screen component={ApprovalList} name="DepartmentList" />
-          <Drawer.Screen component={AccessList} name="AccessListStudent" />
-          <Drawer.Screen component={AccessListTeacher} name="AccessListeacher" />
+     })}>
+          <Drawer.Screen component={ApprovalList} name="Department List" />
+          <Drawer.Screen component={AccessList} name="Student Access List" />
+          <Drawer.Screen component={AccessListTeacher} name="Teacher Access List" />
           <Drawer.Screen component={Mycourses} name="My Courses" />
           <Drawer.Screen component={Home} name="Home" />
           <Drawer.Screen component={About} name="About" />
           <Drawer.Screen name="Update Password" component={PasswordUpdate}  />
-          <Drawer.Screen name="Update Avatar" component={AvatarUpdate}  />
+          <Drawer.Screen name="Update Photo" component={AvatarUpdate}  />
         </Drawer.Navigator>
       )
     }

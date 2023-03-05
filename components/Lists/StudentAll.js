@@ -21,6 +21,7 @@ export default function StudentAll({navigation}) {
   }
 
   useEffect(() => {
+    navigation.setOptions({ title: "Student List"})
     const unsubscribe = navigation.addListener('focus', () => {
         effect()
         // axios.get(`${ip}/student?university=${university}&department=${department}`)

@@ -26,6 +26,7 @@ export default function Dheadlist({navigation}){
     }
 
     useEffect(() => {
+      navigation.setOptions({ title: "Department Head Access List"}) 
       let fl=1
       const unsubscribe = navigation.addListener('focus', () => {
             effect()

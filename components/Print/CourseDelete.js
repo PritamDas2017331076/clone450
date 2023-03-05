@@ -20,6 +20,7 @@ export default function CourseDelete({route, navigation}){
     }
 
     useEffect(() => {
+        navigation.setOptions({ title: "Delete Course"})
         console.log('came in delete')
         effect()
         // axios.get(`${ip}/course/${id}`)

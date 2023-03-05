@@ -23,6 +23,7 @@ export default function PrintSS({route, navigation}){
 
 
     useEffect(() => {
+        navigation.setOptions({ title: "Student Information"})
         effect()
         // axios.get(`${ip}/student/${id}`)
         //     .then(res => {

@@ -21,6 +21,7 @@ export default function UadminAll({navigation}) {
   }
 
   useEffect(() => {
+    navigation.setOptions({ title: "Course List"})
     const unsubscribe = navigation.addListener('focus', () => {
       effect()
         // axios.get(`${ip}/course?university=${uni}&department=${dept}`)

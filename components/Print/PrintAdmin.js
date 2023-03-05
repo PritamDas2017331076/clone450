@@ -21,6 +21,7 @@ export default function PrintAdmin({route, navigation}){
     }
 
     useEffect(() => {
+        navigation.setOptions({ title: "University Admin Information"})
         effect()
     //     let fl=1
     //   if(fl==1){axios.get(`${ip}/university_admin/${id}`)
