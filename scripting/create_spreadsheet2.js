@@ -1,11 +1,8 @@
-const {google} = require('googleapis');
-const sheets = google.sheets('v4');
-const express = require('express')
-const path = require('path')
+import google from 'googleapis';
+import sheets from 'googleapis';
+import express from 'express'
 const app = express()
 // const data = require('./report_data');
-const { json } = require('express');
-
 let auth,drive;
 // auth = new google.auth.GoogleAuth({
 //     keyFile: './scripting/keyfile_450_report.json',
@@ -146,7 +143,7 @@ const generatePublicUrl = async (id) =>{
       console.log(error.message);
     }
   }
-var generateReport = async (data)=>{
+const generateReport = async (data)=>{
   auth = new google.auth.GoogleAuth({
     keyFile: './scripting/keyfile_450_report.json',
     scopes: ['https://www.googleapis.com/auth/drive'],

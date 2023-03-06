@@ -6,8 +6,10 @@ import {ip} from '../ip'
 import { selectUniversity, selectId, selectPost } from '../Loginslice';
 import { useSelector, useDispatch } from 'react-redux';
 import {Card,Button,Text} from '@ui-kitten/components';
-
-
+import daata from '../../scripting/data';
+// import google from 'gooleapis'
+// import { sheets } from 'googleapis';
+// import generateReport from '../../scripting/create_spreadsheet';
 export default function StudentlistL({route, navigation}){
   const [list, setList] = useState([])
   const [cur, setCur] = useState([])
@@ -109,8 +111,9 @@ export default function StudentlistL({route, navigation}){
         //   else pr.push(false)
         // })
       })
-      console.log('need',need)
-
+      // console.log('need',need)
+      // let publicUrl = await generateReport(need)
+      // console.log('url ' , publicUrl)
 
     }
     const effect = async()=>{
@@ -277,14 +280,7 @@ export default function StudentlistL({route, navigation}){
                        <Text style={{textAlign:'center'}}>Delete student</Text>
                    </Card>:null
                 }
-                {
-                    (id==tid)?
-                    <Card style={styles.child}
-                    onPress={()=>spread(course_id, section)}
-                     >
-                       <Text style={{textAlign:'center'}}>Create Summary</Text>
-                   </Card>:null
-                }
+              
             </View>
         </View>
         
