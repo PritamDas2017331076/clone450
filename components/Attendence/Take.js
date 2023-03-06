@@ -77,9 +77,11 @@ export default function Take({route, navigation}){
     // console.log('hello')
     // console.log('record',record)
     let dd=[]
+    let dld=[]
     dist.forEach(ele=>{
       if(ele.status==true) {
         dd.push({registration_number: ele.registration_number,avatar: ele.avatar})
+        dld.push({registration_number: ele.registration_number,date: dat})
       }
     })
     const dap={
@@ -126,27 +128,34 @@ export default function Take({route, navigation}){
     catch(e){
       console.log('bydate',e)
     }
-     dd.map(async(ele)=>{
-      const chg={
-        date: dat,
+    try{
+      const res= await axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}`,dld)
+      console.log('byreg succeeded')
+    }
+    catch(e){
+      console.log('error in byreg',e.message)
+    }
+    //  dd.map(async(ele)=>{
+    //   const chg={
+    //     date: dat,
       
-      }
-      // console.log('registration',ele.registration_number,chg)
-      // axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
-      //   .then(res=>{
-      //      console.log('for each ',res.data)
-      //   })
-      //   .catch(e=>{
-      //     console.log('byreg',e.message)
-      //   })
-      try{
-        const res= await axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
-        console.log('byreg succeeded')
-      }
-      catch(e){
-        console.log('error in byreg',e.message)
-      }
-    })
+    //   }
+    //   // console.log('registration',ele.registration_number,chg)
+    //   // axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+    //   //   .then(res=>{
+    //   //      console.log('for each ',res.data)
+    //   //   })
+    //   //   .catch(e=>{
+    //   //     console.log('byreg',e.message)
+    //   //   })
+    //   try{
+    //     const res= await axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+    //     console.log('byreg succeeded')
+    //   }
+    //   catch(e){
+    //     console.log('error in byreg',e.message)
+    //   }
+    // })
     setShowAlert(true)
     setTimeout(()=>{
       navigation.goBack()

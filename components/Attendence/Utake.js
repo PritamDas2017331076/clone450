@@ -95,9 +95,14 @@ export default function Utake({route, navigation}){
     console.log('hello')
     console.log('record',record)
     let dd=[]
+    let dld=[]
+    let dpd=[]
     dist.forEach(ele=>{
       if(ele.status==true) {
         dd.push({registration_number: ele.registration_number,avatar: ele.avatar})
+        dld.push({registration_number: ele.registration_number,date: dat})
+      }else{
+        dpd.push({registration_number: ele.registration_number,date: dat})
       }
     })
     console.log(dd)
@@ -110,41 +115,53 @@ export default function Utake({route, navigation}){
     }catch(e){
       console.log('error in bydate',e) 
     }
+    try{
+      const res=await axios.patch(`${ip}/byreg/srd?course_id=${course_id}&section=${section}`,dpd)
+      console.log('suucess while updating byregsrd',res.data)
+    }catch(e){
+      console.log('error in byregsrd',e) 
+    }
     // axios.patch(`${ip}/bydate/${pid}`,data)
     //  .then(res=>{
     //    console.log('recorded data',res.data)
     //  })
-     dist.map(async(ele)=>{
-      const chg={
-        date: date,
-      }
-      console.log('registration',ele.registration_number,chg)
-      if(ele.status==true){
-        try{
-          const res=await axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
-          console.log('suucess while updating byregsr',res.data)
-        }catch(e){
-          console.log('error in byregsr',e) 
-        }
-        // axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
-        // .then(res=>{
-        //   console.log('date udated sr ',res.data)
-        // })
-      }
-      else{
-        try{
-          const res=await axios.patch(`${ip}/byreg/srd?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
-          console.log('suucess while updating byregsrd',res.data)
-        }catch(e){
-          console.log('error in byregsrd',e) 
-        }
+    try{
+      const res=await axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}`,dld)
+      console.log('suucess while updating byregsr',res.data)
+    }catch(e){
+      console.log('error in byregsr',e) 
+    }
+    //  dist.map(async(ele)=>{
+    //   const chg={
+    //     date: date,
+    //   }
+    //   console.log('registration',ele.registration_number,chg)
+    //   if(ele.status==true){
+    //     try{
+    //       const res=await axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+    //       console.log('suucess while updating byregsr',res.data)
+    //     }catch(e){
+    //       console.log('error in byregsr',e) 
+    //     }
+    //     // axios.patch(`${ip}/byreg/sr?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+    //     // .then(res=>{
+    //     //   console.log('date udated sr ',res.data)
+    //     // })
+    //   }
+    //   else{
+    //     try{
+    //       const res=await axios.patch(`${ip}/byreg/srd?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+    //       console.log('suucess while updating byregsrd',res.data)
+    //     }catch(e){
+    //       console.log('error in byregsrd',e) 
+    //     }
         
-        // axios.patch(`${ip}/byreg/srd?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
-        // .then(res=>{
-        //   console.log('date updated srd ',res.data)
-        // })
-      }
-    })
+    //     // axios.patch(`${ip}/byreg/srd?course_id=${course_id}&section=${section}&registration_number=${ele.registration_number}`,chg)
+    //     // .then(res=>{
+    //     //   console.log('date updated srd ',res.data)
+    //     // })
+    //   }
+    // })
      navigation.goBack()
 
    }
